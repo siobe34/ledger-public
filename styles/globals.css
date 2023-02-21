@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --bgBase: 243, 243, 243;
+        --bgLvl1: 250, 250, 250;
+        --bgLvl2: 235, 235, 235;
+        --txtBg: 20, 20, 20;
+        --txtPrimary: 255, 255, 255;
+        --borderBase: 195, 195, 195;
+        --borderPrimary: 51, 170, 255;
+        --primary: 0, 149, 255;
+        --txtInfo: 1, 67, 97;
+        --bgInfo: 229, 246, 253;
+        --txtSuccess: 0, 97, 0;
+        --bgSuccess: 198, 239, 206;
+        --txtError: 156, 0, 6;
+        --bgError: 255, 199, 206;
+    }
+    .dark {
+        --bgBase: 28, 28, 28;
+        --bgLvl1: 33, 33, 33;
+        --bgLvl2: 45, 45, 45;
+        --txtBg: 230, 230, 230;
+        --txtPrimary: 255, 255, 255;
+        --borderBase: 75, 75, 75;
+        --borderPrimary: 31, 84, 122;
+        --primary: 40, 127, 189;
+        --txtOnSecondary: 255, 255, 255;
+        --txtInfo: 184, 231, 251;
+        --bgInfo: 10, 28, 36;
+        --txtSuccess: 198, 239, 206;
+        --bgSuccess: 19, 44, 17;
+        --txtError: 255, 199, 206;
+        --bgError: 34, 17, 17;
+    }
+
+    /* TODO refine the scrollbar styling */
+    /* Works on Firefox */
+    /* * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(var(--primary), 0.25) rgba(var(--borderBase), 0.75);
+    } */
+
+    /* Works on Chrome, Edge, and Safari */
+    /* *::-webkit-scrollbar {
+        width: 12px;
+    } */
+
+    /* *::-webkit-scrollbar-track {
+        background-color: rgba(var(--borderBase), 0.75);
+        border-radius: 0.5rem;
+    } */
+
+    /* *::-webkit-scrollbar-thumb {
+        background-color: rgba(var(--primary), 0.25);
+        border-radius: 0.5rem;
+    } */
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    html {
+        color: rgb(var(--txtBg));
+        background-color: rgb(var(--bgBase));
+        scroll-behavior: smooth;
+    }
+
+    .app {
+        display: grid;
+        min-height: 100vh;
+        min-height: 100dvh;
+        grid-template-areas:
+            "nav"
+            "main";
+        grid-template-rows: auto 1fr;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 1.125rem;
+        font-weight: 400;
+    }
+}

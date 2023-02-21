@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+    ledger:
+        image: ledger-v1
+        build:
+            dockerfile: Dockerfile
+        ports:
+            - 3000:3000
