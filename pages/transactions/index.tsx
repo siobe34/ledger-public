@@ -192,6 +192,9 @@ const Transactions: PageWithLayout<InferGetServerSidePropsType<typeof getServerS
 
     // * Func to fetch new data based on parameter states (year, month, user, account)
     const loadTransactions = async () => {
+        // * Set notifications to show data is loading
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Loading data.." }]);
+
         // * Convert month from full month name to number of month
         const queryMonth = monthStringToNumber[month as keyof typeof monthStringToNumber];
 
@@ -217,12 +220,18 @@ const Transactions: PageWithLayout<InferGetServerSidePropsType<typeof getServerS
             return;
         }
 
+        // * Set notifications to show data is being verified
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Verifying data..." }]);
+
         // * Validate the transactions data
         const validateNotifications = validateTransactionPayload(data!.manage.payload, transactions);
         setCurrentNotifications(validateNotifications);
 
         // * If transaction validation returns notifications then do not save transactions
         if (validateNotifications.length > 0) return;
+
+        // * Set notifications to show data is being saved
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Saving data..." }]);
 
         // * Define request options
         const opts = {

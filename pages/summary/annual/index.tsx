@@ -5,6 +5,7 @@ import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsT
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { randomUUID } from "crypto";
+import { v4 as uuid } from "uuid";
 import { Pie, Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -174,6 +175,9 @@ const Annual: PageWithLayout<InferGetServerSidePropsType<typeof getServerSidePro
 
     // * Func to fetch new data based on parameter states (year, month)
     const refreshData = async () => {
+        // * Set notifications to show data is loading
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Loading data.." }]);
+
         const response = await fetch(`${apiRoutes.annualSummary}?year=${year}`);
         const apiResponse = (await response.json()) as unknown as IAnnualSummaryProps;
 

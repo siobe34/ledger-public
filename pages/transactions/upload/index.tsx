@@ -259,12 +259,18 @@ const UploadTransactions: PageWithLayout<InferGetServerSidePropsType<typeof getS
         // * Don't save transactions if no data in table
         if (!transactions) return;
 
+        // * Set notifications to show data is being verified
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Verifying data..." }]);
+
         // * Validate the transactions data
         const validateNotifications = validateTransactionPayload(data!.manage.payload, transactions as TransactionsCollectionType[]);
         setCurrentNotifications(validateNotifications);
 
         // * If transaction validation returns notifications then do not save transactions
         if (validateNotifications.length > 0) return;
+
+        // * Set notifications to show data is being saved
+        setCurrentNotifications(() => [{ key: uuid(), type: "info", description: "Saving data..." }]);
 
         // * Define request options
         const opts = {
