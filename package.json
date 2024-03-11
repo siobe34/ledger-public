@@ -23,6 +23,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.29.4",
+    "drizzle-zod": "^0.5.1",
     "lucide-react": "^0.349.0",
     "mysql2": "^3.9.1",
     "next": "^14.1.0",
