@@ -3,6 +3,7 @@ import {
   bigint,
   datetime,
   decimal,
+  int,
   mysqlTableCreator,
   text,
   timestamp,
@@ -22,6 +23,10 @@ export const createTable = mysqlTableCreator((name) => `ledger_${name}`);
 export const metadatas = createTable("metadata", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   email: varchar("email", { length: 256 }).unique().notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at").onUpdateNow(),
 });
 
 export const metadataRelations = relations(metadatas, ({ many }) => ({
@@ -33,19 +38,20 @@ export const metadataRelations = relations(metadatas, ({ many }) => ({
 export const transactions = createTable("transaction", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
+  sequence: int("sequence").notNull(),
   transactionDate: datetime("transaction_date").notNull(),
-  debit: decimal("debit", { precision: 2, scale: 2 }).notNull(),
-  credit: decimal("credit", { precision: 2, scale: 2 }).notNull(),
-  balance: decimal("balance", { precision: 2, scale: 2 }).notNull(),
+  description: text("description").notNull(),
+  debit: decimal("debit", { precision: 10, scale: 2 }).notNull(),
+  credit: decimal("credit", { precision: 10, scale: 2 }).notNull(),
+  balance: decimal("balance", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 256 }).notNull(),
   user: varchar("user", { length: 256 }).notNull(),
   account: varchar("account", { length: 256 }).notNull(),
-  description: text("description").notNull(),
   comments: text("comments"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updatedAt").onUpdateNow(),
+  updatedAt: timestamp("updated_at").onUpdateNow(),
 });
 
 export const transactionRelations = relations(transactions, ({ one }) => ({
@@ -59,6 +65,10 @@ export const transactionCategories = createTable("transaction_category", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   title: varchar("title", { length: 256 }).notNull(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at").onUpdateNow(),
 });
 
 export const transactionCategoryRelations = relations(
@@ -75,6 +85,10 @@ export const transactionAccounts = createTable("transaction_account", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   title: varchar("title", { length: 256 }).notNull(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at").onUpdateNow(),
 });
 
 export const transactionAccountRelations = relations(
@@ -94,7 +108,7 @@ export const insertTransactionSchema = createInsertSchema(transactions)
     updatedAt: true,
     createdAt: true,
   })
-  // Coerce to correct type because Comments should not be undefined
+  // Coerce to correct type because 'comments' should not be undefined
   .extend({ comments: z.string().nullable() });
 
 export const selectTransactionsSchema = createSelectSchema(transactions);
