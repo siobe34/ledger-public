@@ -1,39 +1,9 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
-import * as TDatabase from "@/server/db/schema";
-import {
-  insertTransactionSchema,
-  metadatas,
-  transactions,
-} from "@/server/db/schema";
+import { insertTransactionSchema, transactions } from "@/server/db/schema";
 import { TRPCError } from "@trpc/server";
 import { and, eq, like, max, not, sql, sum } from "drizzle-orm";
-import { type MySql2Database } from "drizzle-orm/mysql2";
 import { z } from "zod";
-
-// TODO: move to separate file
-const getUserEmailId = async ({
-  email,
-  db,
-}: {
-  email: string | undefined;
-  db: MySql2Database<typeof TDatabase>;
-}) => {
-  const userId = await db
-    .select({ id: metadatas.id })
-    .from(metadatas)
-    .where(eq(metadatas.email, email ?? ""));
-
-  const emailId = userId[0]?.id;
-  if (!emailId) {
-    throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "You don't appear to be signed in. Please sign in.",
-    });
-  }
-
-  return emailId;
-};
 
 const inputSchema = z.object({
   account: z.string().optional().default("%"),
@@ -43,16 +13,11 @@ const inputSchema = z.object({
 });
 
 export const transactionRouter = createTRPCRouter({
-  create: publicProcedure
+  create: privateProcedure
     .input(z.array(insertTransactionSchema))
     .mutation(async ({ ctx, input }) => {
-      const emailId = await getUserEmailId({
-        email: ctx.userEmail,
-        db: ctx.db,
-      });
-
       const transactionsWithEmailId = input.map((i) => ({
-        emailId,
+        emailId: ctx.emailId,
         ...i,
       }));
 
@@ -60,20 +25,15 @@ export const transactionRouter = createTRPCRouter({
 
       return "success";
     }),
-  getByMonth: publicProcedure
+  getByMonth: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
-      const emailId = await getUserEmailId({
-        email: ctx.userEmail,
-        db: ctx.db,
-      });
-
       const matchedRecords = await ctx.db
         .select()
         .from(transactions)
         .where(
           and(
-            eq(transactions.emailId, emailId),
+            eq(transactions.emailId, ctx.emailId),
             like(transactions.account, input.account),
             like(transactions.user, input.user),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
@@ -83,14 +43,9 @@ export const transactionRouter = createTRPCRouter({
 
       return matchedRecords;
     }),
-  getBalanceByMonth: publicProcedure
+  getBalanceByMonth: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
-      const emailId = await getUserEmailId({
-        email: ctx.userEmail,
-        db: ctx.db,
-      });
-
       const matchedRecords = await db
         .select()
         .from(transactions)
@@ -104,7 +59,7 @@ export const transactionRouter = createTRPCRouter({
             .from(transactions)
             .where(
               and(
-                eq(transactions.emailId, emailId),
+                eq(transactions.emailId, ctx.emailId),
                 like(transactions.account, input.account),
                 like(transactions.user, input.user),
                 eq(sql`YEAR(${transactions.transactionDate})`, input.year),
@@ -116,7 +71,7 @@ export const transactionRouter = createTRPCRouter({
           and(
             eq(transactions.sequence, sql`b.max_sequence`),
             eq(transactions.account, sql`b.account`),
-            eq(transactions.emailId, emailId),
+            eq(transactions.emailId, ctx.emailId),
             like(transactions.account, input.account),
             like(transactions.user, input.user),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
@@ -134,14 +89,9 @@ export const transactionRouter = createTRPCRouter({
 
       return matchedRecords.map((record) => record.transaction);
     }),
-  getMonthlySummary: publicProcedure
+  getMonthlySummary: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
-      const emailId = await getUserEmailId({
-        email: ctx.userEmail,
-        db: ctx.db,
-      });
-
       const matchedRecords = await ctx.db
         .select({
           account: transactions.account,
@@ -154,7 +104,7 @@ export const transactionRouter = createTRPCRouter({
         .from(transactions)
         .where(
           and(
-            eq(transactions.emailId, emailId),
+            eq(transactions.emailId, ctx.emailId),
             like(transactions.account, input.account),
             like(transactions.user, input.user),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),

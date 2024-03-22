@@ -6,12 +6,13 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@/server/db";
 import { createClient } from "@/lib/supabase/server";
+import { db } from "@/server/db";
+import { authenticateUser } from "@/lib/authenticateUser";
 
 /**
  * 1. CONTEXT
@@ -81,3 +82,29 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+/**
+ * Private (authenticated) procedure
+ *
+ * This procedure guarantees the user accessing the tRPC API is authenticated, otherwise an Error is thrown and handled by Next.js error boundary.
+ */
+
+// Enforces that a user is authenticated, passes their respective emailId to the tRPC context, otherwise throws an Error
+const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
+  const emailId = await authenticateUser({ email: ctx.userEmail ?? "" });
+
+  if (!emailId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You don't appear to be signed in. Please sign in.",
+    });
+  }
+
+  return next({
+    ctx: {
+      emailId,
+    },
+  });
+});
+
+export const privateProcedure = t.procedure.use(enforceUserIsAuthed);
