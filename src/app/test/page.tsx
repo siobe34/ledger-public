@@ -1,78 +1,40 @@
-"use client";
-import { Pie, Line } from "react-chartjs-2";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  PointElement,
-  LineElement,
-  LinearScale,
-  ArcElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  Colors,
-} from "chart.js";
-ChartJS.register(
-  CategoryScale,
-  BarElement,
-  LinearScale,
-  ArcElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  Colors,
-);
+import { CategoricalSpendingBarChart } from "@/app/test/categorical-spending-bar-chart";
+import { CategoricalSpendingPieChart } from "@/app/test/categorical-spending-pie-chart";
+import { inputSchema } from "@/server/api/routers/transaction";
+import { Suspense } from "react";
+import { InteractiveTest } from "./test-client-interactivity";
+import { AccountBalanceTables } from "./account-balance-tables";
 
-export default function ChartTest() {
+export default async function Test({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const today = new Date();
+  // TODO: better error handling, i.e. add error messages to zod schema and a custom error page?
+  const parsedSearchParams = inputSchema.parse({
+    year: Number(searchParams.year) || today.getFullYear(),
+    month: Number(searchParams.month) || today.getMonth(),
+    account: searchParams.account,
+    user: searchParams.user,
+  });
+
   return (
-    <div className="h-[500px] w-[500px]">
-      {/* <Line
-        data={{
-          labels: ["February", "January", "December"],
-          datasets: [{ data: [20, 500, 430], label: "Balances" }],
-        }}
-      /> */}
-      <Bar
-        data={{
-          labels: [
-            "Category 1",
-            "Category 2",
-            "Category 3",
-            "Category 4",
-            "Category 5",
-          ],
-          datasets: [
-            {
-              data: [20, 80, 100, 44, 98],
-              label: "Testing",
-              barThickness: 30,
-              borderRadius: 3,
-            },
-            {
-              data: [85, 209, 38, 44, 10],
-              label: "Test 2",
-              barThickness: 30,
-              borderRadius: 3,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            title: {
-              display: true,
-              text: "Monthly Categorical Spending By User",
-            },
-          },
-        }}
-      />
+    <div className="flex flex-col items-center justify-start">
+      <InteractiveTest />
+      <Suspense fallback={<div>Loading Chart...</div>}>
+        <AccountBalanceTables {...parsedSearchParams} />
+      </Suspense>{" "}
+      <Suspense fallback={<div>Loading Chart...</div>}>
+        <div className="flex h-[500px] w-full items-center justify-center">
+          <CategoricalSpendingPieChart {...parsedSearchParams} />
+        </div>
+      </Suspense>
+      <Suspense fallback={<div>Loading Chart...</div>}>
+        <div className="flex h-[500px] w-3/4 items-center justify-center">
+          <CategoricalSpendingBarChart {...parsedSearchParams} />
+        </div>
+      </Suspense>
     </div>
   );
 }
