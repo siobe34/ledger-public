@@ -1,9 +1,9 @@
 import { CategoricalSpendingBarChart } from "@/app/test/categorical-spending-bar-chart";
 import { CategoricalSpendingPieChart } from "@/app/test/categorical-spending-pie-chart";
+import { AccountBalanceTables } from "@/app/test/data-table/account-balance-tables";
+import { InteractiveTest } from "@/app/test/test-client-interactivity";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
-import { InteractiveTest } from "./test-client-interactivity";
-import { AccountBalanceTables } from "./account-balance-tables";
 
 export default async function Test({
   searchParams,
@@ -23,7 +23,7 @@ export default async function Test({
     <div className="flex flex-col items-center justify-start">
       <InteractiveTest />
       <Suspense fallback={<div>Loading Chart...</div>}>
-        <AccountBalanceTables {...parsedSearchParams} />
+        <AccountBalanceTables />
       </Suspense>{" "}
       <Suspense fallback={<div>Loading Chart...</div>}>
         <div className="flex h-[500px] w-full items-center justify-center">
