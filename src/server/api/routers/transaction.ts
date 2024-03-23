@@ -2,15 +2,17 @@ import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { insertTransactionSchema, transactions } from "@/server/db/schema";
 import { TRPCError } from "@trpc/server";
-import { and, eq, like, max, not, sql, sum } from "drizzle-orm";
+import { and, eq, like, max, ne, sql, sum } from "drizzle-orm";
 import { z } from "zod";
 
-const inputSchema = z.object({
+export const inputSchema = z.object({
   account: z.string().optional().default("%"),
   user: z.string().optional().default("%"),
   year: z.number(),
   month: z.number(),
 });
+
+export type RequestTransactionData = z.infer<typeof inputSchema>;
 
 export const transactionRouter = createTRPCRouter({
   create: privateProcedure
@@ -71,9 +73,8 @@ export const transactionRouter = createTRPCRouter({
           and(
             eq(transactions.sequence, sql`b.max_sequence`),
             eq(transactions.account, sql`b.account`),
+            eq(transactions.user, sql`b.user`),
             eq(transactions.emailId, ctx.emailId),
-            like(transactions.account, input.account),
-            like(transactions.user, input.user),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
             eq(sql`MONTH(${transactions.transactionDate})`, input.month),
           ),
@@ -98,7 +99,7 @@ export const transactionRouter = createTRPCRouter({
           user: transactions.user,
           category: transactions.category,
           amount_spent: sum(
-            sql<number>`${transactions.debit} - ${transactions.credit}`,
+            sql`${transactions.debit} - ${transactions.credit}`,
           ),
         })
         .from(transactions)
@@ -109,7 +110,8 @@ export const transactionRouter = createTRPCRouter({
             like(transactions.user, input.user),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
             eq(sql`MONTH(${transactions.transactionDate})`, input.month),
-            not(eq(transactions.category, "Credit Card")),
+            ne(transactions.category, "Credit Card"),
+            ne(transactions.category, "Income"),
           ),
         )
         .groupBy(
