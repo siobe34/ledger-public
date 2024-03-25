@@ -3,47 +3,67 @@ import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";
 
 export const CategoricalSpendingBarChart = async ({
-  year,
-  month,
   account,
   user,
+  month,
+  year,
 }: RequestTransactionData) => {
-  const categoricalSpending = await api.transactions.getMonthlySummary.query({
-    account,
-    user,
-    month,
-    year,
-  });
-
-  const labels = Array.from(
-    new Set(categoricalSpending.map((item) => item.category)),
+  const sumPerCategoryWithIncome =
+    await api.transactions.getMonthlySummary.query({
+      account,
+      user,
+      month,
+      year,
+    });
+  const categoricalSpending = sumPerCategoryWithIncome.filter(
+    (i) => i.category !== "Income",
   );
 
-  const datasetLabels = Array.from(
-    new Set(categoricalSpending.map((item) => item.user)),
+  const uniqueUsers = Array.from(
+    new Set(categoricalSpending.map((i) => i.user)),
   );
 
-  const datasets = datasetLabels.map((label) => ({
-    data: categoricalSpending
-      .filter((record) => record.user === label)
-      .map((item) => {
-        if (!item.amount_spent) return 0;
-        return +item.amount_spent;
-      }),
-    label: label,
-    barThickness: 30,
-    borderRadius: 3,
-  }));
+  const uniqueCategories = Array.from(
+    new Set(categoricalSpending.map((i) => i.category)),
+  );
+
+  const datasetsObj: Array<{ label: string; data: number[] }> = [];
+
+  for (const uniqueUser of uniqueUsers) {
+    const usersCategoricalSpending = categoricalSpending.filter(
+      (i) => i.user === uniqueUser,
+    );
+    const userDataArray: number[] = [];
+
+    for (const category of uniqueCategories) {
+      const amountSpentByCategory = usersCategoricalSpending
+        .filter((i) => i.category === category)
+        .map((i) => (i.amount_spent ? +i.amount_spent : 0))
+        .reduce((acc, curr) => acc + curr, 0);
+
+      userDataArray.push(amountSpentByCategory);
+    }
+
+    datasetsObj.push({ label: uniqueUser, data: userDataArray });
+  }
 
   return (
     <BarChart
-      data={{ labels, datasets }}
+      data={{
+        labels: uniqueCategories,
+        datasets: datasetsObj.map((dataset) => ({
+          label: dataset.label,
+          data: dataset.data,
+          borderRadius: 3,
+          barThickness: 30,
+        })),
+      }}
       options={{
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           title: {
-            display: true,
+            display: false,
             text: "Monthly Categorical Spending By User",
           },
         },
