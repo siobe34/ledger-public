@@ -3,17 +3,17 @@ import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";
 
 export const CategoricalSpendingPieChart = async ({
-  year,
-  month,
   account,
   user,
+  month,
+  year,
 }: RequestTransactionData) => {
   const sumPerCategoryWithIncome =
     await api.transactions.getMonthlySummary.query({
-      year,
-      month,
       account,
       user,
+      month,
+      year,
     });
   const categoricalSpending = sumPerCategoryWithIncome.filter(
     (i) => i.category !== "Income",
@@ -40,6 +40,16 @@ export const CategoricalSpendingPieChart = async ({
             data: amountByCategory,
           },
         ],
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: false,
+            text: "Monthly Categorical Spending By User",
+          },
+        },
       }}
     />
   );
