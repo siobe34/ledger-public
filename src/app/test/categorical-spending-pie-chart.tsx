@@ -8,12 +8,16 @@ export const CategoricalSpendingPieChart = async ({
   account,
   user,
 }: RequestTransactionData) => {
-  const categoricalSpending = await api.transactions.getMonthlySummary.query({
-    year,
-    month,
-    account,
-    user,
-  });
+  const sumPerCategoryWithIncome =
+    await api.transactions.getMonthlySummary.query({
+      year,
+      month,
+      account,
+      user,
+    });
+  const categoricalSpending = sumPerCategoryWithIncome.filter(
+    (i) => i.category !== "Income",
+  );
 
   const labels = Array.from(
     new Set(categoricalSpending.map((i) => i.category)),
