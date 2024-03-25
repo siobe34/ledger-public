@@ -1,6 +1,8 @@
 import { CategoricalSpendingBarChart } from "@/app/test/categorical-spending-bar-chart";
 import { CategoricalSpendingPieChart } from "@/app/test/categorical-spending-pie-chart";
-import { AccountBalanceTables } from "@/app/test/data-table/account-balance-tables";
+import { BalancesByAcctUserTable } from "@/app/test/data-tables/balances-acc-by-user/table";
+import { TotalBalancesByUserTable } from "@/app/test/data-tables/total-balances-by-user/table";
+import { SavingsByUserTable } from "@/app/test/data-tables/savings-by-user/table";
 import { InteractiveTest } from "@/app/test/test-client-interactivity";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
@@ -23,7 +25,13 @@ export default async function Test({
     <div className="flex flex-col items-center justify-start">
       <InteractiveTest />
       <Suspense fallback={<div>Loading Chart...</div>}>
-        <AccountBalanceTables />
+        <SavingsByUserTable {...parsedSearchParams} />
+      </Suspense>{" "}
+      <Suspense fallback={<div>Loading Chart...</div>}>
+        <TotalBalancesByUserTable {...parsedSearchParams} />
+      </Suspense>{" "}
+      <Suspense fallback={<div>Loading Chart...</div>}>
+        <BalancesByAcctUserTable {...parsedSearchParams} />
       </Suspense>{" "}
       <Suspense fallback={<div>Loading Chart...</div>}>
         <div className="flex h-[500px] w-full items-center justify-center">
