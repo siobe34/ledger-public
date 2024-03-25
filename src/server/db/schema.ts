@@ -4,6 +4,7 @@ import {
   datetime,
   decimal,
   int,
+  mysqlEnum,
   mysqlTableCreator,
   text,
   timestamp,
@@ -46,7 +47,7 @@ export const transactions = createTable("transaction", {
   balance: decimal("balance", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 256 }).notNull(),
   user: varchar("user", { length: 256 }).notNull(),
-  account: varchar("account", { length: 256 }).notNull(),
+  account: mysqlEnum("account", ["Credit", "Debit"]).notNull(),
   comments: text("comments"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
