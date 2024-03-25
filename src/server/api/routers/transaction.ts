@@ -111,7 +111,6 @@ export const transactionRouter = createTRPCRouter({
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
             eq(sql`MONTH(${transactions.transactionDate})`, input.month),
             ne(transactions.category, "Credit Card"),
-            ne(transactions.category, "Income"),
           ),
         )
         .groupBy(
