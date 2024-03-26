@@ -1,13 +1,13 @@
-import { AnchorHTMLAttributes } from "react";
+import Link, { type LinkProps } from "next/link";
 
 type NavItemType = {
   name: string;
   icon: string;
-} & AnchorHTMLAttributes<HTMLAnchorElement>;
+} & LinkProps;
 
-const NavItem = ({ name, icon, children, ...props }: NavItemType) => {
+const NavItem = ({ name, icon, ...props }: NavItemType) => {
   return (
-    <a
+    <Link
       {...props}
       className="relative inline-flex cursor-pointer items-center justify-center rounded p-2 after:absolute after:top-full after:mt-2 after:hidden after:w-[130%] sm:relative sm:after:block"
     >
@@ -15,7 +15,7 @@ const NavItem = ({ name, icon, children, ...props }: NavItemType) => {
       <span className="z-10 ml-2 sm:absolute sm:left-full sm:hidden sm:whitespace-nowrap sm:rounded sm:px-1 sm:text-sm">
         {name}
       </span>
-    </a>
+    </Link>
   );
 };
 export const DashboardNavigation = () => {
