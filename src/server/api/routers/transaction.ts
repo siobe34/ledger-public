@@ -90,6 +90,66 @@ export const transactionRouter = createTRPCRouter({
 
       return matchedRecords.map((record) => record.transaction);
     }),
+  getBalancesByYear: privateProcedure
+    .input(inputSchema.pick({ year: true }))
+    .query(async ({ ctx, input }) => {
+      const matchedRecords = await db
+        .select({
+          id: transactions.id,
+          transactionDate: transactions.transactionDate,
+          balance: transactions.balance,
+          account: transactions.account,
+          user: transactions.user,
+          month: sql<number>`b.month`,
+          year: sql<number>`b.year`,
+        })
+        .from(transactions)
+        .innerJoin(
+          db
+            .select({
+              account: transactions.account,
+              user: transactions.user,
+              sequence: max(transactions.sequence).as("max_sequence"),
+              year: sql<number>`YEAR(${transactions.transactionDate})`.as(
+                "year",
+              ),
+              month: sql<number>`MONTH(${transactions.transactionDate})`.as(
+                "month",
+              ),
+            })
+            .from(transactions)
+            .where(
+              and(
+                eq(transactions.emailId, ctx.emailId),
+                eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+              ),
+            )
+            .groupBy(
+              transactions.account,
+              transactions.user,
+              sql`year`,
+              sql`month`,
+            )
+            .as("b"),
+          and(
+            eq(transactions.sequence, sql`b.max_sequence`),
+            eq(transactions.account, sql`b.account`),
+            eq(transactions.user, sql`b.user`),
+            eq(transactions.emailId, ctx.emailId),
+            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+          ),
+        )
+        .orderBy(transactions.transactionDate);
+
+      if (matchedRecords.length === 0) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No account balances found for the requested year.",
+        });
+      }
+
+      return matchedRecords;
+    }),
   getMonthlySummary: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
