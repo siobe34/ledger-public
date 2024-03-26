@@ -41,9 +41,13 @@ export const transactionRouter = createTRPCRouter({
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
             eq(sql`MONTH(${transactions.transactionDate})`, input.month),
           ),
-        );
+        )
+        .orderBy(transactions.transactionDate);
 
-      return matchedRecords;
+      return matchedRecords.map((record) => ({
+        ...record,
+        transactionDate: record.transactionDate.toDateString(),
+      }));
     }),
   getBalanceByMonth: privateProcedure
     .input(inputSchema)
