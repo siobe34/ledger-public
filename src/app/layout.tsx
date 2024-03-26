@@ -22,8 +22,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+      <body
+        className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
+        style={{ minHeight: "100dvh" }}
+      >
+        <nav className="flex items-center justify-center">
+          <ul className="flex gap-4">
+            <li>Link 1</li>
+            <li>Link 2</li>
+            <li>Link 3</li>
+            <li>Link 4</li>
+          </ul>
+        </nav>
+        <main className="flex flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </main>
       </body>
     </html>
   );
