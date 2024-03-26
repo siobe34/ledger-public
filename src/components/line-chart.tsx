@@ -2,13 +2,14 @@
 
 import type { ChartData } from "chart.js";
 import {
-  LineElement,
-  PointElement,
+  CategoryScale,
   Chart as ChartJS,
   Colors,
   Filler,
   Legend,
+  LineElement,
   LinearScale,
+  PointElement,
   Title,
   Tooltip,
 } from "chart.js";
@@ -18,6 +19,7 @@ import { Line } from "react-chartjs-2";
 
 ChartJS.register(
   PointElement,
+  CategoryScale,
   LineElement,
   LinearScale,
   Title,
