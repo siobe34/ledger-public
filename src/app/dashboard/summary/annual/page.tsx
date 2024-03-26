@@ -1,10 +1,9 @@
-import { AnnualBalancesLineChart } from "@/app/annual/annual-balances-line-chart";
-import { AnnualBalancesTable } from "@/app/annual/data-tables/annual-balances-by-user/table";
-import { InteractiveTest } from "@/app/test/test-client-interactivity";
+import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-balances-line-chart";
+import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
 
-export default async function Test({
+export default async function AnnualSummaryPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -17,7 +16,6 @@ export default async function Test({
 
   return (
     <div className="flex flex-col items-center justify-start">
-      <InteractiveTest />
       <Suspense fallback={<div>Loading Chart...</div>}>
         <AnnualBalancesTable {...parsedSearchParams} />
       </Suspense>{" "}

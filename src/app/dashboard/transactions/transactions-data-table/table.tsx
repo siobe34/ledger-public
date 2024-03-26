@@ -1,4 +1,4 @@
-import { columns } from "@/app/transactions/data-table/transactions/columns";
+import { columns } from "@/app/dashboard/transactions/transactions-data-table/columns";
 import { DataTable } from "@/components/ui/data-table";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";

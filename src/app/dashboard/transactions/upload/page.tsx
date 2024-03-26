@@ -5,7 +5,7 @@ import { api } from "@/trpc/react";
 import { createRef } from "react";
 import { z } from "zod";
 
-export default function Home() {
+export default function UploadTransactionsPage() {
   const inputRef = createRef<HTMLInputElement>();
 
   const test = api.transactions.create.useMutation();

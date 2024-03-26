@@ -1,7 +1,7 @@
 import {
   TotalBalance,
   columns,
-} from "@/app/test/data-tables/total-balances-by-user/columns";
+} from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/columns";
 import { DataTable } from "@/components/ui/data-table";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";

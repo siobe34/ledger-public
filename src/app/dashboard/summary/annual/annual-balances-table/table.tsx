@@ -1,4 +1,4 @@
-import { columns } from "@/app/annual/data-tables/annual-balances-by-user/columns";
+import { columns } from "@/app/dashboard/summary/annual/annual-balances-table/columns";
 import { DataTable } from "@/components/ui/data-table";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";

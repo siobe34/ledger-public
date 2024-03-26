@@ -1,4 +1,4 @@
-export default function DashboardHome() {
+export default function AccountManagementPage() {
   return (
     <a
       href="/"

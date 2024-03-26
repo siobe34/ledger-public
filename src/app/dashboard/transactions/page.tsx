@@ -1,9 +1,8 @@
-import { InteractiveTest } from "@/app/test/test-client-interactivity";
-import { QueriedTransactionsTable } from "@/app/transactions/data-table/transactions/table";
+import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
 
-export default async function Test({
+export default async function ViewTransactionsPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -19,7 +18,6 @@ export default async function Test({
 
   return (
     <div className="flex flex-col items-center justify-start">
-      <InteractiveTest />
       <Suspense fallback={<div>Loading Chart...</div>}>
         <QueriedTransactionsTable {...parsedSearchParams} />
       </Suspense>{" "}

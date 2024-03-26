@@ -24,7 +24,25 @@ export const DashboardNavigation = () => {
       <button className="flex self-center sm:hidden">Mobile Menu Button</button>
       <ul className="hidden flex-col gap-4 sm:flex">
         <li>
-          <NavItem href="/annual" name="Annual" icon="X" />
+          <NavItem
+            href="/dashboard/account-management"
+            name="Account Management"
+            icon="X"
+          />
+        </li>
+        <li>
+          <NavItem
+            href="/dashboard/transactions"
+            name="Transactions"
+            icon="Y"
+          />
+        </li>
+        <li>
+          <NavItem
+            href="/dashboard/summary/monthly"
+            name="Charts & Analysis"
+            icon="Z"
+          />
         </li>
       </ul>
     </nav>
