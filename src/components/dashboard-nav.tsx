@@ -10,7 +10,7 @@ import {
 
 export const DashboardNavigation = () => {
   return (
-    <nav className="flex flex-col flex-wrap gap-2 border border-b-0 border-t-0 py-4 sm:p-4">
+    <nav className="flex flex-col flex-wrap gap-2 border-b bg-popover py-4 text-popover-foreground sm:border-b-0 sm:border-r sm:bg-inherit sm:p-4">
       <MobileMenuButton className="peer/menu h-12 w-12 self-center sm:hidden" />
       <div className="grid grid-rows-[0fr] transition-all peer-[.show-menu]/menu:grid-rows-[1fr] sm:grid-rows-[1fr]">
         <div className="overflow-hidden">
