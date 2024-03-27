@@ -22,22 +22,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
+      <body
+        className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
+        style={{ minHeight: "100dvh" }}
       >
-        <body
-          className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
-          style={{ minHeight: "100dvh" }}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
           <Header />
           <main className="flex flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </main>
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
