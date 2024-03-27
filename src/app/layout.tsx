@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
+        className={`grid min-h-screen grid-rows-[minmax(5vh,auto)_1fr] font-sans ${inter.variable}`}
         style={{ minHeight: "100dvh" }}
       >
         <ThemeProvider
