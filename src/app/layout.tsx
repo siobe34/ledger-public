@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Inter } from "next/font/google";
@@ -20,16 +21,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
-        style={{ minHeight: "100dvh" }}
+    <html lang="en" suppressHydrationWarning>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
       >
-        <Header />
-        <main className="flex flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </main>
-      </body>
+        <body
+          className={`grid min-h-screen grid-rows-[5vh_1fr] font-sans ${inter.variable}`}
+          style={{ minHeight: "100dvh" }}
+        >
+          <Header />
+          <main className="flex flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </main>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
