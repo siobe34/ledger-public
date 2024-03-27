@@ -16,7 +16,7 @@ export const NavItem = ({ name, icon, ...props }: NavItemType) => {
   return (
     <Link
       {...props}
-      className="inline-flex w-full items-center justify-center gap-2 rounded py-4"
+      className="inline-flex w-full items-center justify-center gap-2 rounded py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     >
       <TooltipProvider delayDuration={75}>
         <Tooltip>

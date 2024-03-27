@@ -14,7 +14,7 @@ export const DashboardNavigation = () => {
       <MobileMenuButton className="peer/menu h-12 w-12 self-center sm:hidden" />
       <div className="grid grid-rows-[0fr] transition-all peer-[.show-menu]/menu:grid-rows-[1fr] sm:grid-rows-[1fr]">
         <div className="overflow-hidden">
-          <ul className="flex flex-col items-center gap-0 sm:gap-4">
+          <ul className="flex flex-col items-center gap-0 px-2 py-1 sm:gap-4">
             <li className="w-full">
               <NavItem
                 href="/dashboard"
