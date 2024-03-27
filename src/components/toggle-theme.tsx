@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
 export const ToggleTheme = () => {
@@ -24,22 +24,22 @@ export const ToggleTheme = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer gap-4"
           onClick={() => setTheme("light")}
         >
-          Light
+          <SunIcon /> Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer gap-4"
           onClick={() => setTheme("dark")}
         >
-          Dark
+          <MoonIcon /> Dark
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer gap-4"
           onClick={() => setTheme("system")}
         >
-          System
+          <LaptopIcon /> System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
