@@ -16,8 +16,8 @@ export default async function MonthlySummaryPage({
   const parsedSearchParams = inputSchema.parse({
     year: Number(searchParams.year) || today.getFullYear(),
     month: Number(searchParams.month) || today.getMonth(),
-    account: searchParams.account,
-    user: searchParams.user,
+    account: searchParams.account || "%",
+    user: searchParams.user || "%",
   });
 
   return (
