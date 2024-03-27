@@ -1,5 +1,5 @@
+import { NavItem } from "@/components/dashboard-nav/nav-item";
 import { MobileMenuButton } from "@/components/mobile-menu-button";
-import { NavItem } from "@/components/nav-item";
 import {
   AreaChart,
   HomeIcon,
