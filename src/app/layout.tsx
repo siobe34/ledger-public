@@ -33,7 +33,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="flex flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+          <main className="flex flex-col items-center justify-start">
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </main>
         </ThemeProvider>
