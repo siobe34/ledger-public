@@ -11,7 +11,7 @@ export default async function ViewTransactionsPage({
   const today = new Date();
   const unsafeParams = {
     account: searchParams.account,
-    month: searchParams.month ? +searchParams.month : today.getMonth(),
+    month: searchParams.month ? +searchParams.month : today.getMonth() + 1,
     user: searchParams.user,
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
   };
