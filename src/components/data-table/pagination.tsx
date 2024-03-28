@@ -22,12 +22,12 @@ export const Pagination = <TData,>({
   table,
 }: DataTablePaginationProps<TData>) => {
   return (
-    <div className="flex items-center justify-between border-t px-2 py-6">
-      <div className="flex-1 text-sm text-muted-foreground">
+    <div className="flex flex-wrap items-center justify-between border-t px-2 py-6">
+      <div className="flex-1 text-center text-sm text-muted-foreground sm:text-left">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex flex-wrap items-center justify-center space-x-6 space-y-2 lg:space-x-8">
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
