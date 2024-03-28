@@ -1,6 +1,7 @@
 import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
 import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { inputSchema } from "@/server/api/routers/transaction";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function ViewTransactionsPage({
@@ -15,6 +16,17 @@ export default async function ViewTransactionsPage({
     user: searchParams.user,
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
   };
+
+  if (
+    !searchParams.account ||
+    !searchParams.month ||
+    !searchParams.user ||
+    !searchParams.year
+  ) {
+    redirect(
+      `/dashboard/transactions?account=${unsafeParams.account ?? "%"}&month=${unsafeParams.month}&user=${unsafeParams.user ?? "%"}&year=${unsafeParams.year}`,
+    );
+  }
 
   const parsedSearchParams = inputSchema.parse(unsafeParams);
 
