@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     data: { user: user },
   } = await supabase.auth.getUser();
 
-  if (!user) return NextResponse.redirect(new URL("/login", request.url));
+  if (!user) return NextResponse.redirect(new URL("/auth/login", request.url));
 
   return await updateSession(request);
 }
@@ -22,6 +22,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - /login
      */
-    "/((?!_next/static|_next/image|favicon.ico|login|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|auth/login|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
