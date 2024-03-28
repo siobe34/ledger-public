@@ -20,7 +20,7 @@ export default async function ViewTransactionsPage({
 
   return (
     <>
-      <DataParameterSelector />
+      <DataParameterSelector {...parsedSearchParams} />
       {/* // TODO: loading component */}
       <Suspense fallback={<div>Loading Table...</div>}>
         <QueriedTransactionsTable {...parsedSearchParams} />

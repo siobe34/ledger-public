@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { ParameterDropdown } from "@/components/data-parameter-selector/parameter-dropdown";
 import { UpdateParametersButton } from "@/components/data-parameter-selector/update-parameters-button";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { z } from "zod";
 
 // TODO: move to separate file
@@ -43,34 +42,24 @@ export type Parameters = {
   year: { label: string; value: number };
 };
 
-export const DataParameterSelector = () => {
-  const today = new Date();
-  // TODO: query options for year and user from database
-  const searchParams = useSearchParams();
-  const unsafeParams = {
-    account: searchParams.get("account") || "%",
-    month: Number(searchParams.get("month")) || today.getMonth(),
-    user: searchParams.get("user") || "%",
-    year: Number(searchParams.get("year")) || today.getFullYear(),
-  };
-  const parsedSearchParams = queryParamsSchema.parse(unsafeParams);
-
+export const DataParameterSelector = (
+  props: z.infer<typeof queryParamsSchema>,
+) => {
   const [account, setAccount] = useState<Parameters["account"]>({
-    label: "All",
-    value:
-      parsedSearchParams.account === "All" ? "%" : parsedSearchParams.account,
+    label: props.account === "%" ? "All" : props.account,
+    value: props.account,
   });
   const [month, setMonth] = useState<Parameters["month"]>({
-    label: MONTHS[parsedSearchParams.month - 1]!.label,
-    value: parsedSearchParams.month,
+    label: MONTHS[props.month - 1]!.label,
+    value: props.month,
   });
   const [user, setUser] = useState<Parameters["user"]>({
-    label: "All",
-    value: parsedSearchParams.user === "All" ? "%" : parsedSearchParams.user,
+    label: props.user === "%" ? "All" : props.user,
+    value: props.user,
   });
   const [year, setYear] = useState<Parameters["year"]>({
-    label: parsedSearchParams.year.toString(),
-    value: parsedSearchParams.year,
+    label: props.year.toString(),
+    value: props.year,
   });
 
   return (
