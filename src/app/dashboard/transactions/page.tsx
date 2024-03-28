@@ -1,5 +1,5 @@
 import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
-import { DataParameterSelector } from "@/components/data-parameter-selector";
+import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
 
