@@ -44,7 +44,7 @@ export const DashboardNavigation = () => {
               />
             </li>
             <li className="w-full">
-              <NavItem href="#" name="Log Out" icon={<LogOut />} />
+              <NavItem href="/auth/logout" name="Log Out" icon={<LogOut />} />
             </li>
           </ul>
         </div>
