@@ -8,7 +8,7 @@ import { z } from "zod";
 // TODO: move to separate file
 // TODO: find a common place to put this as it is the same code as "inputSchema"
 const queryParamsSchema = z.object({
-  account: z.string().optional().default("%"),
+  account: z.enum(["%", "Credit", "Debit"]).optional().default("%"),
   month: z.number(),
   user: z.string().optional().default("%"),
   year: z.number(),

@@ -6,7 +6,7 @@ import { and, eq, like, max, ne, sql, sum } from "drizzle-orm";
 import { z } from "zod";
 
 export const inputSchema = z.object({
-  account: z.string().optional().default("%"),
+  account: z.enum(["%", "Credit", "Debit"]).optional().default("%"),
   user: z.string().optional().default("%"),
   year: z.number(),
   month: z.number(),
