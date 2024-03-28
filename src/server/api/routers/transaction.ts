@@ -30,6 +30,9 @@ export const transactionRouter = createTRPCRouter({
   getByMonth: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
+      // REMOVEME: simulating slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const matchedRecords = await ctx.db
         .select()
         .from(transactions)
