@@ -1,5 +1,7 @@
 "use client";
 
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+// TODO: move this import to a separate /types directory
 import { selectTransactionsSchema } from "@/server/db/schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
@@ -12,7 +14,9 @@ type Transaction = z.infer<typeof _transactionSchema>;
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "transactionDate",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date" />
+    ),
     cell: ({ row }) =>
       new Intl.DateTimeFormat("en-CA", {
         dateStyle: "full",
@@ -20,34 +24,51 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Description" />
+    ),
+  },
+
+  {
+    accessorKey: "debit",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Debit" />
+    ),
   },
   {
     accessorKey: "credit",
-    header: "Credit",
-  },
-  {
-    accessorKey: "debit",
-    header: "Debit",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Credit" />
+    ),
   },
   {
     accessorKey: "balance",
-    header: "Balance",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Balance" />
+    ),
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Category" />
+    ),
   },
   {
     accessorKey: "user",
-    header: "User",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="User" />
+    ),
   },
   {
     accessorKey: "account",
-    header: "Account",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Account" />
+    ),
   },
   {
     accessorKey: "comments",
-    header: "Comments",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Comments" />
+    ),
   },
 ];
