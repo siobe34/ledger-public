@@ -18,8 +18,9 @@ export const TabItem = ({ children, className, ...props }: TabItemType) => {
     <Link
       {...props}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md border border-primary px-3 py-1 text-sm font-medium ring-offset-background transition-all sm:rounded-b-none sm:border-b-0",
-        "hover:text-foreground",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md border border-primary/50 px-3 py-1 text-sm font-medium ring-offset-background transition-all",
+        "sm-rounded-b-none sm:rounded-bl-none sm:rounded-br-none sm:border-b-0",
+        "hover:border-primary hover:text-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50",
         isLinkActive &&
