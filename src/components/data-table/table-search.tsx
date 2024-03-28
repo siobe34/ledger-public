@@ -13,8 +13,8 @@ export const TableSearch = ({
   ...props
 }: TableSearchProps) => {
   return (
-    <div className="flex items-center">
-      <SearchIcon className="absolute translate-x-3" />
+    <div className="group flex items-center">
+      <SearchIcon className="absolute translate-x-3 text-foreground/30 group-focus-within:text-foreground" />
       <Input
         value={search}
         onChange={(event) => setSearch(event.target.value)}
