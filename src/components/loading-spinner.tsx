@@ -9,7 +9,7 @@ export const LoadingSpinner: FC<HTMLAttributes<HTMLDivElement>> = ({
     <div
       {...props}
       className={cn(
-        "flex h-24 w-24 items-center justify-center self-center",
+        "mt-4 flex h-24 w-24 items-center justify-center self-center",
         className,
       )}
     >

@@ -3,6 +3,7 @@ import { CategoricalSpendingPieChart } from "@/app/dashboard/summary/monthly/cat
 import { BalancesByAcctUserTable } from "@/app/dashboard/summary/monthly/data-tables/balances-acc-by-user/table";
 import { SavingsByUserTable } from "@/app/dashboard/summary/monthly/data-tables/savings-by-user/table";
 import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/table";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
 
@@ -21,26 +22,18 @@ export default async function MonthlySummaryPage({
   });
 
   return (
-    <div className="flex flex-col items-center justify-start">
-      <Suspense fallback={<div>Loading Chart...</div>}>
+    <>
+      <Suspense fallback={<LoadingSpinner />}>
         <SavingsByUserTable {...parsedSearchParams} />
-      </Suspense>{" "}
-      <Suspense fallback={<div>Loading Chart...</div>}>
         <TotalBalancesByUserTable {...parsedSearchParams} />
-      </Suspense>{" "}
-      <Suspense fallback={<div>Loading Chart...</div>}>
         <BalancesByAcctUserTable {...parsedSearchParams} />
-      </Suspense>{" "}
-      <Suspense fallback={<div>Loading Chart...</div>}>
         <div className="flex h-[500px] w-full items-center justify-center">
           <CategoricalSpendingPieChart {...parsedSearchParams} />
         </div>
-      </Suspense>
-      <Suspense fallback={<div>Loading Chart...</div>}>
         <div className="flex h-[500px] w-3/4 items-center justify-center">
           <CategoricalSpendingBarChart {...parsedSearchParams} />
         </div>
       </Suspense>
-    </div>
+    </>
   );
 }

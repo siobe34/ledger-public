@@ -1,5 +1,6 @@
 import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-balances-line-chart";
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { Suspense } from "react";
 
@@ -15,15 +16,13 @@ export default async function AnnualSummaryPage({
   });
 
   return (
-    <div className="flex flex-col items-center justify-start">
-      <Suspense fallback={<div>Loading Chart...</div>}>
+    <>
+      <Suspense fallback={<LoadingSpinner />}>
         <AnnualBalancesTable {...parsedSearchParams} />
-      </Suspense>{" "}
-      <Suspense fallback={<div>Loading Chart...</div>}>
         <div className="flex h-[500px] w-full items-center justify-center">
           <AnnualBalancesLineChart {...parsedSearchParams} />
         </div>
-      </Suspense>{" "}
-    </div>
+      </Suspense>
+    </>
   );
 }

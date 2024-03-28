@@ -1,5 +1,6 @@
 import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
 import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -33,8 +34,7 @@ export default async function ViewTransactionsPage({
   return (
     <>
       <DataParameterSelector {...parsedSearchParams} />
-      {/* // TODO: loading component */}
-      <Suspense fallback={<div>Loading Table...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <QueriedTransactionsTable {...parsedSearchParams} />
       </Suspense>
     </>
