@@ -17,6 +17,7 @@ export const QueriedTransactionsTable = async ({
   });
 
   return (
+    // TODO: needs responsive container
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={queriedTransactions} />
     </div>
