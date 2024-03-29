@@ -4,6 +4,8 @@ import { ParameterDropdown } from "@/components/data-parameter-selector/paramete
 import { UpdateParametersButton } from "@/components/data-parameter-selector/update-parameters-button";
 import { useState } from "react";
 import { z } from "zod";
+import { MONTHS } from "@/lib/constants/months";
+import { ACCOUNTS } from "@/lib/constants/accounts";
 
 // TODO: move to separate file
 // TODO: find a common place to put this as it is the same code as "inputSchema"
@@ -14,27 +16,7 @@ const queryParamsSchema = z.object({
   year: z.number(),
 });
 
-// TODO: move to separate file
-const MONTHS = [
-  { label: "January", value: 1 },
-  { label: "February", value: 2 },
-  { label: "March", value: 3 },
-  { label: "April", value: 4 },
-  { label: "May", value: 5 },
-  { label: "June", value: 6 },
-  { label: "July", value: 7 },
-  { label: "August", value: 8 },
-  { label: "September", value: 9 },
-  { label: "October", value: 10 },
-  { label: "November", value: 11 },
-  { label: "December", value: 12 },
-];
-const ACCOUNTS = [
-  { label: "All", value: "%" },
-  { label: "Credit", value: "Credit" },
-  { label: "Debit", value: "Debit" },
-];
-
+// TODO: move all types and zod schemas to one place
 export type Parameters = {
   account: { label: string; value: string };
   month: { label: string; value: number };
