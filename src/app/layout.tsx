@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Inter } from "next/font/google";
@@ -36,6 +37,7 @@ export default function RootLayout({
           <main className="flex flex-col items-center justify-start">
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
