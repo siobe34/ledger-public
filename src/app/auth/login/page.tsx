@@ -41,7 +41,7 @@ export default async function LoginPage() {
             />
             <Label
               htmlFor="email"
-              className="duration-30 transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-invalid:text-destructive"
+              className="duration-30 text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
             >
               Email
             </Label>
@@ -51,12 +51,13 @@ export default async function LoginPage() {
               id="password"
               name="password"
               type="password"
-              className="peer"
+              className="peer invalid:text-destructive invalid:focus-visible:ring-destructive"
               placeholder=""
+              pattern=".{6,}"
             />
             <Label
               htmlFor="password"
-              className="duration-30 text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-[:focus-within:placeholder-shown]:text-foreground/80"
+              className="duration-30 text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
             >
               Password
             </Label>
