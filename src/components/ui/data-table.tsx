@@ -1,6 +1,7 @@
 "use client";
 
 import { Pagination } from "@/components/data-table/pagination";
+import { TableSearch } from "@/components/data-table/table-search";
 import {
   Table,
   TableBody,
@@ -20,7 +21,6 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { TableSearch } from "../data-table/table-search";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
