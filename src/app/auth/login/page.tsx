@@ -1,4 +1,5 @@
 import { login } from "@/app/auth/actions";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +24,9 @@ export default async function LoginPage() {
   return (
     <Card className="mx-2 mt-12">
       <CardHeader>
-        <CardTitle>Ledger</CardTitle>
+        <CardTitle>
+          <Logo className="mb-2 h-12" />
+        </CardTitle>
         <CardDescription>All your transaction in one place.</CardDescription>
       </CardHeader>
       <CardContent>

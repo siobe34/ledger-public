@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/logo";
 import {
   Card,
   CardContent,
@@ -8,8 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function LogoutPage() {
   return (
     <Card className="mx-2 mt-12">
       <CardHeader>
-        <CardTitle>Ledger</CardTitle>
+        <CardTitle>
+          <Logo className="mb-2 h-12" />
+        </CardTitle>
         <CardDescription>All your transaction in one place.</CardDescription>
       </CardHeader>
 
