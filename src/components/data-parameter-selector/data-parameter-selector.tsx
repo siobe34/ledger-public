@@ -2,10 +2,10 @@
 
 import { ParameterDropdown } from "@/components/data-parameter-selector/parameter-dropdown";
 import { UpdateParametersButton } from "@/components/data-parameter-selector/update-parameters-button";
+import { ACCOUNTS } from "@/lib/constants/accounts";
+import { MONTHS } from "@/lib/constants/months";
 import { useState } from "react";
 import { z } from "zod";
-import { MONTHS } from "@/lib/constants/months";
-import { ACCOUNTS } from "@/lib/constants/accounts";
 
 // TODO: move to separate file
 // TODO: find a common place to put this as it is the same code as "inputSchema"
