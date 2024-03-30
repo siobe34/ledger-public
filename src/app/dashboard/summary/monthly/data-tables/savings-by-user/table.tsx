@@ -44,7 +44,12 @@ export const SavingsByUserTable = async ({
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={savingsByUser} />
+      <DataTable
+        columns={columns}
+        data={savingsByUser}
+        searchBar={false}
+        pagination={false}
+      />
     </div>
   );
 };

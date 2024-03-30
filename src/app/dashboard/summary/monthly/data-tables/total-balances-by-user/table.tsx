@@ -61,7 +61,12 @@ export const TotalBalancesByUserTable = async ({
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={totalBalancesByUser} />
+      <DataTable
+        columns={columns}
+        data={totalBalancesByUser}
+        searchBar={false}
+        pagination={false}
+      />
     </div>
   );
 };
