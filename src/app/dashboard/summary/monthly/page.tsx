@@ -5,6 +5,7 @@ import { SavingsByUserTable } from "@/app/dashboard/summary/monthly/data-tables/
 import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/table";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function MonthlySummaryPage({
@@ -13,13 +14,25 @@ export default async function MonthlySummaryPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const today = new Date();
-  // TODO: better error handling, i.e. add error messages to zod schema and a custom error page?
-  const parsedSearchParams = inputSchema.parse({
-    year: Number(searchParams.year) ?? today.getFullYear(),
-    month: Number(searchParams.month) ?? today.getMonth(),
-    account: searchParams.account ?? "%",
-    user: searchParams.user ?? "%",
-  });
+  const unsafeParams = {
+    account: searchParams.account,
+    month: searchParams.month ? +searchParams.month : today.getMonth() + 1,
+    user: searchParams.user,
+    year: searchParams.year ? +searchParams.year : today.getFullYear(),
+  };
+
+  if (
+    !searchParams.account ||
+    !searchParams.month ||
+    !searchParams.user ||
+    !searchParams.year
+  ) {
+    redirect(
+      `/dashboard/summary/monthly?account=${unsafeParams.account ?? "%"}&month=${unsafeParams.month}&user=${unsafeParams.user ?? "%"}&year=${unsafeParams.year}`,
+    );
+  }
+
+  const parsedSearchParams = inputSchema.parse(unsafeParams);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-b
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function AnnualSummaryPage({
@@ -10,10 +11,17 @@ export default async function AnnualSummaryPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const today = new Date();
-  // TODO: better error handling, i.e. add error messages to zod schema and a custom error page?
-  const parsedSearchParams = inputSchema.pick({ year: true }).parse({
-    year: Number(searchParams.year) || today.getFullYear(),
-  });
+  const unsafeParams = {
+    year: searchParams.year ? +searchParams.year : today.getFullYear(),
+  };
+
+  if (!searchParams.year) {
+    redirect(`/dashboard/summary/annual?year=${unsafeParams.year}`);
+  }
+
+  const parsedSearchParams = inputSchema
+    .pick({ year: true })
+    .parse(unsafeParams);
 
   return (
     <>
