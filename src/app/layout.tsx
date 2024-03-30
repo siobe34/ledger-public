@@ -37,7 +37,7 @@ export default function RootLayout({
           <main className="flex flex-col items-center justify-start">
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </main>
-          <Toaster position="top-right" closeButton richColors />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
