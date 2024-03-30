@@ -11,8 +11,8 @@ services:
     restart: always
     working_dir: /app
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: ./docker/Dockerfile
       args:
         NEXT_PUBLIC_CLIENTVAR: "clientvar"
     environment:
