@@ -1,7 +1,6 @@
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { insertTransactionSchema, transactions } from "@/server/db/schema";
-import { TRPCError } from "@trpc/server";
 import { and, eq, like, max, ne, sql, sum } from "drizzle-orm";
 import { z } from "zod";
 
@@ -87,14 +86,6 @@ export const transactionRouter = createTRPCRouter({
           ),
         );
 
-      if (matchedRecords.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message:
-            'No account balance found for the given "user", "year", "month", "account".',
-        });
-      }
-
       return matchedRecords.map((record) => record.transaction);
     }),
   getBalancesByYear: privateProcedure
@@ -147,13 +138,6 @@ export const transactionRouter = createTRPCRouter({
           ),
         )
         .orderBy(transactions.transactionDate);
-
-      if (matchedRecords.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "No account balances found for the requested year.",
-        });
-      }
 
       return matchedRecords;
     }),
