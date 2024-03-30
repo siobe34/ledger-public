@@ -12,6 +12,26 @@ services:
       args:
         NEXT_PUBLIC_CLIENTVAR: "clientvar"
     environment:
+      - USER_UID=${USER_UID}
+      - USER_GID=${USER_GID}
       - DATABASE_URL=${DATABASE_URL}
       - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
       - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - APP_URL=${APP_URL}
+    networks:
+      - proxy
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ledger.entrypoints=http"
+      - "traefik.http.routers.ledger.rule=Host(`${APP_URL}`)"
+      - "traefik.http.middlewares.ledger-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.ledger.middlewares=phpmyadmin-https-redirect"
+      - "traefik.http.routers.ledger-secure.entrypoints=https"
+      - "traefik.http.routers.ledger-secure.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.ledger-secure.tls=true"
+      - "traefik.http.routers.ledger-secure.service=phpmyadmin"
+      - "traefik.http.services.ledger.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
