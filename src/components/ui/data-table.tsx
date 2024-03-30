@@ -25,11 +25,15 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  searchBar?: boolean;
+  pagination?: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  searchBar = true,
+  pagination = true,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -51,7 +55,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <TableSearch search={globalFilter} setSearch={setGlobalFilter} />
+      {searchBar && (
+        <TableSearch search={globalFilter} setSearch={setGlobalFilter} />
+      )}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -101,7 +107,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <Pagination table={table} />
+        {pagination && <Pagination table={table} />}
       </div>
     </>
   );
