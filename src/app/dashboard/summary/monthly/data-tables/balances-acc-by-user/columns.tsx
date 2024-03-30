@@ -1,7 +1,7 @@
 "use client";
 
 import { selectTransactionsSchema } from "@/server/db/schema";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
 
 const _acctBalanceSchema = selectTransactionsSchema.pick({

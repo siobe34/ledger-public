@@ -7,7 +7,7 @@ import { Suspense } from "react";
 export default async function AnnualSummaryPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const today = new Date();
   // TODO: better error handling, i.e. add error messages to zod schema and a custom error page?

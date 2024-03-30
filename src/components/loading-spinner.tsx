@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utilsCn";
-import { FC, HTMLAttributes } from "react";
+import type { FC, HTMLAttributes } from "react";
 
 export const LoadingSpinner: FC<HTMLAttributes<HTMLDivElement>> = ({
   className,

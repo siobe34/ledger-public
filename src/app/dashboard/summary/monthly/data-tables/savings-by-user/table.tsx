@@ -1,5 +1,5 @@
 import {
-  UserSavings,
+  type UserSavings,
   columns,
 } from "@/app/dashboard/summary/monthly/data-tables/savings-by-user/columns";
 import { DataTable } from "@/components/ui/data-table";

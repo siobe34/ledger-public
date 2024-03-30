@@ -3,7 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ButtonHTMLAttributes, FC, createRef, useEffect } from "react";
+import {
+  createRef,
+  useEffect,
+  type ButtonHTMLAttributes,
+  type FC,
+} from "react";
 
 export const MobileMenuButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
@@ -24,7 +29,7 @@ export const MobileMenuButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
     if (!currentRef) return;
 
     currentRef.classList.remove("show-menu");
-  }, [pathname]);
+  }, [pathname, ref]);
 
   return (
     <Button ref={ref} {...props} onClick={handleClick}>

@@ -10,15 +10,15 @@ import { Suspense } from "react";
 export default async function MonthlySummaryPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const today = new Date();
   // TODO: better error handling, i.e. add error messages to zod schema and a custom error page?
   const parsedSearchParams = inputSchema.parse({
-    year: Number(searchParams.year) || today.getFullYear(),
-    month: Number(searchParams.month) || today.getMonth(),
-    account: searchParams.account || "%",
-    user: searchParams.user || "%",
+    year: Number(searchParams.year) ?? today.getFullYear(),
+    month: Number(searchParams.month) ?? today.getMonth(),
+    account: searchParams.account ?? "%",
+    user: searchParams.user ?? "%",
   });
 
   return (

@@ -8,7 +8,7 @@ import { Suspense } from "react";
 export default async function ViewTransactionsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const today = new Date();
   const unsafeParams = {

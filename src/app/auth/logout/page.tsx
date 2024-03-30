@@ -25,8 +25,8 @@ export default function LogoutPage() {
       }
       router.replace("/auth/login");
     };
-    signOut();
-  }, []);
+    void signOut();
+  }, [router, supabase]);
 
   return (
     <Card className="mx-2 mt-12">

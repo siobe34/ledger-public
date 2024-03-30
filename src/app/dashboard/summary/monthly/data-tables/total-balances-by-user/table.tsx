@@ -1,5 +1,5 @@
 import {
-  TotalBalance,
+  type TotalBalance,
   columns,
 } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/columns";
 import { DataTable } from "@/components/ui/data-table";
