@@ -3,6 +3,7 @@ import { CategoricalSpendingPieChart } from "@/app/dashboard/summary/monthly/cat
 import { BalancesByAcctUserTable } from "@/app/dashboard/summary/monthly/data-tables/balances-acc-by-user/table";
 import { SavingsByUserTable } from "@/app/dashboard/summary/monthly/data-tables/savings-by-user/table";
 import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/table";
+import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { redirect } from "next/navigation";
@@ -36,6 +37,7 @@ export default async function MonthlySummaryPage({
 
   return (
     <>
+      <DataParameterSelector {...parsedSearchParams} />
       <Suspense fallback={<LoadingSpinner />}>
         <SavingsByUserTable {...parsedSearchParams} />
         <TotalBalancesByUserTable {...parsedSearchParams} />
