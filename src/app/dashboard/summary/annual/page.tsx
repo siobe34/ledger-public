@@ -1,6 +1,7 @@
 import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-balances-line-chart";
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
 import { AnnualSpendingPieChart } from "@/app/dashboard/summary/annual/annual-spending-pie-chart";
+import { CategoricalSpendingTable } from "@/app/dashboard/summary/annual/categorical-spending-table/table";
 import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,24 +73,24 @@ export default async function AnnualSummaryPage({
         <Card className="max-w-full flex-1 lg:max-w-[50%]">
           <CardHeader>
             <CardTitle className="text-lg font-medium">
-              Annual Amount Spent per Category
+              Average and Total Spending by Category
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-[500px] sm:h-[50vh]">
+          <CardContent>
             <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
-              <AnnualSpendingPieChart {...parsedSearchParams} />
+              <CategoricalSpendingTable {...parsedSearchParams} />
             </Suspense>
           </CardContent>
         </Card>
         <Card className="max-w-full flex-1 lg:max-w-[50%]">
           <CardHeader>
             <CardTitle className="text-lg font-medium">
-              Annual Spending by Category
+              Annual Amount Spent per Category
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[500px] sm:h-[50vh]">
             <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
-              <div>Bar Chart of Categorical Spending for the Year by User</div>
+              <AnnualSpendingPieChart {...parsedSearchParams} />
             </Suspense>
           </CardContent>
         </Card>
