@@ -57,14 +57,35 @@ export default async function MonthlySummaryPage({
         <BalancesByAcctUserTable {...parsedSearchParams} />
         <TotalBalancesByUserTable {...parsedSearchParams} />
       </div>
-      <Suspense fallback={<LoadingSpinner />}>
-        <div className="flex h-[500px] w-full items-center justify-center">
-          <CategoricalSpendingPieChart {...parsedSearchParams} />
-        </div>
-        <div className="flex h-[500px] w-3/4 items-center justify-center">
-          <CategoricalSpendingBarChart {...parsedSearchParams} />
-        </div>
-      </Suspense>
+      <h2 className="w-full border-b text-left text-xl font-medium">
+        Monthly Spending by Category
+      </h2>
+      <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Total Spending by Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[500px] sm:h-[50vh]">
+            <Suspense fallback={<LoadingSpinner />}>
+              <CategoricalSpendingPieChart {...parsedSearchParams} />
+            </Suspense>
+          </CardContent>
+        </Card>
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              User Spending by Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[500px] sm:h-[50vh]">
+            <Suspense fallback={<LoadingSpinner />}>
+              <CategoricalSpendingBarChart {...parsedSearchParams} />
+            </Suspense>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }
