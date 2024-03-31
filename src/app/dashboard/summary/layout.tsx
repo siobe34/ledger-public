@@ -12,14 +12,14 @@ export default function SummaryLayout({
       <NavigationTabs>
         <TabItem href="/dashboard/summary/monthly" className="gap-2">
           <PieChartIcon />
-          Monthly
+          Monthly Summary
         </TabItem>
         <TabItem href="/dashboard/summary/annual" className="gap-2">
           <LineChartIcon />
-          Annual
+          Annual Summary
         </TabItem>
       </NavigationTabs>
-      <article className="flex w-full flex-col items-center justify-start sm:items-start">
+      <article className="flex w-full flex-col items-center justify-start gap-4 pt-6 sm:items-start">
         {children}
       </article>
     </section>
