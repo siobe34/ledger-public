@@ -20,7 +20,11 @@ export const UpdateParametersButton = ({
     router.push(`${pathname}${query}`);
   };
   return (
-    <Button variant="outline" onClick={refreshQueryParams} className="gap-2">
+    <Button
+      variant="outlinePrimary"
+      onClick={refreshQueryParams}
+      className="gap-2"
+    >
       <RefreshCw />
       Refresh Table
     </Button>

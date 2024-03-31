@@ -62,7 +62,7 @@ export default async function LoginPage() {
               Password
             </Label>
           </div>
-          <Button variant="outline" formAction={login}>
+          <Button variant="outlinePrimary" formAction={login}>
             Log In
           </Button>
         </form>
