@@ -45,7 +45,7 @@ export const DataParameterSelector = (
   });
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 p-4 text-sm sm:flex-row sm:items-end sm:px-0">
+    <div className="flex flex-col flex-wrap items-center justify-center gap-6 p-4 text-sm sm:flex-row sm:items-end sm:px-0">
       <UpdateParametersButton
         account={account}
         month={month}
