@@ -34,12 +34,7 @@ export const QueriedTransactionsTable = ({
     });
   }, [isError, isLoading, isSuccess, data, month, year]);
 
-  if (!data) return <LoadingSpinner />;
+  if (!data) return <LoadingSpinner className="mx-auto" />;
 
-  return (
-    // TODO: needs responsive container
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
-    </div>
-  );
+  return <DataTable columns={columns} data={data} />;
 };
