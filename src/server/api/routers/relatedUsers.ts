@@ -1,6 +1,10 @@
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
-import { insertUsersSchema, transactionUsers } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import {
+  insertUsersSchema,
+  selectUsersSchema,
+  transactionUsers,
+} from "@/server/db/schema";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
 export const relatedUsersRouter = createTRPCRouter({
@@ -23,7 +27,17 @@ export const relatedUsersRouter = createTRPCRouter({
       await ctx.db
         .insert(transactionUsers)
         .values(relatedTransactionUsersWithEmailId);
-
-      return "success";
+    }),
+  delete: privateProcedure
+    .input(selectUsersSchema.pick({ id: true }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(transactionUsers)
+        .where(
+          and(
+            eq(transactionUsers.emailId, ctx.emailId),
+            eq(transactionUsers.id, input.id),
+          ),
+        );
     }),
 });
