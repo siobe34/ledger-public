@@ -37,11 +37,17 @@ export default async function MonthlySummaryPage({
 
   return (
     <>
+      <h1 className="text-2xl font-bold underline">Monthly Summary</h1>
       <DataParameterSelector {...parsedSearchParams} />
-      <Suspense fallback={<LoadingSpinner />}>
+      <h2 className="w-full border-b text-left text-xl font-medium">
+        Monthly Balances
+      </h2>
+      <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row">
         <SavingsByUserTable {...parsedSearchParams} />
-        <TotalBalancesByUserTable {...parsedSearchParams} />
         <BalancesByAcctUserTable {...parsedSearchParams} />
+        <TotalBalancesByUserTable {...parsedSearchParams} />
+      </div>
+      <Suspense fallback={<LoadingSpinner />}>
         <div className="flex h-[500px] w-full items-center justify-center">
           <CategoricalSpendingPieChart {...parsedSearchParams} />
         </div>
