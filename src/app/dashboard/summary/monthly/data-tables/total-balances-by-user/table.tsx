@@ -1,7 +1,8 @@
 import {
-  type TotalBalance,
   columns,
+  type TotalBalance,
 } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/columns";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";
@@ -60,13 +61,20 @@ export const TotalBalancesByUserTable = async ({
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable
-        columns={columns}
-        data={totalBalancesByUser}
-        searchBar={false}
-        pagination={false}
-      />
-    </div>
+    <Card className="max-w-full flex-1">
+      <CardHeader>
+        <CardTitle className="text-lg font-medium">
+          Total Balance by User
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <DataTable
+          columns={columns}
+          data={totalBalancesByUser}
+          searchBar={false}
+          pagination={false}
+        />
+      </CardContent>
+    </Card>
   );
 };
