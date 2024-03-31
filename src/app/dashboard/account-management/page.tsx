@@ -1,5 +1,6 @@
+import { ConfiguresCategoriesTable } from "@/app/dashboard/account-management/configure-categories-table/table";
+import { ConfigureUsersTable } from "@/app/dashboard/account-management/configure-users-table/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ConfigureUsersTable } from "./configure-users-table/table";
 
 export default function AccountManagementPage() {
   return (
@@ -20,7 +21,7 @@ export default function AccountManagementPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="w-fit max-w-full sm:min-w-[50%]">
-          <div>Insert editable table here</div>
+          <ConfiguresCategoriesTable />
         </CardContent>
       </Card>
     </section>
