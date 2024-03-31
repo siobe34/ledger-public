@@ -64,6 +64,7 @@ export const transactionRelations = relations(transactions, ({ one }) => ({
 
 export const transactionCategories = createTable("transaction_category", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  // TODO: the title col should be unique, don't want duplicate Categories
   title: varchar("title", { length: 256 }).notNull(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at")
@@ -84,6 +85,7 @@ export const transactionCategoryRelations = relations(
 
 export const transactionUsers = createTable("transaction_user", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  // TODO: the title col should be unique, don't want duplicate configured Users
   title: varchar("title", { length: 256 }).notNull(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at")
