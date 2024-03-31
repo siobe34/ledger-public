@@ -1,25 +1,44 @@
+"use client";
+
 import {
   columns,
   type UserSavings,
 } from "@/app/dashboard/summary/monthly/data-tables/savings-by-user/columns";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { DataTable } from "@/components/ui/data-table";
+import { dataLoadToastNotifications } from "@/lib/dataLoadToastNotifications";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
+import { useEffect } from "react";
 
-export const SavingsByUserTable = async ({
+export const SavingsByUserTable = ({
   account,
   month,
   user,
   year,
 }: RequestTransactionData) => {
-  const sumPerCategoryWithIncome =
-    await api.transactions.getMonthlySummary.query({
+  const { data, isError, isLoading, isSuccess } =
+    api.transactions.getMonthlySummary.useQuery({
       account,
       month,
       user,
       year,
     });
+
+  useEffect(() => {
+    dataLoadToastNotifications({
+      isError,
+      isLoading,
+      isSuccess,
+      month,
+      year,
+      dataLength: data?.length ?? 0,
+    });
+  }, [isError, isLoading, isSuccess, data, month, year]);
+
+  if (!data) return <LoadingSpinner className="mx-auto" />;
+
+  const sumPerCategoryWithIncome = data;
 
   const uniqueUsers = Array.from(
     new Set(sumPerCategoryWithIncome.map((i) => i.user)),
