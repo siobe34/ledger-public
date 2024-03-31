@@ -1,5 +1,4 @@
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
-import { db } from "@/server/db";
 import { insertTransactionSchema, transactions } from "@/server/db/schema";
 import { and, countDistinct, eq, like, max, ne, sql, sum } from "drizzle-orm";
 import { z } from "zod";
@@ -57,11 +56,11 @@ export const transactionRouter = createTRPCRouter({
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const matchedRecords = await db
+      const matchedRecords = await ctx.db
         .select()
         .from(transactions)
         .innerJoin(
-          db
+          ctx.db
             .select({
               account: transactions.account,
               user: transactions.user,
@@ -97,7 +96,7 @@ export const transactionRouter = createTRPCRouter({
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const matchedRecords = await db
+      const matchedRecords = await ctx.db
         .select({
           id: transactions.id,
           transactionDate: transactions.transactionDate,
@@ -109,7 +108,7 @@ export const transactionRouter = createTRPCRouter({
         })
         .from(transactions)
         .innerJoin(
-          db
+          ctx.db
             .select({
               account: transactions.account,
               user: transactions.user,
