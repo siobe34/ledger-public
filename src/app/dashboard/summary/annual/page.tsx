@@ -1,5 +1,6 @@
 import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-balances-line-chart";
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
+import { AnnualSpendingPieChart } from "@/app/dashboard/summary/annual/annual-spending-pie-chart";
 import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -76,9 +77,7 @@ export default async function AnnualSummaryPage({
           </CardHeader>
           <CardContent className="h-[500px] sm:h-[50vh]">
             <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
-              <div>
-                Table of Categorical Spending Averages and Sums for the Year
-              </div>
+              <AnnualSpendingPieChart {...parsedSearchParams} />
             </Suspense>
           </CardContent>
         </Card>
@@ -90,7 +89,7 @@ export default async function AnnualSummaryPage({
           </CardHeader>
           <CardContent className="h-[500px] sm:h-[50vh]">
             <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
-              <div>Pie Chart of Categorical Spending for the Year</div>
+              <div>Bar Chart of Categorical Spending for the Year by User</div>
             </Suspense>
           </CardContent>
         </Card>
