@@ -41,7 +41,7 @@ export default async function LoginPage() {
             />
             <Label
               htmlFor="email"
-              className="duration-30 text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
+              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
             >
               Email
             </Label>
@@ -57,7 +57,7 @@ export default async function LoginPage() {
             />
             <Label
               htmlFor="password"
-              className="duration-30 text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
+              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
             >
               Password
             </Label>
