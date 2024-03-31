@@ -33,7 +33,7 @@ export const metadatas = createTable("metadata", {
 export const metadataRelations = relations(metadatas, ({ many }) => ({
   transactions: many(transactions),
   transactionCategories: many(transactionCategories),
-  transactionAccounts: many(transactionAccounts),
+  transactionUsers: many(transactionUsers),
 }));
 
 export const transactions = createTable("transaction", {
@@ -82,7 +82,7 @@ export const transactionCategoryRelations = relations(
   }),
 );
 
-export const transactionAccounts = createTable("transaction_account", {
+export const transactionUsers = createTable("transaction_user", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   title: varchar("title", { length: 256 }).notNull(),
   emailId: bigint("email_id", { mode: "number" }).notNull(),
@@ -92,11 +92,11 @@ export const transactionAccounts = createTable("transaction_account", {
   updatedAt: timestamp("updated_at").onUpdateNow(),
 });
 
-export const transactionAccountRelations = relations(
-  transactionAccounts,
+export const transactionUserRelations = relations(
+  transactionUsers,
   ({ one }) => ({
     owner: one(metadatas, {
-      fields: [transactionAccounts.emailId],
+      fields: [transactionUsers.emailId],
       references: [metadatas.id],
     }),
   }),
