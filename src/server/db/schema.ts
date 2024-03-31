@@ -123,11 +123,13 @@ export const insertCategoriesSchema = createInsertSchema(
   createdAt: true,
 });
 
-export const insertUsersSchema = createInsertSchema(transactionCategories).omit(
-  {
-    id: true,
-    emailId: true,
-    updatedAt: true,
-    createdAt: true,
-  },
-);
+export const selectCategoriesSchema = createSelectSchema(transactionCategories);
+
+export const insertUsersSchema = createInsertSchema(transactionUsers).omit({
+  id: true,
+  emailId: true,
+  updatedAt: true,
+  createdAt: true,
+});
+
+export const selectUsersSchema = createSelectSchema(transactionUsers);
