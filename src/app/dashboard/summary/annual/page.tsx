@@ -16,6 +16,7 @@ export default async function AnnualSummaryPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const configuredUsers = await api.relatedUsers.get.query();
+  const configuredYears = await api.transactions.getPossibleYears.query();
 
   const today = new Date();
   const unsafeParams = {
@@ -36,6 +37,7 @@ export default async function AnnualSummaryPage({
       <DataParameterSelector
         account="%"
         configuredUsers={configuredUsers}
+        configuredYears={configuredYears}
         display={{ account: false, month: false, user: false, year: true }}
         month={today.getMonth()}
         user="%"

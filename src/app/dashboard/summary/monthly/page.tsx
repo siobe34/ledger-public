@@ -17,6 +17,7 @@ export default async function MonthlySummaryPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const configuredUsers = await api.relatedUsers.get.query();
+  const configuredYears = await api.transactions.getPossibleYears.query();
 
   const today = new Date();
   const unsafeParams = {
@@ -44,6 +45,7 @@ export default async function MonthlySummaryPage({
       <h1 className="text-2xl font-bold underline">Monthly Summary</h1>
       <DataParameterSelector
         configuredUsers={configuredUsers}
+        configuredYears={configuredYears}
         {...parsedSearchParams}
       />
       <h2 className="w-full border-b pt-4 text-left text-xl font-medium">

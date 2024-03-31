@@ -29,6 +29,7 @@ export type Parameters = {
 type DataParameterSelectorProps = {
   display?: Partial<Record<keyof Parameters, boolean>>;
   configuredUsers: Array<z.infer<typeof selectUsersSchema>>;
+  configuredYears: number[];
 } & z.infer<typeof queryParamsSchema>;
 
 export const DataParameterSelector = (props: DataParameterSelectorProps) => {
@@ -68,12 +69,10 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
         {displayDropdowns.year && (
           <ParameterDropdown
             label="Year"
-            dropdownOptions={[
-              { label: "2020", value: 2020 },
-              { label: "2023", value: 2023 },
-              { label: "2024", value: 2024 },
-              { label: "2025", value: 2025 },
-            ]}
+            dropdownOptions={props.configuredYears.map((year) => ({
+              label: year.toString(),
+              value: year,
+            }))}
             selectedItem={year}
             setSelectedItem={setYear}
           />

@@ -12,6 +12,7 @@ export default async function ViewTransactionsPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const configuredUsers = await api.relatedUsers.get.query();
+  const configuredYears = await api.transactions.getPossibleYears.query();
 
   const today = new Date();
   const unsafeParams = {
@@ -39,6 +40,7 @@ export default async function ViewTransactionsPage({
       <h1 className="text-2xl font-bold underline">Monthly Transactions</h1>
       <DataParameterSelector
         configuredUsers={configuredUsers}
+        configuredYears={configuredYears}
         {...parsedSearchParams}
       />
       <div className="w-full">
