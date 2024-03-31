@@ -113,3 +113,21 @@ export const insertTransactionSchema = createInsertSchema(transactions)
   .extend({ comments: z.string().nullable() });
 
 export const selectTransactionsSchema = createSelectSchema(transactions);
+
+export const insertCategoriesSchema = createInsertSchema(
+  transactionCategories,
+).omit({
+  id: true,
+  emailId: true,
+  updatedAt: true,
+  createdAt: true,
+});
+
+export const insertUsersSchema = createInsertSchema(transactionCategories).omit(
+  {
+    id: true,
+    emailId: true,
+    updatedAt: true,
+    createdAt: true,
+  },
+);
