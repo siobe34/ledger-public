@@ -19,7 +19,7 @@ export default function TransactionsLayout({
           Upload Transactions
         </TabItem>
       </NavigationTabs>
-      <article className="flex w-full flex-col items-center justify-start sm:items-start">
+      <article className="flex w-full flex-col items-center justify-start gap-4 pt-6 sm:items-start">
         {children}
       </article>
     </section>
