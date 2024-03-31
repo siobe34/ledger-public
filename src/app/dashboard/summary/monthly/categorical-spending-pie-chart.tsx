@@ -38,6 +38,9 @@ export const CategoricalSpendingPieChart = async ({
           {
             label: "Amount Spent",
             data: amountByCategory,
+            borderWidth: 0,
+            hoverBorderWidth: 1,
+            hoverOffset: 10,
           },
         ],
       }}
