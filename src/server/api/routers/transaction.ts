@@ -203,12 +203,14 @@ export const transactionRouter = createTRPCRouter({
             eq(transactions.emailId, ctx.emailId),
             eq(sql`YEAR(${transactions.transactionDate})`, input.year),
             ne(transactions.category, "Credit Card"),
+            ne(transactions.category, "Income"),
           ),
         )
         .groupBy(transactions.category);
 
       const matchedRecordsWithAverages = matchedRecords.map((i) => ({
         ...i,
+        amount_spent: i.amount_spent ? +i.amount_spent : 0,
         average: i.amount_spent ? +i.amount_spent / i.count : 0,
       }));
 
