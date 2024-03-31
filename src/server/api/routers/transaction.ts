@@ -215,4 +215,15 @@ export const transactionRouter = createTRPCRouter({
 
       return matchedRecordsWithAverages;
     }),
+  getPossibleYears: privateProcedure.query(async ({ ctx }) => {
+    const records = await ctx.db
+      .selectDistinct({
+        year: sql<number>`YEAR(${transactions.transactionDate})`.as("year"),
+      })
+      .from(transactions)
+      .where(eq(transactions.emailId, ctx.emailId))
+      .orderBy(sql`year`);
+
+    return records.map((i) => i.year);
+  }),
 });
