@@ -7,11 +7,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { registerChartJSColours } from "@/lib/registerChartJSColours";
 import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
 export const ToggleTheme = () => {
-  const { setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
+
+  if (theme === "light" || resolvedTheme === "light") {
+    registerChartJSColours("light");
+  }
+
+  if (theme === "dark" || resolvedTheme === "dark") {
+    registerChartJSColours("dark");
+  }
 
   return (
     <DropdownMenu>
