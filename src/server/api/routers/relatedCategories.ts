@@ -11,7 +11,8 @@ export const relatedCategoriesRouter = createTRPCRouter({
     const matchedRecords = await ctx.db
       .select()
       .from(transactionCategories)
-      .where(eq(transactionCategories.emailId, ctx.emailId));
+      .where(eq(transactionCategories.emailId, ctx.emailId))
+      .orderBy(transactionCategories.title);
 
     return matchedRecords;
   }),

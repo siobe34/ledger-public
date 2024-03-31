@@ -12,7 +12,8 @@ export const relatedUsersRouter = createTRPCRouter({
     const matchedRecords = await ctx.db
       .select()
       .from(transactionUsers)
-      .where(eq(transactionUsers.emailId, ctx.emailId));
+      .where(eq(transactionUsers.emailId, ctx.emailId))
+      .orderBy(transactionUsers.title);
 
     return matchedRecords;
   }),
