@@ -1,7 +1,7 @@
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { insertTransactionSchema, transactions } from "@/server/db/schema";
-import { and, eq, like, max, ne, sql, sum } from "drizzle-orm";
+import { and, countDistinct, eq, like, max, ne, sql, sum } from "drizzle-orm";
 import { z } from "zod";
 
 export const inputSchema = z.object({
@@ -180,5 +180,38 @@ export const transactionRouter = createTRPCRouter({
         );
 
       return matchedRecords;
+    }),
+  getAnnualCategoricalSpending: privateProcedure
+    .input(inputSchema.pick({ year: true }))
+    .query(async ({ ctx, input }) => {
+      // REMOVEME: simulating slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const matchedRecords = await ctx.db
+        .select({
+          category: transactions.category,
+          amount_spent: sum(
+            sql`${transactions.debit} - ${transactions.credit}`,
+          ).as("amount_spent"),
+          count: countDistinct(sql`MONTH(${transactions.transactionDate})`).as(
+            "count",
+          ),
+        })
+        .from(transactions)
+        .where(
+          and(
+            eq(transactions.emailId, ctx.emailId),
+            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+            ne(transactions.category, "Credit Card"),
+          ),
+        )
+        .groupBy(transactions.category);
+
+      const matchedRecordsWithAverages = matchedRecords.map((i) => ({
+        ...i,
+        average: i.amount_spent ? +i.amount_spent / i.count : 0,
+      }));
+
+      return matchedRecordsWithAverages;
     }),
 });
