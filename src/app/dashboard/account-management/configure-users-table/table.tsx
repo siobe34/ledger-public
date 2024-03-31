@@ -6,6 +6,12 @@ import { api } from "@/trpc/server";
 export const ConfigureUsersTable = async () => {
   const data = await api.relatedUsers.get.query();
 
+  let pagination = false;
+
+  if (data.length >= 10) {
+    pagination = true;
+  }
+
   return (
     <>
       <AddUser className="mb-4" />
@@ -13,7 +19,7 @@ export const ConfigureUsersTable = async () => {
         columns={columns}
         data={data}
         searchBar={false}
-        pagination={false}
+        pagination={pagination}
       />
     </>
   );
