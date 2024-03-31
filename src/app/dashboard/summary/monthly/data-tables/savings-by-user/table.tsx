@@ -63,20 +63,11 @@ export const SavingsByUserTable = ({
   }
 
   return (
-    <Card className="max-w-full flex-1">
-      <CardHeader>
-        <CardTitle className="text-lg font-medium">
-          Incomes, Expenses, and Savings by User
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <DataTable
-          columns={columns}
-          data={savingsByUser}
-          searchBar={false}
-          pagination={false}
-        />
-      </CardContent>
-    </Card>
+    <DataTable
+      columns={columns}
+      data={savingsByUser}
+      searchBar={false}
+      pagination={false}
+    />
   );
 };

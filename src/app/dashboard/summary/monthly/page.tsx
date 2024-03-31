@@ -5,6 +5,7 @@ import { SavingsByUserTable } from "@/app/dashboard/summary/monthly/data-tables/
 import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/table";
 import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -43,7 +44,16 @@ export default async function MonthlySummaryPage({
         Monthly Balances
       </h2>
       <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row">
-        <SavingsByUserTable {...parsedSearchParams} />
+        <Card className="max-w-full flex-1">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Incomes, Expenses, and Savings by User
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <SavingsByUserTable {...parsedSearchParams} />
+          </CardContent>
+        </Card>
         <BalancesByAcctUserTable {...parsedSearchParams} />
         <TotalBalancesByUserTable {...parsedSearchParams} />
       </div>
