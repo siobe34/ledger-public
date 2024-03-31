@@ -3,7 +3,9 @@
 import { ParameterDropdown } from "@/components/data-parameter-selector/parameter-dropdown";
 import { UpdateParametersButton } from "@/components/data-parameter-selector/update-parameters-button";
 import { ACCOUNTS } from "@/lib/constants/accounts";
+import { DEFAULT_USER } from "@/lib/constants/defaultParameters";
 import { MONTHS } from "@/lib/constants/months";
+import { selectUsersSchema } from "@/server/db/schema";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -26,6 +28,7 @@ export type Parameters = {
 
 type DataParameterSelectorProps = {
   display?: Partial<Record<keyof Parameters, boolean>>;
+  configuredUsers: Array<z.infer<typeof selectUsersSchema>>;
 } & z.infer<typeof queryParamsSchema>;
 
 export const DataParameterSelector = (props: DataParameterSelectorProps) => {
@@ -87,9 +90,11 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
           <ParameterDropdown
             label="User"
             dropdownOptions={[
-              { label: "All", value: "%" },
-              { label: "Ibad", value: "Ibad" },
-              { label: "Khadija", value: "Khadija" },
+              DEFAULT_USER,
+              ...props.configuredUsers.map((user) => ({
+                label: user.title,
+                value: user.title,
+              })),
             ]}
             selectedItem={user}
             setSelectedItem={setUser}

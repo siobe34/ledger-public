@@ -6,6 +6,7 @@ import { DataParameterSelector } from "@/components/data-parameter-selector/data
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputSchema } from "@/server/api/routers/transaction";
+import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -14,6 +15,8 @@ export default async function AnnualSummaryPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
+  const configuredUsers = await api.relatedUsers.get.query();
+
   const today = new Date();
   const unsafeParams = {
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
@@ -32,6 +35,7 @@ export default async function AnnualSummaryPage({
       <h1 className="text-2xl font-bold underline">Annual Summary</h1>
       <DataParameterSelector
         account="%"
+        configuredUsers={configuredUsers}
         display={{ account: false, month: false, user: false, year: true }}
         month={today.getMonth()}
         user="%"
