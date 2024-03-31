@@ -33,6 +33,7 @@ export default async function ViewTransactionsPage({
 
   return (
     <>
+      <h1 className="text-2xl font-bold underline">Monthly Transactions</h1>
       <DataParameterSelector {...parsedSearchParams} />
       <Suspense fallback={<LoadingSpinner />}>
         <QueriedTransactionsTable {...parsedSearchParams} />
