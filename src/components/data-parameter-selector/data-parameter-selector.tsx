@@ -24,9 +24,18 @@ export type Parameters = {
   year: { label: string; value: number };
 };
 
-export const DataParameterSelector = (
-  props: z.infer<typeof queryParamsSchema>,
-) => {
+type DataParameterSelectorProps = {
+  display?: Partial<Record<keyof Parameters, boolean>>;
+} & z.infer<typeof queryParamsSchema>;
+
+export const DataParameterSelector = (props: DataParameterSelectorProps) => {
+  const displayDropdowns = {
+    account: props.display?.account === false ? false : true,
+    month: props.display?.month === false ? false : true,
+    user: props.display?.user === false ? false : true,
+    year: props.display?.year === false ? false : true,
+  };
+
   const [account, setAccount] = useState<Parameters["account"]>({
     label: props.account === "%" ? "All" : props.account,
     value: props.account,
@@ -53,39 +62,47 @@ export const DataParameterSelector = (
         year={year}
       />
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <ParameterDropdown
-          label="Year"
-          dropdownOptions={[
-            { label: "2020", value: 2020 },
-            { label: "2023", value: 2023 },
-            { label: "2024", value: 2024 },
-            { label: "2025", value: 2025 },
-          ]}
-          selectedItem={year}
-          setSelectedItem={setYear}
-        />
-        <ParameterDropdown
-          label="Month"
-          dropdownOptions={MONTHS}
-          selectedItem={month}
-          setSelectedItem={setMonth}
-        />
-        <ParameterDropdown
-          label="User"
-          dropdownOptions={[
-            { label: "All", value: "%" },
-            { label: "Ibad", value: "Ibad" },
-            { label: "Khadija", value: "Khadija" },
-          ]}
-          selectedItem={user}
-          setSelectedItem={setUser}
-        />
-        <ParameterDropdown
-          label="Account"
-          dropdownOptions={ACCOUNTS}
-          selectedItem={account}
-          setSelectedItem={setAccount}
-        />
+        {displayDropdowns.year && (
+          <ParameterDropdown
+            label="Year"
+            dropdownOptions={[
+              { label: "2020", value: 2020 },
+              { label: "2023", value: 2023 },
+              { label: "2024", value: 2024 },
+              { label: "2025", value: 2025 },
+            ]}
+            selectedItem={year}
+            setSelectedItem={setYear}
+          />
+        )}
+        {displayDropdowns.month && (
+          <ParameterDropdown
+            label="Month"
+            dropdownOptions={MONTHS}
+            selectedItem={month}
+            setSelectedItem={setMonth}
+          />
+        )}
+        {displayDropdowns.user && (
+          <ParameterDropdown
+            label="User"
+            dropdownOptions={[
+              { label: "All", value: "%" },
+              { label: "Ibad", value: "Ibad" },
+              { label: "Khadija", value: "Khadija" },
+            ]}
+            selectedItem={user}
+            setSelectedItem={setUser}
+          />
+        )}
+        {displayDropdowns.account && (
+          <ParameterDropdown
+            label="Account"
+            dropdownOptions={ACCOUNTS}
+            selectedItem={account}
+            setSelectedItem={setAccount}
+          />
+        )}
       </div>
     </div>
   );
