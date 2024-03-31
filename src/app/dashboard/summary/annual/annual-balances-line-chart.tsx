@@ -76,6 +76,11 @@ export const AnnualBalancesLineChart = async ({
           })),
         ],
       }}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: 4 },
+      }}
     />
   );
 };
