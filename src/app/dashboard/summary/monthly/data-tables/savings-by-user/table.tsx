@@ -18,7 +18,7 @@ export const SavingsByUserTable = ({
   year,
 }: RequestTransactionData) => {
   const { data, isError, isLoading, isSuccess } =
-    api.transactions.getMonthlySummary.useQuery({
+    api.transactions.getMonthlyCategoricalSpending.useQuery({
       account,
       month,
       user,

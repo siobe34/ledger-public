@@ -147,7 +147,7 @@ export const transactionRouter = createTRPCRouter({
 
       return matchedRecords;
     }),
-  getMonthlySummary: privateProcedure
+  getMonthlyCategoricalSpending: privateProcedure
     .input(inputSchema)
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call

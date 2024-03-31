@@ -9,7 +9,7 @@ export const CategoricalSpendingBarChart = async ({
   year,
 }: RequestTransactionData) => {
   const sumPerCategoryWithIncome =
-    await api.transactions.getMonthlySummary.query({
+    await api.transactions.getMonthlyCategoricalSpending.query({
       account,
       user,
       month,
