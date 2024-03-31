@@ -40,7 +40,7 @@ export default async function MonthlySummaryPage({
     <>
       <h1 className="text-2xl font-bold underline">Monthly Summary</h1>
       <DataParameterSelector {...parsedSearchParams} />
-      <h2 className="w-full border-b text-left text-xl font-medium">
+      <h2 className="w-full border-b pt-4 text-left text-xl font-medium">
         Monthly Balances
       </h2>
       <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row">
@@ -57,7 +57,7 @@ export default async function MonthlySummaryPage({
         <BalancesByAcctUserTable {...parsedSearchParams} />
         <TotalBalancesByUserTable {...parsedSearchParams} />
       </div>
-      <h2 className="w-full border-b text-left text-xl font-medium">
+      <h2 className="w-full border-b pt-8 text-left text-xl font-medium">
         Monthly Spending by Category
       </h2>
       <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">

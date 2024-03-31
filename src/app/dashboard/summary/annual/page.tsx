@@ -35,7 +35,7 @@ export default async function AnnualSummaryPage({
         user="%"
         year={parsedSearchParams.year}
       />
-      <h2 className="w-full border-b text-left text-xl font-medium">
+      <h2 className="w-full border-b pt-4 text-left text-xl font-medium">
         Annual Balances
       </h2>
       <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">
@@ -64,7 +64,7 @@ export default async function AnnualSummaryPage({
           </CardContent>
         </Card>
       </div>
-      <h2 className="w-full border-b text-left text-xl font-medium">
+      <h2 className="w-full border-b pt-8 text-left text-xl font-medium">
         Categorical Spending
       </h2>
       <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">
