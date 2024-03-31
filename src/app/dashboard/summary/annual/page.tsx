@@ -1,6 +1,8 @@
 import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-balances-line-chart";
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
+import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputSchema } from "@/server/api/routers/transaction";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -25,12 +27,74 @@ export default async function AnnualSummaryPage({
 
   return (
     <>
-      <Suspense fallback={<LoadingSpinner />}>
-        <AnnualBalancesTable {...parsedSearchParams} />
-        <div className="flex h-[500px] w-full items-center justify-center">
-          <AnnualBalancesLineChart {...parsedSearchParams} />
-        </div>
-      </Suspense>
+      <h1 className="text-2xl font-bold underline">Annual Summary</h1>
+      <DataParameterSelector
+        account="%"
+        display={{ account: false, month: false, user: false, year: true }}
+        month={today.getMonth()}
+        user="%"
+        year={parsedSearchParams.year}
+      />
+      <h2 className="w-full border-b text-left text-xl font-medium">
+        Annual Balances
+      </h2>
+      <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Balances by User
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
+              <AnnualBalancesTable {...parsedSearchParams} />
+            </Suspense>
+          </CardContent>
+        </Card>
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Annual Net Worth by Month
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[500px] sm:h-[50vh]">
+            <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
+              <AnnualBalancesLineChart {...parsedSearchParams} />
+            </Suspense>
+          </CardContent>
+        </Card>
+      </div>
+      <h2 className="w-full border-b text-left text-xl font-medium">
+        Categorical Spending
+      </h2>
+      <div className="flex w-full flex-col flex-wrap justify-around gap-8 sm:flex-row lg:flex-nowrap">
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Annual Amount Spent per Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[500px] sm:h-[50vh]">
+            <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
+              <div>
+                Table of Categorical Spending Averages and Sums for the Year
+              </div>
+            </Suspense>
+          </CardContent>
+        </Card>
+        <Card className="max-w-full flex-1 lg:max-w-[50%]">
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">
+              Annual Spending by Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[500px] sm:h-[50vh]">
+            <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
+              <div>Pie Chart of Categorical Spending for the Year</div>
+            </Suspense>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }
