@@ -3,7 +3,6 @@ import { ConfigureUsersTable } from "@/app/dashboard/account-management/configur
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputGetRelatedUsersSchema } from "@/server/api/routers/relatedUsers";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default function AccountManagementPage({
@@ -14,10 +13,6 @@ export default function AccountManagementPage({
   const unsafeParams = {
     query: searchParams.q ? searchParams.q : "ledger",
   };
-
-  if (!searchParams.query) {
-    redirect(`/dashboard/account-management?q=${unsafeParams.query}`);
-  }
 
   const parsedSearchParams = inputGetRelatedUsersSchema.parse(unsafeParams);
 
