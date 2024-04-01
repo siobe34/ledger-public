@@ -2,11 +2,10 @@ import { AnnualBalancesLineChart } from "@/app/dashboard/summary/annual/annual-b
 import { AnnualBalancesTable } from "@/app/dashboard/summary/annual/annual-balances-table/table";
 import { AnnualSpendingPieChart } from "@/app/dashboard/summary/annual/annual-spending-pie-chart";
 import { CategoricalSpendingTable } from "@/app/dashboard/summary/annual/categorical-spending-table/table";
-import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
+import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputSchema } from "@/server/api/routers/transaction";
-import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -15,9 +14,6 @@ export default async function AnnualSummaryPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const configuredUsers = await api.relatedUsers.get.query();
-  const configuredYears = await api.transactions.getPossibleYears.query();
-
   const today = new Date();
   const unsafeParams = {
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
@@ -36,8 +32,6 @@ export default async function AnnualSummaryPage({
       <h1 className="text-2xl font-bold underline">Annual Summary</h1>
       <DataParameterSelector
         account="%"
-        configuredUsers={configuredUsers}
-        configuredYears={configuredYears}
         display={{ account: false, month: false, user: false, year: true }}
         month={today.getMonth()}
         user="%"

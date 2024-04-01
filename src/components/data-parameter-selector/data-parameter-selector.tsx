@@ -27,32 +27,25 @@ export type Parameters = {
 };
 
 type DataParameterSelectorProps = {
-  display?: Partial<Record<keyof Parameters, boolean>>;
+  display: Record<keyof Parameters, boolean>;
   configuredUsers: Array<z.infer<typeof selectUsersSchema>>;
   configuredYears: number[];
 } & z.infer<typeof queryParamsSchema>;
 
-export const DataParameterSelector = (props: DataParameterSelectorProps) => {
-  const displayDropdowns = {
-    account: props.display?.account === false ? false : true,
-    month: props.display?.month === false ? false : true,
-    user: props.display?.user === false ? false : true,
-    year: props.display?.year === false ? false : true,
-  };
-
-  const [account, setAccount] = useState<Parameters["account"]>({
+export const ClientLogic = (props: DataParameterSelectorProps) => {
+  const [account, setAccount] = useState({
     label: props.account === "%" ? "All" : props.account,
     value: props.account,
   });
-  const [month, setMonth] = useState<Parameters["month"]>({
+  const [month, setMonth] = useState({
     label: MONTHS[props.month - 1]!.label,
     value: props.month,
   });
-  const [user, setUser] = useState<Parameters["user"]>({
+  const [user, setUser] = useState({
     label: props.user === "%" ? "All" : props.user,
     value: props.user,
   });
-  const [year, setYear] = useState<Parameters["year"]>({
+  const [year, setYear] = useState({
     label: props.year.toString(),
     value: props.year,
   });
@@ -66,7 +59,7 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
         year={year}
       />
       <div className="flex flex-wrap items-center justify-center gap-4">
-        {displayDropdowns.year && (
+        {props.display.year && (
           <ParameterDropdown
             label="Year"
             dropdownOptions={props.configuredYears.map((year) => ({
@@ -77,7 +70,7 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
             setSelectedItem={setYear}
           />
         )}
-        {displayDropdowns.month && (
+        {props.display.month && (
           <ParameterDropdown
             label="Month"
             dropdownOptions={MONTHS}
@@ -85,7 +78,7 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
             setSelectedItem={setMonth}
           />
         )}
-        {displayDropdowns.user && (
+        {props.display.user && (
           <ParameterDropdown
             label="User"
             dropdownOptions={[
@@ -99,7 +92,7 @@ export const DataParameterSelector = (props: DataParameterSelectorProps) => {
             setSelectedItem={setUser}
           />
         )}
-        {displayDropdowns.account && (
+        {props.display.account && (
           <ParameterDropdown
             label="Account"
             dropdownOptions={ACCOUNTS}

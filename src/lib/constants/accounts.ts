@@ -1,5 +1,5 @@
 export const ACCOUNTS = [
-  { label: "All", value: "%" },
-  { label: "Credit", value: "Credit" },
-  { label: "Debit", value: "Debit" },
+  { label: "All", value: "%" as const },
+  { label: "Credit", value: "Credit" as const },
+  { label: "Debit", value: "Debit" as const },
 ];

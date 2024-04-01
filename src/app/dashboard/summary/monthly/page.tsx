@@ -3,11 +3,10 @@ import { CategoricalSpendingPieChart } from "@/app/dashboard/summary/monthly/cat
 import { BalancesByAcctUserTable } from "@/app/dashboard/summary/monthly/data-tables/balances-acc-by-user/table";
 import { SavingsByUserTable } from "@/app/dashboard/summary/monthly/data-tables/savings-by-user/table";
 import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/table";
-import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
+import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { inputSchema } from "@/server/api/routers/transaction";
-import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -16,9 +15,6 @@ export default async function MonthlySummaryPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const configuredUsers = await api.relatedUsers.get.query();
-  const configuredYears = await api.transactions.getPossibleYears.query();
-
   const today = new Date();
   const unsafeParams = {
     account: searchParams.account,
@@ -43,11 +39,7 @@ export default async function MonthlySummaryPage({
   return (
     <>
       <h1 className="text-2xl font-bold underline">Monthly Summary</h1>
-      <DataParameterSelector
-        configuredUsers={configuredUsers}
-        configuredYears={configuredYears}
-        {...parsedSearchParams}
-      />
+      <DataParameterSelector {...parsedSearchParams} />
       <h2 className="w-full border-b pt-4 text-left text-xl font-medium">
         Monthly Balances
       </h2>

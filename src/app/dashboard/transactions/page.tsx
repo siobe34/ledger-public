@@ -1,8 +1,7 @@
 import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
-import { DataParameterSelector } from "@/components/data-parameter-selector/data-parameter-selector";
+import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { inputSchema } from "@/server/api/routers/transaction";
-import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -11,9 +10,6 @@ export default async function ViewTransactionsPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const configuredUsers = await api.relatedUsers.get.query();
-  const configuredYears = await api.transactions.getPossibleYears.query();
-
   const today = new Date();
   const unsafeParams = {
     account: searchParams.account,
@@ -38,11 +34,7 @@ export default async function ViewTransactionsPage({
   return (
     <>
       <h1 className="text-2xl font-bold underline">Monthly Transactions</h1>
-      <DataParameterSelector
-        configuredUsers={configuredUsers}
-        configuredYears={configuredYears}
-        {...parsedSearchParams}
-      />
+      <DataParameterSelector {...parsedSearchParams} />
       <div className="w-full">
         <Suspense fallback={<LoadingSpinner className="mx-auto" />}>
           <QueriedTransactionsTable {...parsedSearchParams} />

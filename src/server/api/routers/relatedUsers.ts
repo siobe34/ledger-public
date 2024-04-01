@@ -7,16 +7,22 @@ import {
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
-export const relatedUsersRouter = createTRPCRouter({
-  get: privateProcedure.query(async ({ ctx }) => {
-    const matchedRecords = await ctx.db
-      .select()
-      .from(transactionUsers)
-      .where(eq(transactionUsers.emailId, ctx.emailId))
-      .orderBy(transactionUsers.title);
+export const inputGetRelatedUsersSchema = z
+  .object({ query: z.string() })
+  .default({ query: "ledger" });
 
-    return matchedRecords;
-  }),
+export const relatedUsersRouter = createTRPCRouter({
+  get: privateProcedure
+    .input(inputGetRelatedUsersSchema)
+    .query(async ({ ctx }) => {
+      const matchedRecords = await ctx.db
+        .select()
+        .from(transactionUsers)
+        .where(eq(transactionUsers.emailId, ctx.emailId))
+        .orderBy(transactionUsers.title);
+
+      return matchedRecords;
+    }),
   create: privateProcedure
     .input(z.array(insertUsersSchema))
     .mutation(async ({ ctx, input }) => {
