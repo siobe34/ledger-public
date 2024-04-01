@@ -1,3 +1,4 @@
+import { UploadDataWizard } from "@/app/dashboard/transactions/upload/upload-data-wizard/wizard";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 
@@ -12,8 +13,7 @@ export default async function UploadTransactionsPage() {
   return (
     <>
       <h1 className="text-2xl font-bold underline">Upload Transactions Data</h1>
-      {/* TODO: create this component */}
-      {/* <UploadDataWizard /> */}
+      <UploadDataWizard />
     </>
   );
 }
