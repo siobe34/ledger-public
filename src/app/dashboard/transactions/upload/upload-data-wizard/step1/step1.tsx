@@ -10,7 +10,7 @@ import { InfoIcon } from "lucide-react";
 
 export const Step1 = () => {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Define your data</CardTitle>
         <CardDescription>
