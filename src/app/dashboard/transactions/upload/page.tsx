@@ -30,7 +30,7 @@ export default async function UploadTransactionsPage({
   return (
     <>
       <h1 className="text-2xl font-bold underline">Upload Transactions Data</h1>
-      <UploadDataWizard />
+      <UploadDataWizard {...parsedSearchParams} />
     </>
   );
 }

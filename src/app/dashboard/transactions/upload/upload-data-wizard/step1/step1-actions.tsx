@@ -2,10 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export const Step1Actions = () => {
-  const { colOrder, enableNext } = useUploadTransactionsWizard();
+  const router = useRouter();
+  const { colOrder } = useUploadTransactionsWizard();
+  const [validationStatus, setValidationStatus] = useState(false);
+
   const validateStep1 = () => {
     const colOrders = Object.values(colOrder);
 
@@ -30,14 +35,21 @@ export const Step1Actions = () => {
 
     if (condition1 && condition2) {
       toast.success("Next step ready.");
-      enableNext();
+      setValidationStatus(true);
     }
   };
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-8 py-4">
       {/* TODO: implement saving default settings */}
       <Button variant="outlinePrimary">Set Current Settings as Default</Button>
       <Button onClick={validateStep1}>Validate</Button>
+      <Button
+        onClick={() => router.push("/dashboard/transactions/upload?step=2")}
+        disabled={!validationStatus}
+      >
+        Step 2
+      </Button>
     </div>
   );
 };
