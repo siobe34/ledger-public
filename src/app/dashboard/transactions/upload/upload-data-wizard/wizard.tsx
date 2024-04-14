@@ -1,54 +1,51 @@
 "use client";
 
+import { Step1 } from "@/app/dashboard/transactions/upload/upload-data-wizard/step1/step1";
+import { Step1Actions } from "@/app/dashboard/transactions/upload/upload-data-wizard/step1/step1-actions";
+import { Step2 } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2";
+import { Step3 } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/step3";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { useState } from "react";
+import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
+import { useEffect, useState } from "react";
 
 export const UploadDataWizard = () => {
+  const { activeStep, buttonStates, goNextStep, goPrevStep } =
+    useUploadTransactionsWizard();
+
   const [api, setApi] = useState<CarouselApi>();
-  const [wizardStepManager, setWizardStepManager] = useState<{
-    activeStep: 1 | 2 | 3;
-    canGoNext: boolean;
-    canGoPrev: boolean;
-  }>({
-    activeStep: 1,
-    canGoNext: false,
-    canGoPrev: false,
-  });
+
+  const canGoNext = buttonStates[activeStep].canGoNext;
+  const canGoPrev = buttonStates[activeStep].canGoPrev;
 
   const handleNext = () => {
-    api?.scrollNext();
+    if (!api) return;
+    api.reInit({ active: true });
+    api.scrollNext();
 
-    if (!api?.canScrollNext()) {
-      setWizardStepManager((prevState) => ({ ...prevState, canGoNext: false }));
-    }
-    if (api?.canScrollPrev()) {
-      setWizardStepManager((prevState) => ({ ...prevState, canGoPrev: true }));
-    }
+    goNextStep();
   };
 
   const handlePrevious = () => {
-    api?.scrollPrev();
+    if (!api) return;
+    api.reInit({ active: true });
+    api.scrollPrev();
 
-    if (api?.canScrollNext()) {
-      setWizardStepManager((prevState) => ({ ...prevState, canGoNext: true }));
-    }
-    if (!api?.canScrollPrev()) {
-      setWizardStepManager((prevState) => ({ ...prevState, canGoPrev: false }));
-    }
+    goPrevStep();
   };
+
+  useEffect(() => {
+    if (!api) return;
+
+    api.on("settle", () => {
+      api.reInit({ active: false });
+    });
+  }, [api]);
 
   return (
     <>
@@ -56,34 +53,29 @@ export const UploadDataWizard = () => {
         <Button
           variant="outline"
           onClick={handlePrevious}
-          disabled={!wizardStepManager.canGoPrev}
+          disabled={!canGoPrev}
         >
           Previous Step
-          <span
-            className="sr-only"
-            aria-disabled={!wizardStepManager.canGoPrev}
-          >
+          <span className="sr-only" aria-disabled={!canGoPrev}>
             Go to previous step in the Uploading Data wizard.
           </span>
         </Button>
         <span className="hidden h-1 flex-grow border bg-border sm:flex" />
-        <Button
-          variant="outline"
-          onClick={handleNext}
-          disabled={!wizardStepManager.canGoNext}
-        >
+        <Button variant="outline" onClick={handleNext} disabled={!canGoNext}>
           Next Step
-          <span
-            className="sr-only"
-            aria-disabled={!wizardStepManager.canGoNext}
-          >
+          <span className="sr-only" aria-disabled={!canGoNext}>
             Go to next step in the Uploading Data wizard.
           </span>
         </Button>
       </div>
-      <Carousel setApi={setApi} className="self-center">
+      <Carousel
+        opts={{ active: false, duration: 15 }}
+        setApi={setApi}
+        className="w-full"
+      >
         <CarouselContent>
           <CarouselItem>
+            <Step1Actions />
             <Step1 />
           </CarouselItem>
           <CarouselItem>
@@ -95,41 +87,5 @@ export const UploadDataWizard = () => {
         </CarouselContent>
       </Carousel>
     </>
-  );
-};
-
-const Step1 = () => {
-  return (
-    <Card className="max-w-[80%]">
-      <CardHeader>
-        <CardTitle>Step 1</CardTitle>
-        <CardDescription>Just a test</CardDescription>
-      </CardHeader>
-      <CardContent>Some other things go here</CardContent>
-    </Card>
-  );
-};
-
-const Step2 = () => {
-  return (
-    <Card className="max-w-[80%]">
-      <CardHeader>
-        <CardTitle>Step 2</CardTitle>
-        <CardDescription>Just a test</CardDescription>
-      </CardHeader>
-      <CardContent>Some other things go here</CardContent>
-    </Card>
-  );
-};
-
-const Step3 = () => {
-  return (
-    <Card className="max-w-[80%]">
-      <CardHeader>
-        <CardTitle>Step 3</CardTitle>
-        <CardDescription>Just a test</CardDescription>
-      </CardHeader>
-      <CardContent>Some other things go here</CardContent>
-    </Card>
   );
 };
