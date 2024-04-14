@@ -1,3 +1,6 @@
+"use client";
+// TODO: remove useclient and make into RSC
+
 import {
   Card,
   CardContent,

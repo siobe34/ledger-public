@@ -1,3 +1,5 @@
+"use client";
+// TODO: remove useclient and make into rsc
 import { Step2RequiredDropdowns } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2-dropdowns";
 import { Step2FileUploader } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2-fileuploader";
 import {
