@@ -1,5 +1,3 @@
-"use client";
-// TODO: remove useclient and make into rsc
 import { Step2RequiredDropdowns } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2-dropdowns";
 import { Step2FileUploader } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2-fileuploader";
 import {
@@ -12,14 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 
-export const Step2 = () => {
-  // TODO: this entire page can be RSC and this data fetching can take place on server
-  const { data: users } = api.relatedUsers.get.useQuery();
+export const Step2 = async () => {
+  const users = await api.relatedUsers.get.query();
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Upload your Data</CardTitle>
         <CardDescription>
@@ -27,8 +24,7 @@ export const Step2 = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {/* TODO: remove nullish check when rsc */}
-        <Step2RequiredDropdowns users={users ?? []} />
+        <Step2RequiredDropdowns users={users} />
         <div className="flex items-center justify-center gap-4">
           <Checkbox id="ignore-first-row" />
           <Label htmlFor="ignore-first-row">My Data has Headers</Label>

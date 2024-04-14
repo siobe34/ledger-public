@@ -1,6 +1,3 @@
-"use client";
-// TODO: remove useclient and make into RSC
-
 import { UploadedTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/table";
 import {
   Card,
@@ -9,14 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 
-export const Step3 = () => {
-  // TODO: this entire page can be RSC and this data fetching can take place on server
-  const { data: categories } = api.relatedCategories.get.useQuery();
+export const Step3 = async () => {
+  const categories = await api.relatedCategories.get.query();
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Step 3</CardTitle>
         <CardDescription>Just a test</CardDescription>
