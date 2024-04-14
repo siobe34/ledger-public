@@ -1,6 +1,7 @@
 "use client";
 // TODO: remove useclient and make into RSC
 
+import { UploadedTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/table";
 import {
   Card,
   CardContent,
@@ -20,7 +21,9 @@ export const Step3 = () => {
         <CardTitle>Step 3</CardTitle>
         <CardDescription>Just a test</CardDescription>
       </CardHeader>
-      <CardContent>Some other things go here</CardContent>
+      <CardContent>
+        <UploadedTransactionsTable />
+      </CardContent>
     </Card>
   );
 };
