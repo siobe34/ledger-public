@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
 import { selectUsersSchema } from "@/server/db/schema";
-import { useState } from "react";
 import { z } from "zod";
 
 type Props = {
@@ -17,21 +16,20 @@ type Props = {
 };
 
 export const Step2RequiredDropdowns = ({ users }: Props) => {
-  const [selectedUser, setSelectedUser] = useState("User");
-  const [selectedAccount, setSelectedAccount] = useState("Account");
+  const { requiredCols, user, account, setUser, setAccount } =
+    useUploadTransactionsWizard();
 
-  const { requiredCols } = useUploadTransactionsWizard();
   const needsAccount = !requiredCols.includes("Account");
   const needsUser = !requiredCols.includes("User");
 
   if (!needsAccount && !needsUser) return null;
 
   const handleAccountSelection = (newAccount: string) => {
-    setSelectedAccount(newAccount);
+    setAccount(newAccount);
   };
 
   const handleUserSelection = (newUser: string) => {
-    setSelectedUser(newUser);
+    setUser(newUser);
   };
 
   return (
@@ -46,11 +44,9 @@ export const Step2RequiredDropdowns = ({ users }: Props) => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant={
-                  selectedAccount === "Account" ? "destructive" : "outline"
-                }
+                variant={account === "Account" ? "destructive" : "outline"}
               >
-                {selectedAccount}
+                {account}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent loop align="center">
@@ -69,10 +65,8 @@ export const Step2RequiredDropdowns = ({ users }: Props) => {
         {needsUser && users && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant={selectedUser === "User" ? "destructive" : "outline"}
-              >
-                {selectedUser}
+              <Button variant={user === "User" ? "destructive" : "outline"}>
+                {user}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent loop align="center">
