@@ -79,8 +79,8 @@ export const sanitizeData = (
   return rawData.map((rawTransaction, idx) => {
     const transaction: Record<string, string | number | Date> = {};
 
-    if (rawTransaction.date) {
-      transaction.date = new Date(rawTransaction.date);
+    if (rawTransaction.transactionDate) {
+      transaction.transactionDate = new Date(rawTransaction.transactionDate);
     }
 
     if (rawTransaction.debit) {
@@ -106,7 +106,7 @@ export const sanitizeData = (
 
     return {
       sequence: idx + 1,
-      transactionDate: transaction.date,
+      transactionDate: transaction.transactionDate,
       description: rawTransaction.description,
       debit: transaction.debit ?? "0.00",
       credit: transaction.credit ?? "0.00",

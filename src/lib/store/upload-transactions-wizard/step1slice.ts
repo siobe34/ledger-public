@@ -2,7 +2,7 @@ import { type StateCreator } from "zustand";
 
 // TODO: move to constant file
 const DEFAULT_DATA_COLS = [
-  "date",
+  "transactionDate",
   "description",
   "debit",
   "credit",
@@ -14,7 +14,7 @@ const DEFAULT_DATA_COLS = [
 ];
 
 const DEFAULT_COL_ORDER = {
-  date: 1,
+  transactionDate: 1,
   description: 2,
   debit: 3,
   credit: 4,
