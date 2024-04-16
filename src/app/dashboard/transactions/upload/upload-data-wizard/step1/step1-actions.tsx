@@ -43,7 +43,7 @@ export const Step1Actions = () => {
   return (
     <div className="flex flex-wrap items-center justify-center gap-8 py-4">
       {/* TODO: implement saving default settings */}
-      <Button variant="outlinePrimary">
+      <Button variant="outline">
         Set Current Settings as Default
         <span className="sr-only">
           Save the current settings for loading data as the defaults for next
