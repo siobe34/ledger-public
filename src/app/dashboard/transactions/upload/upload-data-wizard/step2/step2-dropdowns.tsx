@@ -1,18 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { AccountsDropdown } from "@/components/accounts-dropdown";
+import { DropdownStateful } from "@/components/dropdown-with-state";
 import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
-import { selectUsersSchema } from "@/server/db/schema";
-import { z } from "zod";
 
 type Props = {
-  users: z.infer<typeof selectUsersSchema>[];
+  users: string[];
 };
 
 export const Step2RequiredDropdowns = ({ users }: Props) => {
@@ -24,14 +17,6 @@ export const Step2RequiredDropdowns = ({ users }: Props) => {
 
   if (!needsAccount && !needsUser) return null;
 
-  const handleAccountSelection = (newAccount: string) => {
-    setAccount(newAccount);
-  };
-
-  const handleUserSelection = (newUser: string) => {
-    setUser(newUser);
-  };
-
   return (
     <>
       <p>
@@ -41,46 +26,23 @@ export const Step2RequiredDropdowns = ({ users }: Props) => {
       </p>
       <div className="flex flex-wrap items-center justify-center gap-4 pb-8 pt-4">
         {needsAccount && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant={account === "Account" ? "destructive" : "outline"}
-              >
-                {account}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent loop align="center">
-              {["Credit", "Debit"].map((dropdownItem) => (
-                <DropdownMenuItem
-                  key={dropdownItem}
-                  className="cursor-pointer justify-center"
-                  onSelect={() => handleAccountSelection(dropdownItem)}
-                >
-                  {dropdownItem}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AccountsDropdown
+            buttonProps={{
+              variant: account === "Account" ? "destructive" : "outline",
+            }}
+            selectedItem={account}
+            setSelectedItem={setAccount}
+          />
         )}
         {needsUser && users && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant={user === "User" ? "destructive" : "outline"}>
-                {user}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent loop align="center">
-              {users.map((dropdownItem) => (
-                <DropdownMenuItem
-                  key={dropdownItem.id.toString()}
-                  className="cursor-pointer justify-center"
-                  onSelect={() => handleUserSelection(dropdownItem.title)}
-                >
-                  {dropdownItem.title}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <DropdownStateful
+            buttonProps={{
+              variant: user === "User" ? "destructive" : "outline",
+            }}
+            dropdownOpts={users}
+            selectedItem={user}
+            setSelectedItem={setUser}
+          />
         )}
       </div>
     </>
