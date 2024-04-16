@@ -1,11 +1,10 @@
 "use client";
 
-import { selectUsersSchema } from "@/server/db/schema";
-import { type ColumnDef } from "@tanstack/react-table";
-import { z } from "zod";
 import { DeleteUser } from "@/app/dashboard/account-management/configure-users-table/delete-user";
+import { type UserSelect } from "@/lib/types/global";
+import { type ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<z.infer<typeof selectUsersSchema>>[] = [
+export const columns: ColumnDef<UserSelect>[] = [
   {
     accessorKey: "title",
     header: "User",

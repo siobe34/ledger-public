@@ -5,7 +5,7 @@ import { UpdateParametersButton } from "@/components/data-parameter-selector/upd
 import { ACCOUNTS } from "@/lib/constants/accounts";
 import { DEFAULT_USER } from "@/lib/constants/defaultParameters";
 import { MONTHS } from "@/lib/constants/months";
-import { selectUsersSchema } from "@/server/db/schema";
+import { type UserSelect } from "@/lib/types/global";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -28,7 +28,7 @@ export type Parameters = {
 
 type DataParameterSelectorProps = {
   display: Record<keyof Parameters, boolean>;
-  configuredUsers: Array<z.infer<typeof selectUsersSchema>>;
+  configuredUsers: UserSelect[];
   configuredYears: number[];
 } & z.infer<typeof queryParamsSchema>;
 

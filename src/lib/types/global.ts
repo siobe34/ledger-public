@@ -11,8 +11,10 @@ import { z } from "zod";
 export type TransactionInsert = z.infer<typeof insertTransactionSchema>;
 export type TransactionSelect = z.infer<typeof selectTransactionsSchema>;
 
+// REMOVEME: if not used later
 export type CategoryInsert = z.infer<typeof insertCategoriesSchema>;
 export type CategorySelect = z.infer<typeof selectCategoriesSchema>;
 
+// REMOVEME: if not used later
 export type UserInsert = z.infer<typeof insertUsersSchema>;
 export type UserSelect = z.infer<typeof selectUsersSchema>;

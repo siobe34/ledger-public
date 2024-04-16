@@ -1,6 +1,5 @@
 import { type StateCreator } from "zustand";
 
-// TODO: move to constant file
 const DEFAULT_DATA_COLS = [
   "transactionDate",
   "description",
@@ -25,19 +24,15 @@ const DEFAULT_COL_ORDER = {
   comments: 9,
 } as const;
 
+type Column = (typeof DEFAULT_DATA_COLS)[number];
+
 export type Step1Slice = {
   dataCols: typeof DEFAULT_DATA_COLS;
-  requiredCols: Array<(typeof DEFAULT_DATA_COLS)[number]>;
-  colOrder: Record<Step1Slice["dataCols"][number], number>;
-  setAReqCol: (col: (typeof DEFAULT_DATA_COLS)[number]) => void;
-  removeAReqCol: (col: (typeof DEFAULT_DATA_COLS)[number]) => void;
-  setColOrder: ({
-    col,
-    newOrder,
-  }: {
-    col: (typeof DEFAULT_DATA_COLS)[number];
-    newOrder: number;
-  }) => void;
+  requiredCols: Column[];
+  colOrder: Record<Column, number>;
+  setAReqCol: (col: Column) => void;
+  removeAReqCol: (col: Column) => void;
+  setColOrder: ({ col, newOrder }: { col: Column; newOrder: number }) => void;
 };
 
 export const createStep1Slice: StateCreator<Step1Slice> = (set) => ({

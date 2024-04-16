@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
+import { type TransactionInsert } from "@/lib/types/global";
 import { insertTransactionSchema } from "@/server/db/schema";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
@@ -14,9 +15,7 @@ export const Step3Actions = () => {
   const [validationStatus, setValidationStatus] = useState(false);
   const { tableData } = useUploadTransactionsWizard();
 
-  const [data, setData] = useState<
-    z.infer<typeof insertTransactionSchema>[] | null
-  >(null);
+  const [data, setData] = useState<TransactionInsert[] | null>(null);
 
   const { mutate: dbUploadTransactions } = api.transactions.create.useMutation({
     onError: () => {

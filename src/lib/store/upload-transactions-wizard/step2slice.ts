@@ -1,5 +1,4 @@
-import { insertTransactionSchema } from "@/server/db/schema";
-import { z } from "zod";
+import { type TransactionInsert } from "@/lib/types/global";
 import { type StateCreator } from "zustand";
 
 export type Step2Slice = {
@@ -7,7 +6,7 @@ export type Step2Slice = {
   setUser: (user: string) => void;
   account: string;
   setAccount: (account: string) => void;
-  uploadedData: z.infer<typeof insertTransactionSchema>[] | null;
+  uploadedData: TransactionInsert[] | null;
   setUploadedData: (newData: Step2Slice["uploadedData"]) => void;
   ignoreFirstRow: boolean;
   setIgnoreFirstRow: (newValue: boolean) => void;

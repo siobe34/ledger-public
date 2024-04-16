@@ -1,11 +1,10 @@
 "use client";
 
-import { selectCategoriesSchema } from "@/server/db/schema";
-import { type ColumnDef } from "@tanstack/react-table";
-import { z } from "zod";
 import { DeleteCategory } from "@/app/dashboard/account-management/configure-categories-table/delete-category";
+import { type CategorySelect } from "@/lib/types/global";
+import { type ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<z.infer<typeof selectCategoriesSchema>>[] = [
+export const columns: ColumnDef<CategorySelect>[] = [
   {
     accessorKey: "title",
     header: "Category",

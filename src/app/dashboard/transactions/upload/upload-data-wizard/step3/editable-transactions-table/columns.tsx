@@ -4,12 +4,11 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { DropdownStateful } from "@/components/dropdown-with-state";
 import { Input } from "@/components/ui/input";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
-import { insertTransactionSchema } from "@/server/db/schema";
+import { type TransactionInsert } from "@/lib/types/global";
 import type { ColumnDef, Getter, Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 
-export const columns: ColumnDef<z.infer<typeof insertTransactionSchema>>[] = [
+export const columns: ColumnDef<TransactionInsert>[] = [
   {
     accessorKey: "transactionDate",
     header: ({ column }) => (

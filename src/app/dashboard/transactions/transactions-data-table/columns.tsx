@@ -1,15 +1,13 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-// TODO: move this import to a separate /types directory
-import { selectTransactionsSchema } from "@/server/db/schema";
+import { formatTransactionDate } from "@/lib/formatTransactionDate";
+import { type TransactionSelect } from "@/lib/types/global";
 import type { ColumnDef } from "@tanstack/react-table";
-import { z } from "zod";
 
-const _transactionSchema = selectTransactionsSchema.extend({
-  transactionDate: z.string(),
-});
-type Transaction = z.infer<typeof _transactionSchema>;
+type Transaction = Omit<TransactionSelect, "transactionDate"> & {
+  transactionDate: string;
+};
 
 export const columns: ColumnDef<Transaction>[] = [
   {
