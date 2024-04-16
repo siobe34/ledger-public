@@ -1,4 +1,4 @@
-import { insertTransactionSchema } from "@/server/db/schema";
+import { insertTransactionSchema, insertUsersSchema } from "@/server/db/schema";
 import { z } from "zod";
 
 export const getTransactionsSchema = z.object({
@@ -9,3 +9,5 @@ export const getTransactionsSchema = z.object({
 });
 
 export const insertTransactionsArraySchema = z.array(insertTransactionSchema);
+
+export const insertUsersArraySchema = z.array(insertUsersSchema);

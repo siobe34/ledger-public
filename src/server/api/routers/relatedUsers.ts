@@ -24,7 +24,7 @@ export const relatedUsersRouter = createTRPCRouter({
       return matchedRecords;
     }),
   create: privateProcedure
-    .input(z.array(insertUsersSchema))
+    .input(insertUsersArraySchema)
     .mutation(async ({ ctx, input }) => {
       const relatedTransactionUsersWithEmailId = input.map((i) => ({
         emailId: ctx.emailId,
