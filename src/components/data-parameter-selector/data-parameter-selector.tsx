@@ -18,12 +18,11 @@ const queryParamsSchema = z.object({
   year: z.number(),
 });
 
-// TODO: move all types and zod schemas to one place
 export type Parameters = {
-  account: { label: string; value: string };
-  month: { label: string; value: number };
-  user: { label: string; value: string };
-  year: { label: string; value: number };
+  [Key in keyof z.infer<typeof queryParamsSchema>]: {
+    label: string;
+    value: z.infer<typeof queryParamsSchema>[Key];
+  };
 };
 
 type DataParameterSelectorProps = {
