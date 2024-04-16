@@ -1,28 +1,18 @@
+import { insertUsersArraySchema } from "@/lib/schemas/trpc-inputs";
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
-import {
-  insertUsersSchema,
-  selectUsersSchema,
-  transactionUsers,
-} from "@/server/db/schema";
+import { selectUsersSchema, transactionUsers } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
-import { z } from "zod";
-
-export const inputGetRelatedUsersSchema = z
-  .object({ query: z.string() })
-  .default({ query: "ledger" });
 
 export const relatedUsersRouter = createTRPCRouter({
-  get: privateProcedure
-    .input(inputGetRelatedUsersSchema)
-    .query(async ({ ctx }) => {
-      const matchedRecords = await ctx.db
-        .select()
-        .from(transactionUsers)
-        .where(eq(transactionUsers.emailId, ctx.emailId))
-        .orderBy(transactionUsers.title);
+  get: privateProcedure.query(async ({ ctx }) => {
+    const matchedRecords = await ctx.db
+      .select()
+      .from(transactionUsers)
+      .where(eq(transactionUsers.emailId, ctx.emailId))
+      .orderBy(transactionUsers.title);
 
-      return matchedRecords;
-    }),
+    return matchedRecords;
+  }),
   create: privateProcedure
     .input(insertUsersArraySchema)
     .mutation(async ({ ctx, input }) => {
