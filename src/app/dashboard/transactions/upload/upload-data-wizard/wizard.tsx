@@ -3,6 +3,7 @@ import { Step1Actions } from "@/app/dashboard/transactions/upload/upload-data-wi
 import { Step2 } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2";
 import { Step2Actions } from "@/app/dashboard/transactions/upload/upload-data-wizard/step2/step2-actions";
 import { Step3 } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/step3";
+import { Step3Actions } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/step3-actions";
 
 const VALID_STEPS = [1, 2, 3];
 
@@ -27,7 +28,12 @@ export const UploadDataWizard = ({ step }: { step: number }) => {
         </>
       )}
 
-      {step === 3 && <Step3 />}
+      {step === 3 && (
+        <>
+          <Step3Actions />
+          <Step3 />
+        </>
+      )}
     </>
   );
 };
