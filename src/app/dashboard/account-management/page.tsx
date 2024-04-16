@@ -4,6 +4,8 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function AccountManagementPage() {
   return (
     <section className="flex w-full flex-col items-center justify-start gap-4 px-2 pt-2 sm:items-start">
