@@ -79,7 +79,11 @@ export const Step2FileUploader = () => {
       json = json.map((x) => ({ ...x, User: user }));
     }
 
-    const json = CSVtoJSON({ csv, headers: requiredCols, ignoreFirstRow });
+    const missingCols = dataCols.filter((col) => !requiredCols.includes(col));
+
+    missingCols.forEach((key) => {
+      json = json.map((x) => ({ ...x, [key]: "" }));
+    });
 
     setUploadedData(json);
   };
