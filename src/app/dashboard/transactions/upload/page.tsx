@@ -3,6 +3,8 @@ import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+export const dynamic = "force-dynamic";
+
 // TODO: fix url param parsing and zod schema
 const test = z.object({ step: z.number() });
 
