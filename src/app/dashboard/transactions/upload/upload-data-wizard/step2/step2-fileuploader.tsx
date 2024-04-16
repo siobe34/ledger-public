@@ -65,6 +65,7 @@ export const Step2FileUploader = () => {
         className="self-center justify-self-center"
       >
         Browse
+        <span className="sr-only">Browse for a file to upload.</span>
       </Button>
     </>
   );
