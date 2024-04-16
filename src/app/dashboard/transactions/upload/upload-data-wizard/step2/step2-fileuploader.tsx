@@ -1,10 +1,13 @@
 "use client";
 
+import { sanitizeData } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/step3-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUploadTransactionsWizard } from "@/lib/store/upload-transactions-wizard/store";
+import { insertTransactionSchema } from "@/server/db/schema";
 import { createRef } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 export const Step2FileUploader = () => {
   const fileRef = createRef<HTMLInputElement>();
@@ -50,17 +53,15 @@ export const Step2FileUploader = () => {
     const filePromise = await fetch(URL.createObjectURL(files[0]));
     const fileText = await filePromise.text();
 
-    convertAndSaveData(fileText);
+    const convertedToJson = convertData(fileText);
+    const parsedJson = parseData(convertedToJson);
+
+    if (!parsedJson) return;
+
+    setUploadedData(parsedJson);
   };
 
-  const handleBrowseForFile = () => {
-    const currentRef = fileRef.current;
-    if (!currentRef) return;
-
-    currentRef.click();
-  };
-
-  const convertAndSaveData = (csv: string) => {
+  const convertData = (csv: string) => {
     const sortedColOrder = Object.entries(colOrder).sort(
       ([_a, a], [_b, b]) => a - b,
     );
@@ -71,21 +72,47 @@ export const Step2FileUploader = () => {
 
     let json = CSVtoJSON({ csv, headers, ignoreFirstRow });
 
-    if (!requiredCols.includes("Account")) {
-      json = json.map((x) => ({ ...x, Account: account }));
-    }
-
-    if (!requiredCols.includes("User")) {
-      json = json.map((x) => ({ ...x, User: user }));
-    }
-
     const missingCols = dataCols.filter((col) => !requiredCols.includes(col));
 
     missingCols.forEach((key) => {
       json = json.map((x) => ({ ...x, [key]: "" }));
     });
 
-    setUploadedData(json);
+    if (!requiredCols.includes("account")) {
+      json = json.map((x) => ({ ...x, account: account }));
+    }
+
+    if (!requiredCols.includes("user")) {
+      json = json.map((x) => ({ ...x, user: user }));
+    }
+
+    return json;
+  };
+
+  const parseData = (unparsedData: Record<string, string>[]) => {
+    const preProcessedData = sanitizeData(unparsedData);
+
+    const zodParser = z
+      .array(insertTransactionSchema)
+      .safeParse(preProcessedData);
+
+    if (zodParser.success) {
+      const parsedData = zodParser.data;
+
+      return parsedData;
+    } else {
+      toast.error(
+        "The file you selected doesn't seem to have data in the shape you defined in Step 1. Please go back and try again.",
+      );
+      return null;
+    }
+  };
+
+  const handleBrowseForFile = () => {
+    const currentRef = fileRef.current;
+    if (!currentRef) return;
+
+    currentRef.click();
   };
 
   return (
