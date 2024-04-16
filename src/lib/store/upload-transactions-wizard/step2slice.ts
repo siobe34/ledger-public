@@ -7,6 +7,8 @@ export type Step2Slice = {
   setAccount: (account: string) => void;
   uploadedData: Record<string, string>[] | null;
   setUploadedData: (newData: Record<string, string>[]) => void;
+  ignoreFirstRow: boolean;
+  setIgnoreFirstRow: (newValue: boolean) => void;
 };
 
 export const createStep2Slice: StateCreator<Step2Slice> = (set) => ({
@@ -16,4 +18,6 @@ export const createStep2Slice: StateCreator<Step2Slice> = (set) => ({
   setAccount: (account) => set({ account }),
   uploadedData: null,
   setUploadedData: (newData) => set({ uploadedData: newData }),
+  ignoreFirstRow: false,
+  setIgnoreFirstRow: (newValue) => set({ ignoreFirstRow: newValue }),
 });

@@ -8,7 +8,8 @@ import { toast } from "sonner";
 
 export const Step2FileUploader = () => {
   const fileRef = createRef<HTMLInputElement>();
-  const { requiredCols, setUploadedData } = useUploadTransactionsWizard();
+  const { ignoreFirstRow, requiredCols, setUploadedData } =
+    useUploadTransactionsWizard();
 
   const handleFileSelection = async () => {
     const currentRef = fileRef.current;
@@ -45,7 +46,7 @@ export const Step2FileUploader = () => {
   };
 
   const convertAndSaveData = (csv: string) => {
-    const json = CSVtoJSON(csv, requiredCols);
+    const json = CSVtoJSON({ csv, headers: requiredCols, ignoreFirstRow });
 
     setUploadedData(json);
   };
@@ -69,8 +70,18 @@ export const Step2FileUploader = () => {
   );
 };
 
-export const CSVtoJSON = (CSV: string, headers: string[]) => {
-  const rows = CSV.split("\n").filter((row) => row !== "");
+export const CSVtoJSON = ({
+  csv,
+  headers,
+  ignoreFirstRow = false,
+}: {
+  csv: string;
+  headers: string[];
+  ignoreFirstRow?: boolean;
+}) => {
+  const rows = csv.split("\n").filter((row) => row !== "");
+
+  if (ignoreFirstRow) rows.shift();
 
   const json = rows.map((row) => {
     // * Split the current row into an array of values and remove any potential whitespaces
