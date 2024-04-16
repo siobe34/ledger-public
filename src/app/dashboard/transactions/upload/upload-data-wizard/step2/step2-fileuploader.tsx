@@ -10,6 +10,8 @@ export const Step2FileUploader = () => {
   const fileRef = createRef<HTMLInputElement>();
   const {
     account,
+    colOrder,
+    dataCols,
     ignoreFirstRow,
     requiredCols,
     setUploadedData,
@@ -59,6 +61,24 @@ export const Step2FileUploader = () => {
   };
 
   const convertAndSaveData = (csv: string) => {
+    const sortedColOrder = Object.entries(colOrder).sort(
+      ([_a, a], [_b, b]) => a - b,
+    );
+
+    const headers = sortedColOrder
+      .filter(([col]) => requiredCols.includes(col))
+      .map(([col]) => col);
+
+    let json = CSVtoJSON({ csv, headers, ignoreFirstRow });
+
+    if (!requiredCols.includes("Account")) {
+      json = json.map((x) => ({ ...x, Account: account }));
+    }
+
+    if (!requiredCols.includes("User")) {
+      json = json.map((x) => ({ ...x, User: user }));
+    }
+
     const json = CSVtoJSON({ csv, headers: requiredCols, ignoreFirstRow });
 
     setUploadedData(json);
