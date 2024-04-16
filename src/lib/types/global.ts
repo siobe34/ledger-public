@@ -1,3 +1,4 @@
+import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import {
   insertCategoriesSchema,
   insertTransactionSchema,
@@ -18,3 +19,5 @@ export type CategorySelect = z.infer<typeof selectCategoriesSchema>;
 // REMOVEME: if not used later
 export type UserInsert = z.infer<typeof insertUsersSchema>;
 export type UserSelect = z.infer<typeof selectUsersSchema>;
+
+export type RequestTransactionData = z.infer<typeof getTransactionsSchema>;
