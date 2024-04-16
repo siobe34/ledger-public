@@ -23,7 +23,7 @@ export const Step2 = async () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Step2RequiredDropdowns users={users} />
+        <Step2RequiredDropdowns users={users.map((i) => i.title)} />
         <Step2Checkbox />
       </CardContent>
       <CardFooter>
