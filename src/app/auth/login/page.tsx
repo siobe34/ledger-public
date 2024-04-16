@@ -36,12 +36,12 @@ export default async function LoginPage() {
               id="email"
               name="email"
               type="email"
-              className="peer invalid:text-destructive invalid:focus-visible:ring-destructive"
+              className="peer invalid:text-destructive invalid:focus-visible:ring-destructive dark:invalid:text-destructive-foreground dark:invalid:focus-visible:ring-destructive-foreground"
               placeholder=""
             />
             <Label
               htmlFor="email"
-              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
+              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80 dark:peer-invalid:text-destructive-foreground"
             >
               Email
             </Label>
@@ -51,13 +51,13 @@ export default async function LoginPage() {
               id="password"
               name="password"
               type="password"
-              className="peer invalid:text-destructive invalid:focus-visible:ring-destructive"
+              className="peer invalid:text-destructive invalid:focus-visible:ring-destructive dark:invalid:text-destructive-foreground dark:invalid:focus-visible:ring-destructive-foreground"
               placeholder=""
               pattern=".{6,}"
             />
             <Label
               htmlFor="password"
-              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80"
+              className="duration-30 pointer-events-none text-foreground transition-all peer-placeholder-shown:translate-x-4 peer-placeholder-shown:translate-y-9 peer-placeholder-shown:text-foreground/80 peer-invalid:text-destructive peer-[:focus-within:placeholder-shown]:text-foreground/80 dark:peer-invalid:text-destructive-foreground"
             >
               Password
             </Label>
