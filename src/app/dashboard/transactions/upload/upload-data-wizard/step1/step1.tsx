@@ -19,10 +19,10 @@ export const Step1 = () => {
           have all of the required fields then you can still upload what you
           have and then fill out the missing columns.
         </CardDescription>
-        {/* TODO: style below to be an "info" alert (like how you see in various docs sites that have useful info in highlighted blocks of text) */}
-        <span className="inline-flex w-fit items-center justify-start gap-2 rounded bg-sky-200 px-2 py-1 text-blue-950">
+        <span className="text-info-foreground bg-info border-info-border inline-flex w-fit items-center justify-start gap-2 rounded-md border p-2">
           <InfoIcon />
-          Make sure to set the order of the columns correctly.
+          Make sure to set the order of the columns correctly, otherwise the
+          file will not be read correctly.
         </span>
       </CardHeader>
       <CardContent>
