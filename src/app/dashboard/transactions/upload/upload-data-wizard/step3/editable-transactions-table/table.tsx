@@ -1,5 +1,6 @@
 "use client";
 
+import { NavigableCell } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/navigable-cell";
 import { Pagination } from "@/components/data-table/pagination";
 import { TableSearch } from "@/components/data-table/table-search";
 import {
@@ -138,18 +139,22 @@ export const EditableTransactionsTable = <TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, rowIdx) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                  {row.getVisibleCells().map((cell, colIdx) => (
+                    <NavigableCell
+                      key={cell.id}
+                      rowIdx={rowIdx}
+                      colIdx={colIdx}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )}
-                    </TableCell>
+                    </NavigableCell>
                   ))}
                 </TableRow>
               ))
