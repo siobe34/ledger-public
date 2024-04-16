@@ -1,4 +1,4 @@
-import { UploadedTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/table";
+import { UploadedTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/table";
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import { api } from "@/trpc/server";
 
 export const Step3 = async () => {
   const categories = await api.relatedCategories.get.query();
+  const users = await api.relatedUsers.get.query();
 
   return (
     <Card className="w-full">
@@ -18,7 +19,7 @@ export const Step3 = async () => {
         <CardDescription>Just a test</CardDescription>
       </CardHeader>
       <CardContent>
-        <UploadedTransactionsTable />
+        <UploadedTransactionsTable categories={categories} users={users} />
       </CardContent>
     </Card>
   );
