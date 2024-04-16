@@ -17,7 +17,7 @@ export const Step1 = () => {
           Uploading Transactions data is only supported in CSV format, the
           required columns for the data are shown below. If your data does not
           have all of the required fields then you can still upload what you
-          have and then fill out the missing columns.
+          have and fill out the missing columns later in the process.
         </CardDescription>
         <span className="text-info-foreground bg-info border-info-border inline-flex w-fit items-center justify-start gap-2 rounded-md border p-2">
           <InfoIcon />
