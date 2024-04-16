@@ -1,5 +1,6 @@
 "use client";
 
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { selectTransactionsSchema } from "@/server/db/schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
@@ -22,13 +23,6 @@ export const columns: ColumnDef<TotalBalance>[] = [
   {
     accessorKey: "balance",
     header: "Balance",
-    cell: ({ row }) => {
-      let unsafeAmount = parseFloat(row.getValue("balance"));
-      if (isNaN(unsafeAmount)) {
-        unsafeAmount = 0;
-      }
-
-      return `$${unsafeAmount.toFixed(2)}`;
-    },
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.balance }),
   },
 ];

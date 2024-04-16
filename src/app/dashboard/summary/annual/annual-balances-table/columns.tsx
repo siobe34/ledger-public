@@ -1,5 +1,6 @@
 "use client";
 
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { selectTransactionsSchema } from "@/server/db/schema";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -37,15 +38,6 @@ export const columns: ColumnDef<UserBalances>[] = [
   {
     accessorKey: "balance",
     header: "Balance",
-    // TODO: extract monetary value sanitization to function because it's used in a lot of places. Also use zod for validation in the function
-    cell: ({ row }) => {
-      let unsafeAmount = parseFloat(row.getValue("balance"));
-      if (isNaN(unsafeAmount)) {
-        unsafeAmount = 0;
-      }
-
-      // TODO: everywhere that this logic is used should instead use Intl.NumberFormat
-      return `$${unsafeAmount.toFixed(2)}`;
-    },
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.balance }),
   },
 ];

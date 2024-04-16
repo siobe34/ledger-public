@@ -1,5 +1,6 @@
 "use client";
 
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { selectTransactionsSchema } from "@/server/db/schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
@@ -20,43 +21,17 @@ export const columns: ColumnDef<UserSavings>[] = [
   {
     accessorKey: "income",
     header: "Income",
-    // TODO: extract monetary value sanitization to function because it's used in a lot of places. Also use zod for validation in the function
-    cell: ({ row }) => {
-      let unsafeAmount = parseFloat(row.getValue("income"));
-      if (isNaN(unsafeAmount)) {
-        unsafeAmount = 0;
-      }
-
-      return `$${unsafeAmount.toFixed(2)}`;
-    },
+    cell: ({ row }) => formatMonetaryVals({ value: row.original.income }),
   },
   {
     accessorKey: "expenses",
     header: "Expenses",
-    cell: ({ row }) => {
-      let unsafeAmount = parseFloat(row.getValue("expenses"));
-      if (isNaN(unsafeAmount)) {
-        unsafeAmount = 0;
-      }
-
-      return `$${unsafeAmount.toFixed(2)}`;
-    },
+    cell: ({ row }) => formatMonetaryVals({ value: row.original.expenses }),
   },
   {
     accessorKey: "savings",
     header: "Savings",
-    cell: ({ row }) => {
-      let unsafeIncome = parseFloat(row.getValue("income"));
-      let unsafeExpenses = parseFloat(row.getValue("expenses"));
-      if (isNaN(unsafeIncome)) {
-        unsafeIncome = 0;
-      }
-      if (isNaN(unsafeExpenses)) {
-        unsafeExpenses = 0;
-      }
-
-      const savings = unsafeIncome - unsafeExpenses;
-      return `$${savings.toFixed(2)}`;
-    },
+    cell: ({ row }) =>
+      formatMonetaryVals({ value: row.original.income - row.original.savings }),
   },
 ];

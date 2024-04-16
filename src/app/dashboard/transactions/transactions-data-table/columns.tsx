@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { type TransactionSelect } from "@/lib/types/global";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -30,18 +31,21 @@ export const columns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Debit" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.debit }),
   },
   {
     accessorKey: "credit",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Credit" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.credit }),
   },
   {
     accessorKey: "balance",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Balance" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.balance }),
   },
   {
     accessorKey: "category",

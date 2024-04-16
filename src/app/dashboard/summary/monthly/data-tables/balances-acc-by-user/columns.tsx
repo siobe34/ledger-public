@@ -1,5 +1,6 @@
 "use client";
 
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { selectTransactionsSchema } from "@/server/db/schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
@@ -25,5 +26,6 @@ export const columns: ColumnDef<AccountBalance>[] = [
   {
     accessorKey: "balance",
     header: "Balance",
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.balance }),
   },
 ];

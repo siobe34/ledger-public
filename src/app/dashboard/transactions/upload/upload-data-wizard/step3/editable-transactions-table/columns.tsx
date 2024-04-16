@@ -3,6 +3,7 @@
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DropdownStateful } from "@/components/dropdown-with-state";
 import { Input } from "@/components/ui/input";
+import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { type TransactionInsert } from "@/lib/types/global";
 import type { ColumnDef, Getter, Table } from "@tanstack/react-table";
@@ -28,18 +29,21 @@ export const columns: ColumnDef<TransactionInsert>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Debit" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.debit }),
   },
   {
     accessorKey: "credit",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Credit" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.credit }),
   },
   {
     accessorKey: "balance",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Balance" />
     ),
+    cell: ({ row }) => formatMonetaryVals({ value: +row.original.balance }),
   },
   {
     accessorKey: "category",
