@@ -29,9 +29,9 @@ export const NavItem = ({ name, icon, ...props }: NavItemType) => {
     <Link
       {...props}
       className={cn(
-        "inline-flex w-full items-center justify-center gap-2 rounded py-4 text-foreground/70 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:aspect-square sm:h-8",
+        "inline-flex w-full items-center justify-center gap-2 rounded py-4 text-foreground/70 hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:aspect-square sm:h-8",
         isLinkActive &&
-          "border border-primary bg-primary text-primary-foreground hover:text-primary-foreground",
+          "border border-primary bg-primary text-primary-foreground hover:text-primary-foreground focus-visible:text-primary-foreground",
       )}
     >
       <TooltipProvider delayDuration={75}>
