@@ -8,8 +8,21 @@ import { toast } from "sonner";
 
 export const Step2FileUploader = () => {
   const fileRef = createRef<HTMLInputElement>();
-  const { ignoreFirstRow, requiredCols, setUploadedData } =
-    useUploadTransactionsWizard();
+  const {
+    account,
+    ignoreFirstRow,
+    requiredCols,
+    setUploadedData,
+    user,
+  } = useUploadTransactionsWizard();
+
+  let disableBrowseButton = false;
+  if (!requiredCols.includes("Account") && account === "Account") {
+    disableBrowseButton = true;
+  }
+  if (!requiredCols.includes("User") && user === "User") {
+    disableBrowseButton = true;
+  }
 
   const handleFileSelection = async () => {
     const currentRef = fileRef.current;
@@ -61,8 +74,10 @@ export const Step2FileUploader = () => {
       />
       <Button
         size="lg"
-        onClick={handleBrowseForFile}
         className="self-center justify-self-center"
+        onClick={handleBrowseForFile}
+        disabled={disableBrowseButton}
+        aria-disabled={disableBrowseButton}
       >
         Browse
         <span className="sr-only">Browse for a file to upload.</span>
