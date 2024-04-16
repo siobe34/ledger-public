@@ -34,7 +34,8 @@ export const Step1Actions = () => {
     }
 
     if (condition1 && condition2) {
-      toast.success("Next step ready.");
+      toast.success("Ready to proceed to Step 2.");
+
       setValidationStatus(true);
     }
   };
