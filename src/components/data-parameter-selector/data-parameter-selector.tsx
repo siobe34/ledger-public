@@ -5,23 +5,15 @@ import { UpdateParametersButton } from "@/components/data-parameter-selector/upd
 import { ACCOUNTS } from "@/lib/constants/accounts";
 import { DEFAULT_USER } from "@/lib/constants/defaultParameters";
 import { MONTHS } from "@/lib/constants/months";
+import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { type UserSelect } from "@/lib/types/global";
 import { useState } from "react";
 import { z } from "zod";
 
-// TODO: move to separate file
-// TODO: find a common place to put this as it is the same code as "inputSchema"
-const queryParamsSchema = z.object({
-  account: z.enum(["%", "Credit", "Debit"]).optional().default("%"),
-  month: z.number(),
-  user: z.string().optional().default("%"),
-  year: z.number(),
-});
-
 export type Parameters = {
-  [Key in keyof z.infer<typeof queryParamsSchema>]: {
+  [Key in keyof z.infer<typeof getTransactionsSchema>]: {
     label: string;
-    value: z.infer<typeof queryParamsSchema>[Key];
+    value: z.infer<typeof getTransactionsSchema>[Key];
   };
 };
 
@@ -29,7 +21,7 @@ type DataParameterSelectorProps = {
   display: Record<keyof Parameters, boolean>;
   configuredUsers: UserSelect[];
   configuredYears: number[];
-} & z.infer<typeof queryParamsSchema>;
+} & z.infer<typeof getTransactionsSchema>;
 
 export const ClientLogic = (props: DataParameterSelectorProps) => {
   const [account, setAccount] = useState({

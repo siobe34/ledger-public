@@ -1,7 +1,7 @@
 import { QueriedTransactionsTable } from "@/app/dashboard/transactions/transactions-data-table/table";
 import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { inputSchema } from "@/server/api/routers/transaction";
+import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -29,7 +29,7 @@ export default async function ViewTransactionsPage({
     );
   }
 
-  const parsedSearchParams = inputSchema.parse(unsafeParams);
+  const parsedSearchParams = getTransactionsSchema.parse(unsafeParams);
 
   return (
     <>

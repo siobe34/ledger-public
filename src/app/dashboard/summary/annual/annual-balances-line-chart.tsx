@@ -1,6 +1,6 @@
 import { LineChart } from "@/components/line-chart";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
-import { type RequestTransactionData } from "@/server/api/routers/transaction";
+import { type RequestTransactionData } from "@/lib/types/global";
 import { api } from "@/trpc/server";
 
 export const AnnualBalancesLineChart = async ({

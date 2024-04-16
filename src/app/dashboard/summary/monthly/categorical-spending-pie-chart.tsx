@@ -1,5 +1,5 @@
 import { PieChart } from "@/components/pie-chart";
-import { type RequestTransactionData } from "@/server/api/routers/transaction";
+import { type RequestTransactionData } from "@/lib/types/global";
 import { api } from "@/trpc/server";
 
 export const CategoricalSpendingPieChart = async ({

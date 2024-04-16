@@ -6,7 +6,7 @@ import { TotalBalancesByUserTable } from "@/app/dashboard/summary/monthly/data-t
 import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { inputSchema } from "@/server/api/routers/transaction";
+import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -34,7 +34,7 @@ export default async function MonthlySummaryPage({
     );
   }
 
-  const parsedSearchParams = inputSchema.parse(unsafeParams);
+  const parsedSearchParams = getTransactionsSchema.parse(unsafeParams);
 
   return (
     <>

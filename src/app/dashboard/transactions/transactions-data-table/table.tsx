@@ -4,8 +4,7 @@ import { columns } from "@/app/dashboard/transactions/transactions-data-table/co
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { DataTable } from "@/components/ui/data-table";
 import { dataLoadToastNotifications } from "@/lib/dataLoadToastNotifications";
-// TODO: change location of import to not be from server
-import { type RequestTransactionData } from "@/server/api/routers/transaction";
+import { type RequestTransactionData } from "@/lib/types/global";
 import { api } from "@/trpc/react";
 import { useEffect } from "react";
 

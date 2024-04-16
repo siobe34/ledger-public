@@ -4,7 +4,7 @@ import { columns } from "@/app/dashboard/summary/annual/annual-balances-table/co
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { DataTable } from "@/components/ui/data-table";
 import { dataLoadToastNotifications } from "@/lib/dataLoadToastNotifications";
-import { type RequestTransactionData } from "@/server/api/routers/transaction";
+import { type RequestTransactionData } from "@/lib/types/global";
 import { api } from "@/trpc/react";
 import { useEffect } from "react";
 

@@ -4,7 +4,7 @@ import {
 } from "@/app/dashboard/summary/monthly/data-tables/total-balances-by-user/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
-import { type RequestTransactionData } from "@/server/api/routers/transaction";
+import { type RequestTransactionData } from "@/lib/types/global";
 import { api } from "@/trpc/server";
 
 export const TotalBalancesByUserTable = async ({

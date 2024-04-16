@@ -5,7 +5,7 @@ import { CategoricalSpendingTable } from "@/app/dashboard/summary/annual/categor
 import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-wrapper";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { inputSchema } from "@/server/api/routers/transaction";
+import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -23,7 +23,7 @@ export default async function AnnualSummaryPage({
     redirect(`/dashboard/summary/annual?year=${unsafeParams.year}`);
   }
 
-  const parsedSearchParams = inputSchema
+  const parsedSearchParams = getTransactionsSchema
     .pick({ year: true })
     .parse(unsafeParams);
 

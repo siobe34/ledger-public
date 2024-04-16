@@ -1,20 +1,14 @@
+import {
+  getTransactionsSchema,
+  insertTransactionsArraySchema,
+} from "@/lib/schemas/trpc-inputs";
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
-import { insertTransactionSchema, transactions } from "@/server/db/schema";
+import { transactions } from "@/server/db/schema";
 import { and, countDistinct, eq, like, max, ne, sql, sum } from "drizzle-orm";
-import { z } from "zod";
-
-export const inputSchema = z.object({
-  account: z.enum(["%", "Credit", "Debit"]).optional().default("%"),
-  user: z.string().optional().default("%"),
-  year: z.number(),
-  month: z.number(),
-});
-
-export type RequestTransactionData = z.infer<typeof inputSchema>;
 
 export const transactionRouter = createTRPCRouter({
   create: privateProcedure
-    .input(z.array(insertTransactionSchema))
+    .input(insertTransactionsArraySchema)
     .mutation(async ({ ctx, input }) => {
       const transactionsWithEmailId = input.map((i) => ({
         emailId: ctx.emailId,
@@ -26,7 +20,7 @@ export const transactionRouter = createTRPCRouter({
       return "success";
     }),
   getByMonth: privateProcedure
-    .input(inputSchema)
+    .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -51,7 +45,7 @@ export const transactionRouter = createTRPCRouter({
       }));
     }),
   getBalanceByMonth: privateProcedure
-    .input(inputSchema)
+    .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -91,7 +85,7 @@ export const transactionRouter = createTRPCRouter({
       return matchedRecords.map((record) => record.transaction);
     }),
   getBalancesByYear: privateProcedure
-    .input(inputSchema.pick({ year: true }))
+    .input(getTransactionsSchema.pick({ year: true }))
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -147,7 +141,7 @@ export const transactionRouter = createTRPCRouter({
       return matchedRecords;
     }),
   getMonthlyCategoricalSpending: privateProcedure
-    .input(inputSchema)
+    .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -181,7 +175,7 @@ export const transactionRouter = createTRPCRouter({
       return matchedRecords;
     }),
   getAnnualCategoricalSpending: privateProcedure
-    .input(inputSchema.pick({ year: true }))
+    .input(getTransactionsSchema.pick({ year: true }))
     .query(async ({ ctx, input }) => {
       // REMOVEME: simulating slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
