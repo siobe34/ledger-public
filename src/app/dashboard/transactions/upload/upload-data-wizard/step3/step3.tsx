@@ -1,4 +1,5 @@
-import { UploadedTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/table";
+import { columns } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/columns";
+import { EditableTransactionsTable } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/table";
 import {
   Card,
   CardContent,
@@ -19,7 +20,12 @@ export const Step3 = async () => {
         <CardDescription>Just a test</CardDescription>
       </CardHeader>
       <CardContent>
-        <UploadedTransactionsTable categories={categories} users={users} />
+        <EditableTransactionsTable
+          categories={categories.map((i) => i.title)}
+          users={users.map((i) => i.title)}
+          columns={columns}
+          searchBar={false}
+        />
       </CardContent>
     </Card>
   );
