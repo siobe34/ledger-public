@@ -20,7 +20,6 @@ export const TotalBalancesByUserTable = async ({
     year,
   });
 
-  // TODO: extract to separate func (also used in account-balances table)
   const accountBalancesByUser = keyTransactions.map((i) => ({
     id: i.id,
     user: i.user,
