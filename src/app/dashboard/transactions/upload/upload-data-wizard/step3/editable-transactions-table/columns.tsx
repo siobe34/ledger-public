@@ -3,6 +3,7 @@
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DropdownStateful } from "@/components/dropdown-with-state";
 import { Input } from "@/components/ui/input";
+import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { insertTransactionSchema } from "@/server/db/schema";
 import type { ColumnDef, Getter, Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
@@ -15,9 +16,7 @@ export const columns: ColumnDef<z.infer<typeof insertTransactionSchema>>[] = [
       <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ cell }) =>
-      new Intl.DateTimeFormat("en-CA", {
-        dateStyle: "full",
-      }).format(new Date(cell.getValue() as string)),
+      formatTransactionDate({ date: new Date(`${cell.getValue() as string}`) }),
   },
   {
     accessorKey: "description",

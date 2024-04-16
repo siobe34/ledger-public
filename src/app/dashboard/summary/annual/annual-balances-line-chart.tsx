@@ -1,4 +1,5 @@
 import { LineChart } from "@/components/line-chart";
+import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { type RequestTransactionData } from "@/server/api/routers/transaction";
 import { api } from "@/trpc/server";
 
@@ -19,9 +20,10 @@ export const AnnualBalancesLineChart = async ({
   const monthNames = Array.from(
     new Set(
       annualBalancesByUser.map((i) =>
-        new Intl.DateTimeFormat("en-CA", { month: "short" }).format(
-          i.transactionDate,
-        ),
+        formatTransactionDate({
+          date: i.transactionDate,
+          opts: { month: "short" },
+        }),
       ),
     ),
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { selectTransactionsSchema } from "@/server/db/schema";
 import type { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
@@ -27,15 +28,11 @@ export const columns: ColumnDef<UserBalances>[] = [
   {
     accessorKey: "month",
     header: "Month",
-    cell: ({ row }) => {
-      const date = row.original.transactionDate;
-      // TODO: this line specifically is re-used so much I should extract it to a helper func
-      const month = new Intl.DateTimeFormat("en-CA", { month: "long" }).format(
-        date,
-      );
-
-      return month;
-    },
+    cell: ({ row }) =>
+      formatTransactionDate({
+        date: row.original.transactionDate,
+        opts: { month: "long" },
+      }),
   },
   {
     accessorKey: "balance",

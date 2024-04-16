@@ -18,9 +18,7 @@ export const columns: ColumnDef<Transaction>[] = [
       <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ row }) =>
-      new Intl.DateTimeFormat("en-CA", {
-        dateStyle: "full",
-      }).format(new Date(row.original.transactionDate)),
+      formatTransactionDate({ date: new Date(row.original.transactionDate) }),
   },
   {
     accessorKey: "description",
