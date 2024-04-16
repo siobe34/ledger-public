@@ -73,46 +73,48 @@ export const Step3Actions = () => {
   );
 };
 
-const sanitizeData = (rawData: Record<string, string | number | Date>[]) => {
+export const sanitizeData = (
+  rawData: Record<string, string | number | Date>[],
+) => {
   return rawData.map((rawTransaction, idx) => {
     const transaction: Record<string, string | number | Date> = {};
 
-    if (rawTransaction.Date) {
-      transaction.Date = new Date(rawTransaction.Date);
+    if (rawTransaction.date) {
+      transaction.date = new Date(rawTransaction.date);
     }
 
-    if (rawTransaction.Debit) {
-      transaction.Debit =
-        rawTransaction.Debit === ""
+    if (rawTransaction.debit) {
+      transaction.debit =
+        rawTransaction.debit === ""
           ? "0.00"
-          : parseFloat(rawTransaction.Debit.toString()).toFixed(2).toString();
+          : parseFloat(rawTransaction.debit.toString()).toFixed(2).toString();
     }
 
-    if (rawTransaction.Credit) {
-      transaction.Credit =
-        rawTransaction.Credit === ""
+    if (rawTransaction.credit) {
+      transaction.credit =
+        rawTransaction.credit === ""
           ? "0.00"
-          : parseFloat(rawTransaction.Credit.toString()).toFixed(2).toString();
+          : parseFloat(rawTransaction.credit.toString()).toFixed(2).toString();
     }
 
-    if (rawTransaction.Balance) {
-      transaction.Balance =
-        rawTransaction.Balance === ""
+    if (rawTransaction.balance) {
+      transaction.balance =
+        rawTransaction.balance === ""
           ? "0.00"
-          : parseFloat(rawTransaction.Balance.toString()).toFixed(2).toString();
+          : parseFloat(rawTransaction.balance.toString()).toFixed(2).toString();
     }
 
     return {
       sequence: idx + 1,
-      transactionDate: transaction.Date,
-      description: rawTransaction.Description,
+      transactionDate: transaction.date,
+      description: rawTransaction.description,
       debit: transaction.debit ?? "0.00",
       credit: transaction.credit ?? "0.00",
       balance: transaction.balance ?? "0.00",
-      user: rawTransaction.User,
-      account: rawTransaction.Account,
-      category: rawTransaction.Category,
-      comments: rawTransaction.Comments,
+      user: rawTransaction.user,
+      account: rawTransaction.account,
+      category: rawTransaction.category,
+      comments: rawTransaction.comments,
     };
   });
 };

@@ -2,27 +2,27 @@ import { type StateCreator } from "zustand";
 
 // TODO: move to constant file
 const DEFAULT_DATA_COLS = [
-  "Date",
-  "Description",
-  "Debit",
-  "Credit",
-  "Balance",
-  "Category",
-  "User",
-  "Account",
-  "Comments",
+  "date",
+  "description",
+  "debit",
+  "credit",
+  "balance",
+  "category",
+  "user",
+  "account",
+  "comments",
 ];
 
 const DEFAULT_COL_ORDER = {
-  Date: 1,
-  Description: 2,
-  Debit: 3,
-  Credit: 4,
-  Balance: 5,
-  Category: 6,
-  User: 7,
-  Account: 8,
-  Comments: 9,
+  date: 1,
+  description: 2,
+  debit: 3,
+  credit: 4,
+  balance: 5,
+  category: 6,
+  user: 7,
+  account: 8,
+  comments: 9,
 } as const;
 
 export type Step1Slice = {

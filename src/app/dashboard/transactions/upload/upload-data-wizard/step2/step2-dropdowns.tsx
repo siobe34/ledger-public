@@ -12,8 +12,8 @@ export const Step2RequiredDropdowns = ({ users }: Props) => {
   const { requiredCols, user, account, setUser, setAccount } =
     useUploadTransactionsWizard();
 
-  const needsAccount = !requiredCols.includes("Account");
-  const needsUser = !requiredCols.includes("User");
+  const needsAccount = !requiredCols.includes("account");
+  const needsUser = !requiredCols.includes("user");
 
   if (!needsAccount && !needsUser) return null;
 

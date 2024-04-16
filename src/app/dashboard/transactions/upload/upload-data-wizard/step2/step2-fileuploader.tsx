@@ -19,10 +19,10 @@ export const Step2FileUploader = () => {
   } = useUploadTransactionsWizard();
 
   let disableBrowseButton = false;
-  if (!requiredCols.includes("Account") && account === "Account") {
+  if (!requiredCols.includes("account") && account === "Account") {
     disableBrowseButton = true;
   }
-  if (!requiredCols.includes("User") && user === "User") {
+  if (!requiredCols.includes("user") && user === "User") {
     disableBrowseButton = true;
   }
 

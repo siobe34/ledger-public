@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<Record<string, string>>[] = [
   {
-    accessorKey: "Date",
+    accessorKey: "transactionDate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Date" />
     ),
@@ -18,31 +18,31 @@ export const columns: ColumnDef<Record<string, string>>[] = [
       }).format(new Date(cell.getValue() as string)),
   },
   {
-    accessorKey: "Description",
+    accessorKey: "description",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Description" />
     ),
   },
   {
-    accessorKey: "Debit",
+    accessorKey: "debit",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Debit" />
     ),
   },
   {
-    accessorKey: "Credit",
+    accessorKey: "credit",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Credit" />
     ),
   },
   {
-    accessorKey: "Balance",
+    accessorKey: "balance",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Balance" />
     ),
   },
   {
-    accessorKey: "Category",
+    accessorKey: "category",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Category" />
     ),
@@ -57,7 +57,7 @@ export const columns: ColumnDef<Record<string, string>>[] = [
     ),
   },
   {
-    accessorKey: "User",
+    accessorKey: "user",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="User" />
     ),
@@ -72,7 +72,7 @@ export const columns: ColumnDef<Record<string, string>>[] = [
     ),
   },
   {
-    accessorKey: "Account",
+    accessorKey: "account",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Account" />
     ),
@@ -87,7 +87,7 @@ export const columns: ColumnDef<Record<string, string>>[] = [
     ),
   },
   {
-    accessorKey: "Comments",
+    accessorKey: "comments",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Comments" />
     ),
