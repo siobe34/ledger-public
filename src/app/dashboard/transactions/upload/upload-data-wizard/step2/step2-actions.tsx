@@ -14,8 +14,6 @@ export const Step2Actions = () => {
   useEffect(() => {
     if (!uploadedData) return;
 
-    // TODO: additional validation required here to make sure uploadedData is in a shape readable by the upload transactions table in step 3, otherwise it throws an Error
-
     toast.success("Ready to proceed to Step 3.");
 
     setValidationStatus(true);
