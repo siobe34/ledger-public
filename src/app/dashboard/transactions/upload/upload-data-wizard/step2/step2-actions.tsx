@@ -26,8 +26,9 @@ export const Step2Actions = () => {
       <Button
         onClick={() => router.push("/dashboard/transactions/upload?step=3")}
         disabled={!validationStatus}
+        aria-disabled={!validationStatus}
       >
-        Step 3
+        Step 3<span className="sr-only">Proceed to Step 3.</span>
       </Button>
     </div>
   );

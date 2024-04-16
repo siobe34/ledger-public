@@ -57,9 +57,17 @@ export const Step3Actions = () => {
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-8 py-4">
-      <Button onClick={validateStep3}>Validate</Button>
-      <Button onClick={handleDataUpload} disabled={!validationStatus}>
+      <Button onClick={validateStep3}>
+        Validate
+        <span className="sr-only">Validate current step to proceed.</span>
+      </Button>
+      <Button
+        onClick={handleDataUpload}
+        disabled={!validationStatus}
+        aria-disabled={!validationStatus}
+      >
         Save
+        <span className="sr-only">Save Transactions to database.</span>
       </Button>
     </div>
   );
