@@ -59,7 +59,9 @@ export const Step1Table = () => {
       <TableBody>
         {dataCols.map((col, idx) => (
           <TableRow key={col}>
-            <TableCell>{col}</TableCell>
+            <TableCell className="capitalize">
+              {col === "transactionDate" ? "Date" : col}
+            </TableCell>
             <TableCell>
               <Input
                 type="text"
