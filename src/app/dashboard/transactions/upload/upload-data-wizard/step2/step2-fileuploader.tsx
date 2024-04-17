@@ -81,7 +81,27 @@ export const Step2FileUploader = ({ categories, users }: Props) => {
 
     const preProcessedData = sanitizeTransactionData(finalJson);
 
-    const zodParser = insertTransactionsArraySchema.safeParse(preProcessedData);
+    const zodParser = insertTransactionsArraySchema
+      .superRefine((transactionsArray, ctx) => {
+        for (const transacation of transactionsArray) {
+          if (!categories.includes(transacation.category)) {
+            ctx.addIssue({
+              code: "custom",
+              message: `The following category is not configured: ${transacation.category}.`,
+              path: [0, "category"],
+            });
+          }
+
+          if (!users.includes(transacation.user)) {
+            ctx.addIssue({
+              code: "custom",
+              message: `The following user is not configured: ${transacation.user}.`,
+              path: [1, "user"],
+            });
+          }
+        }
+      })
+      .safeParse(preProcessedData);
 
     if (!zodParser.success) {
       toast.error(
