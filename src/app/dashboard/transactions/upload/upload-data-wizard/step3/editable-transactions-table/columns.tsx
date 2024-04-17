@@ -1,13 +1,12 @@
 "use client";
 
+import { EditableCellDropdown } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/editable-cell-dropdown";
+import { EditableCellInput } from "@/app/dashboard/transactions/upload/upload-data-wizard/step3/editable-transactions-table/editable-cell-input";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { DropdownStateful } from "@/components/dropdown-with-state";
-import { Input } from "@/components/ui/input";
 import { formatMonetaryVals } from "@/lib/formatMonetaryVals";
 import { formatTransactionDate } from "@/lib/formatTransactionDate";
 import { type TransactionInsert } from "@/lib/types/global";
-import type { ColumnDef, Getter, Table } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<TransactionInsert>[] = [
   {
@@ -105,75 +104,3 @@ export const columns: ColumnDef<TransactionInsert>[] = [
     ),
   },
 ];
-
-type EditableCellProps<TData> = {
-  getValue: Getter<unknown>;
-  id: string;
-  index: number;
-  table: Table<TData>;
-};
-
-type EditableCellDropdownProps<TData> = EditableCellProps<TData> & {
-  dropdownOpts: string[];
-};
-
-const EditableCellDropdown = <TData,>({
-  dropdownOpts,
-  getValue,
-  id,
-  index,
-  table,
-}: EditableCellDropdownProps<TData>) => {
-  const initialValue = getValue() as string;
-  const defaultSelectedItem = initialValue.length > 0 ? initialValue : "Select";
-
-  const [selectedItem, setSelectedItem] = useState(defaultSelectedItem);
-
-  useEffect(() => {
-    const defaultSelectedItem =
-      initialValue.length > 0 ? initialValue : "Select";
-    setSelectedItem(defaultSelectedItem);
-  }, [initialValue]);
-
-  const handleSelect = (newItem: string) => {
-    table.options.meta?.updateData(index, id, newItem);
-  };
-
-  return (
-    <DropdownStateful
-      dropdownOpts={dropdownOpts}
-      selectedItem={selectedItem}
-      setItemCallback={handleSelect}
-      setSelectedItem={setSelectedItem}
-      buttonProps={{
-        variant: selectedItem === "Select" ? "default" : "outline",
-      }}
-    />
-  );
-};
-
-const EditableCellInput = <TData,>({
-  getValue,
-  id,
-  index,
-  table,
-}: EditableCellProps<TData>) => {
-  const initialValue = getValue();
-  const [value, setValue] = useState(initialValue);
-
-  const onBlur = () => {
-    table.options.meta?.updateData(index, id, value);
-  };
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  return (
-    <Input
-      value={value as string}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={onBlur}
-    />
-  );
-};
