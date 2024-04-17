@@ -1,13 +1,10 @@
 import { UploadDataWizard } from "@/app/dashboard/transactions/upload/upload-data-wizard/wizard";
+import { uploadWizardStepSchema } from "@/lib/schemas/upload-page-wizard";
 import { type PageSearchParams } from "@/lib/types/global";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 
 export const dynamic = "force-dynamic";
-
-// TODO: fix url param parsing and zod schema
-const test = z.object({ step: z.number() });
 
 export default async function UploadTransactionsPage({
   searchParams,
@@ -21,7 +18,7 @@ export default async function UploadTransactionsPage({
     redirect("/dashboard/transactions/upload/config-required");
   }
 
-  const zodStatus = test.safeParse(unsafeParams);
+  const zodStatus = uploadWizardStepSchema.safeParse(unsafeParams);
 
   if (!zodStatus.success) {
     redirect("/dashboard/transactions/upload?step=1");
