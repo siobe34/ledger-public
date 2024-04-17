@@ -13,6 +13,7 @@ import { api } from "@/trpc/server";
 
 export const Step2 = async () => {
   const users = await api.relatedUsers.get.query();
+  const categories = await api.relatedCategories.get.query();
 
   return (
     <Card className="w-full">
@@ -27,7 +28,10 @@ export const Step2 = async () => {
         <Step2Checkbox />
       </CardContent>
       <CardFooter>
-        <Step2FileUploader />
+        <Step2FileUploader
+          categories={categories.map((i) => i.title)}
+          users={users.map((i) => i.title)}
+        />
       </CardFooter>
     </Card>
   );

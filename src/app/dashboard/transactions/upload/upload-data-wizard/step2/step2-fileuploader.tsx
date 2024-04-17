@@ -14,7 +14,12 @@ import {
 import { createRef } from "react";
 import { toast } from "sonner";
 
-export const Step2FileUploader = () => {
+type Props = {
+  categories: string[];
+  users: string[];
+};
+
+export const Step2FileUploader = ({ categories, users }: Props) => {
   const fileRef = createRef<HTMLInputElement>();
   const {
     account,
