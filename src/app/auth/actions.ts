@@ -1,5 +1,6 @@
 "use server";
 
+import { loginSchema } from "@/lib/schemas/login";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -7,13 +8,20 @@ import { redirect } from "next/navigation";
 export const login = async (formData: FormData) => {
   const supabase = createClient();
 
-  // TODO: validate email & password input
   const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+    email: formData.get("email"),
+    password: formData.get("password"),
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const zodParser = loginSchema.safeParse(data);
+
+  if (!zodParser.success) {
+    redirect("/error");
+  }
+
+  const parsedLoginData = zodParser.data;
+
+  const { error } = await supabase.auth.signInWithPassword(parsedLoginData);
 
   if (error) {
     redirect("/error");
