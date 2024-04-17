@@ -7,14 +7,13 @@ import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
+import { type PageSearchParams } from "@/lib/types/global";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function MonthlySummaryPage({
   searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+}: PageSearchParams) {
   const today = new Date();
   const unsafeParams = {
     account: searchParams.account,
@@ -23,18 +22,18 @@ export default async function MonthlySummaryPage({
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
   };
 
-  if (
-    !searchParams.account ||
-    !searchParams.month ||
-    !searchParams.user ||
-    !searchParams.year
-  ) {
+  const zodParamParser = getTransactionsSchema.safeParse(unsafeParams);
+
+  if (!zodParamParser.success) {
+    const account = unsafeParams.account?.toString() ?? "%";
+    const user = unsafeParams.user?.toString() ?? "%";
+
     redirect(
-      `/dashboard/summary/monthly?account=${unsafeParams.account ?? "%"}&month=${unsafeParams.month}&user=${unsafeParams.user ?? "%"}&year=${unsafeParams.year}`,
+      `/dashboard/summary/monthly?account=${account}&month=${unsafeParams.month}&user=${user}&year=${unsafeParams.year}`,
     );
   }
 
-  const parsedSearchParams = getTransactionsSchema.parse(unsafeParams);
+  const parsedSearchParams = zodParamParser.data;
 
   return (
     <>

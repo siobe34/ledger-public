@@ -6,26 +6,27 @@ import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
+import { type PageSearchParams } from "@/lib/types/global";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function AnnualSummaryPage({
   searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+}: PageSearchParams) {
   const today = new Date();
   const unsafeParams = {
     year: searchParams.year ? +searchParams.year : today.getFullYear(),
   };
 
-  if (!searchParams.year) {
+  const zodParamParser = getTransactionsSchema
+    .pick({ year: true })
+    .safeParse(unsafeParams);
+
+  if (!zodParamParser.success) {
     redirect(`/dashboard/summary/annual?year=${unsafeParams.year}`);
   }
 
-  const parsedSearchParams = getTransactionsSchema
-    .pick({ year: true })
-    .parse(unsafeParams);
+  const parsedSearchParams = zodParamParser.data;
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { UploadDataWizard } from "@/app/dashboard/transactions/upload/upload-data-wizard/wizard";
+import { type PageSearchParams } from "@/lib/types/global";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -10,12 +11,11 @@ const test = z.object({ step: z.number() });
 
 export default async function UploadTransactionsPage({
   searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+}: PageSearchParams) {
+  const unsafeParams = { step: searchParams.step && +searchParams.step };
+
   const configuredUsers = await api.relatedUsers.get.query();
   const configuredCategories = await api.relatedCategories.get.query();
-  const unsafeParams = { step: searchParams.step && +searchParams.step };
 
   if (configuredUsers.length === 0 || configuredCategories.length === 0) {
     redirect("/dashboard/transactions/upload/config-required");

@@ -9,6 +9,10 @@ import {
 } from "@/server/db/schema";
 import { z } from "zod";
 
+export type PageSearchParams = {
+  searchParams: Record<string, string | string[] | undefined>;
+};
+
 export type TransactionInsert = z.infer<typeof insertTransactionSchema>;
 export type TransactionSelect = z.infer<typeof selectTransactionsSchema>;
 
