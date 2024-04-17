@@ -104,9 +104,11 @@ export const Step2FileUploader = ({ categories, users }: Props) => {
       .safeParse(preProcessedData);
 
     if (!zodParser.success) {
-      toast.error(
-        "The file you selected doesn't seem to have data in the shape you defined in Step 1. Please go back and try again.",
+      const uniqueErrors = zodParser.error.errors.filter(
+        (v, i, a) => a.findIndex((v2) => v2.message === v.message) === i,
       );
+
+      uniqueErrors.forEach((err) => toast.error(err.message));
 
       return;
     }
