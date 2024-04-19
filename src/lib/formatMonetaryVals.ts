@@ -12,5 +12,7 @@ export const formatMonetaryVals = ({
   value,
   opts = DEFAULT_MONETARY_FORMAT,
 }: FormatDateProps) => {
+  if (Number.isNaN(value)) value = 0;
+
   return new Intl.NumberFormat("en-CA", opts).format(value);
 };
