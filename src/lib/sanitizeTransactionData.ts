@@ -8,34 +8,14 @@ export const sanitizeTransactionData = (
       transaction.transactionDate = new Date(rawTransaction.transactionDate);
     }
 
-    if (rawTransaction.debit) {
-      transaction.debit =
-        rawTransaction.debit === ""
-          ? "0.00"
-          : parseFloat(rawTransaction.debit.toString()).toFixed(2).toString();
-    }
-
-    if (rawTransaction.credit) {
-      transaction.credit =
-        rawTransaction.credit === ""
-          ? "0.00"
-          : parseFloat(rawTransaction.credit.toString()).toFixed(2).toString();
-    }
-
-    if (rawTransaction.balance) {
-      transaction.balance =
-        rawTransaction.balance === ""
-          ? "0.00"
-          : parseFloat(rawTransaction.balance.toString()).toFixed(2).toString();
-    }
-
     return {
       sequence: idx + 1,
-      transactionDate: transaction.transactionDate,
+      transactionDate:
+        transaction.transactionDate ?? rawTransaction.transactionDate,
       description: rawTransaction.description,
-      debit: transaction.debit ?? "0.00",
-      credit: transaction.credit ?? "0.00",
-      balance: transaction.balance ?? "0.00",
+      debit: rawTransaction.debit,
+      credit: rawTransaction.credit,
+      balance: rawTransaction.balance,
       user: rawTransaction.user,
       account: rawTransaction.account,
       category: rawTransaction.category,
