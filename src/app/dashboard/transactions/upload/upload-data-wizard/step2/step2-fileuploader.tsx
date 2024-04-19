@@ -11,6 +11,7 @@ import {
   addMissingKeysToJson,
   getTransactionsCsvHeaders,
 } from "@/lib/transactions-parsing-helpers";
+import { transactionsSuperRefine } from "@/lib/transactionsSuperRefine";
 import { createRef } from "react";
 import { toast } from "sonner";
 
@@ -82,25 +83,15 @@ export const Step2FileUploader = ({ categories, users }: Props) => {
     const preProcessedData = sanitizeTransactionData(finalJson);
 
     const zodParser = insertTransactionsArraySchema
-      .superRefine((transactionsArray, ctx) => {
-        for (const transacation of transactionsArray) {
-          if (!categories.includes(transacation.category)) {
-            ctx.addIssue({
-              code: "custom",
-              message: `The following category is not configured: ${transacation.category}.`,
-              path: [0, "category"],
-            });
-          }
-
-          if (!users.includes(transacation.user)) {
-            ctx.addIssue({
-              code: "custom",
-              message: `The following user is not configured: ${transacation.user}.`,
-              path: [1, "user"],
-            });
-          }
-        }
-      })
+      .superRefine((transactionsArray, ctx) =>
+        transactionsSuperRefine({
+          categories,
+          users,
+          requiredCols,
+          transactionsArray,
+          ctx,
+        }),
+      )
       .safeParse(preProcessedData);
 
     if (!zodParser.success) {
