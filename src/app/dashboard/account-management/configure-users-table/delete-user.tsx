@@ -37,7 +37,7 @@ export const DeleteUser = ({ id }: { id: number }) => {
       <AlertDialogTrigger asChild>
         <Button
           variant="ghost"
-          className="dark:border dark:border-transparent dark:hover:border dark:hover:border-input"
+          className="dark:border dark:border-transparent dark:hover:border dark:hover:border-input dark:focus-visible:border dark:focus-visible:border-input"
           disabled={isLoading}
         >
           <Trash2Icon />
