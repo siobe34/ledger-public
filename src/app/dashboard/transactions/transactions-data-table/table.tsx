@@ -33,7 +33,12 @@ export const QueriedTransactionsTable = ({
     });
   }, [isError, isLoading, isSuccess, data, month, year]);
 
-  if (!data) return <LoadingSpinner className="mx-auto" />;
+  if (!data)
+    return (
+      <div className="flex h-[400px] w-full animate-pulse items-start justify-center rounded-md bg-accent">
+        <LoadingSpinner />
+      </div>
+    );
 
   return <DataTable columns={columns} data={data} />;
 };
