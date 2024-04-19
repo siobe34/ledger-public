@@ -1,3 +1,4 @@
+import { accountEnumErrorMap } from "@/lib/schemas/error-maps";
 import { relations, sql } from "drizzle-orm";
 import {
   bigint,
@@ -111,8 +112,10 @@ export const insertTransactionSchema = createInsertSchema(transactions)
     updatedAt: true,
     createdAt: true,
   })
-  // Coerce to correct type because 'comments' should not be undefined
-  .extend({ comments: z.string().nullable() });
+  .extend({
+    account: z.enum(["Credit", "Debit"], { errorMap: accountEnumErrorMap }),
+    comments: z.string().nullable(),
+  });
 
 export const selectTransactionsSchema = createSelectSchema(transactions);
 
