@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<IAnnualSummaryProps> = async
     const db = client.db(dbNames.ledger);
 
     // * Return annual data for the current year
-    const todaysDate = new Date();
+    const todaysDate = new Date('2023-05-04');
 
     // * Get monthly balances for the year by user and account
     const dbAnnualBalanceSummary = await queryTransactions(
@@ -157,7 +157,7 @@ const Annual: PageWithLayout<InferGetServerSidePropsType<typeof getServerSidePro
     const [currentNotifications, setCurrentNotifications] = useState(() => notifications);
 
     // * State for year that annual balances are loaded for
-    const [year, setYear] = useState(new Date().toLocaleString("en-US", { year: "numeric" }));
+    const [year, setYear] = useState(new Date('2023-05-04').toLocaleString("en-US", { year: "numeric" }));
 
     // * State for annual balance data
     const [annualBalanceSummary, setAnnualBalanceSummary] = useState(() => (data ? data.annualBalanceSummary : undefined));
