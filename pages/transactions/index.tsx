@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<{
     const dbManageQuery = await db.collection<ManageCollectionType>(dbCollections.manage).findOne({ email: user.email });
 
     // * Query from transactions database with current user's email address and today's year and month
-    const todaysDate = new Date('2023-04-01');
+    const todaysDate = new Date();
     const dbTransactionsQuery = await db
         .collection<TransactionsCollectionType>(dbCollections.transactions)
         .aggregate([
@@ -149,8 +149,8 @@ const Transactions: PageWithLayout<InferGetServerSidePropsType<typeof getServerS
     const [transactions, setTransactions] = useState(() => data?.transactions);
 
     // * State for year and month that transactions are loaded for
-    const [year, setYear] = useState(new Date('2023-04-01').toLocaleString("en-US", { year: "numeric" }));
-    const [month, setMonth] = useState(new Date('2023-04-01').toLocaleString("en-US", { month: "long" }));
+    const [year, setYear] = useState(new Date().toLocaleString("en-US", { year: "numeric" }));
+    const [month, setMonth] = useState(new Date().toLocaleString("en-US", { month: "long" }));
 
     // * State of user that transactions are loaded for
     const [user, setUser] = useState("All");
