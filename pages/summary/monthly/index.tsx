@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps<IMonthlySummaryProps> = asyn
     // * If session exists, user is authorized to view data so we can make database queries
 
     // * Query from transactions database with current user's email address and today's year and month
-    const todaysDate = new Date();
+    const todaysDate = new Date('2023-04-01');
 
     // * Get monthly summary by user and category ignoring potential "Credit Card" and "Income" category
     const dbMonthlyCategoricalSummaryByUser = await queryTransactions(
@@ -138,8 +138,8 @@ const Monthly: PageWithLayout<InferGetServerSidePropsType<typeof getServerSidePr
     const [currentNotifications, setCurrentNotifications] = useState(() => notifications);
 
     // * State for year and month that transactions are loaded for
-    const [year, setYear] = useState(new Date().toLocaleString("en-US", { year: "numeric" }));
-    const [month, setMonth] = useState(new Date().toLocaleString("en-US", { month: "long" }));
+    const [year, setYear] = useState(new Date('2023-04-01').toLocaleString("en-US", { year: "numeric" }));
+    const [month, setMonth] = useState(new Date('2023-04-01').toLocaleString("en-US", { month: "long" }));
     const [chartMonth, setChartMonth] = useState(month);
 
     // * State for monthly spending by category and user
