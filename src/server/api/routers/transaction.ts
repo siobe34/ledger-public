@@ -33,8 +33,14 @@ export const transactionRouter = createTRPCRouter({
             eq(transactions.emailId, ctx.emailId),
             like(transactions.account, input.account),
             like(transactions.user, input.user),
-            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
-            eq(sql`MONTH(${transactions.transactionDate})`, input.month),
+            eq(
+              sql`DATE_PART('year', ${transactions.transactionDate})`,
+              input.year,
+            ),
+            eq(
+              sql`DATE_PART('month',${transactions.transactionDate})`,
+              input.month,
+            ),
           ),
         )
         .orderBy(transactions.transactionDate);
@@ -66,8 +72,14 @@ export const transactionRouter = createTRPCRouter({
                 eq(transactions.emailId, ctx.emailId),
                 like(transactions.account, input.account),
                 like(transactions.user, input.user),
-                eq(sql`YEAR(${transactions.transactionDate})`, input.year),
-                eq(sql`MONTH(${transactions.transactionDate})`, input.month),
+                eq(
+                  sql`DATE_PART('year', ${transactions.transactionDate})`,
+                  input.year,
+                ),
+                eq(
+                  sql`DATE_PART('month', ${transactions.transactionDate})`,
+                  input.month,
+                ),
               ),
             )
             .groupBy(transactions.account, transactions.user)
@@ -77,8 +89,14 @@ export const transactionRouter = createTRPCRouter({
             eq(transactions.account, sql`b.account`),
             eq(transactions.user, sql`b.user`),
             eq(transactions.emailId, ctx.emailId),
-            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
-            eq(sql`MONTH(${transactions.transactionDate})`, input.month),
+            eq(
+              sql`DATE_PART('year', ${transactions.transactionDate})`,
+              input.year,
+            ),
+            eq(
+              sql`DATE_PART('month', ${transactions.transactionDate})`,
+              input.month,
+            ),
           ),
         );
 
@@ -107,18 +125,22 @@ export const transactionRouter = createTRPCRouter({
               account: transactions.account,
               user: transactions.user,
               sequence: max(transactions.sequence).as("max_sequence"),
-              year: sql<number>`YEAR(${transactions.transactionDate})`.as(
+              year: sql<number>`DATE_PART('year', ${transactions.transactionDate})`.as(
                 "year",
               ),
-              month: sql<number>`MONTH(${transactions.transactionDate})`.as(
-                "month",
-              ),
+              month:
+                sql<number>`DATE_PART('month', ${transactions.transactionDate})`.as(
+                  "month",
+                ),
             })
             .from(transactions)
             .where(
               and(
                 eq(transactions.emailId, ctx.emailId),
-                eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+                eq(
+                  sql`DATE_PART('year', ${transactions.transactionDate})`,
+                  input.year,
+                ),
               ),
             )
             .groupBy(
@@ -133,7 +155,10 @@ export const transactionRouter = createTRPCRouter({
             eq(transactions.account, sql`b.account`),
             eq(transactions.user, sql`b.user`),
             eq(transactions.emailId, ctx.emailId),
-            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+            eq(
+              sql`DATE_PART('year', ${transactions.transactionDate})`,
+              input.year,
+            ),
           ),
         )
         .orderBy(transactions.transactionDate);
@@ -161,8 +186,14 @@ export const transactionRouter = createTRPCRouter({
             eq(transactions.emailId, ctx.emailId),
             like(transactions.account, input.account),
             like(transactions.user, input.user),
-            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
-            eq(sql`MONTH(${transactions.transactionDate})`, input.month),
+            eq(
+              sql`DATE_PART('year', ${transactions.transactionDate})`,
+              input.year,
+            ),
+            eq(
+              sql`DATE_PART('month', ${transactions.transactionDate})`,
+              input.month,
+            ),
             ne(transactions.category, "Credit Card"),
           ),
         )
@@ -186,15 +217,18 @@ export const transactionRouter = createTRPCRouter({
           amount_spent: sum(
             sql`${transactions.debit} - ${transactions.credit}`,
           ).as("amount_spent"),
-          count: countDistinct(sql`MONTH(${transactions.transactionDate})`).as(
-            "count",
-          ),
+          count: countDistinct(
+            sql`DATE_PART('month', ${transactions.transactionDate})`,
+          ).as("count"),
         })
         .from(transactions)
         .where(
           and(
             eq(transactions.emailId, ctx.emailId),
-            eq(sql`YEAR(${transactions.transactionDate})`, input.year),
+            eq(
+              sql`DATE_PART('year', ${transactions.transactionDate})`,
+              input.year,
+            ),
             ne(transactions.category, "Credit Card"),
             ne(transactions.category, "Income"),
           ),
@@ -212,7 +246,9 @@ export const transactionRouter = createTRPCRouter({
   getPossibleYears: privateProcedure.query(async ({ ctx }) => {
     const records = await ctx.db
       .selectDistinct({
-        year: sql<number>`YEAR(${transactions.transactionDate})`.as("year"),
+        year: sql<number>`DATE_PART('year', ${transactions.transactionDate})`.as(
+          "year",
+        ),
       })
       .from(transactions)
       .where(eq(transactions.emailId, ctx.emailId))
