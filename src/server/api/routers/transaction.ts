@@ -22,9 +22,6 @@ export const transactionRouter = createTRPCRouter({
   getByMonth: privateProcedure
     .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
-      // REMOVEME: simulating slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const matchedRecords = await ctx.db
         .select()
         .from(transactions)
@@ -53,9 +50,6 @@ export const transactionRouter = createTRPCRouter({
   getBalanceByMonth: privateProcedure
     .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
-      // REMOVEME: simulating slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const matchedRecords = await ctx.db
         .select()
         .from(transactions)
@@ -105,9 +99,6 @@ export const transactionRouter = createTRPCRouter({
   getBalancesByYear: privateProcedure
     .input(getTransactionsSchema.pick({ year: true }))
     .query(async ({ ctx, input }) => {
-      // REMOVEME: simulating slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const matchedRecords = await ctx.db
         .select({
           id: transactions.id,
@@ -168,9 +159,6 @@ export const transactionRouter = createTRPCRouter({
   getMonthlyCategoricalSpending: privateProcedure
     .input(getTransactionsSchema)
     .query(async ({ ctx, input }) => {
-      // REMOVEME: simulating slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const matchedRecords = await ctx.db
         .select({
           account: transactions.account,
@@ -208,9 +196,6 @@ export const transactionRouter = createTRPCRouter({
   getAnnualCategoricalSpending: privateProcedure
     .input(getTransactionsSchema.pick({ year: true }))
     .query(async ({ ctx, input }) => {
-      // REMOVEME: simulating slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const matchedRecords = await ctx.db
         .select({
           category: transactions.category,
