@@ -1,16 +1,14 @@
 import { accountEnumErrorMap } from "@/lib/schemas/error-maps";
 import { relations, sql } from "drizzle-orm";
 import {
-  bigint,
-  datetime,
   decimal,
-  int,
-  mysqlEnum,
-  mysqlTableCreator,
+  integer,
+  pgTableCreator,
+  serial,
   text,
   timestamp,
   varchar,
-} from "drizzle-orm/mysql-core";
+} from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -20,15 +18,15 @@ import { z } from "zod";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = mysqlTableCreator((name) => `ledger_${name}`);
+export const createTable = pgTableCreator((name) => `ledger_${name}`);
 
 export const metadatas = createTable("metadata", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  id: serial("id").primaryKey(),
   email: varchar("email", { length: 256 }).unique().notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const metadataRelations = relations(metadatas, ({ many }) => ({
@@ -38,22 +36,22 @@ export const metadataRelations = relations(metadatas, ({ many }) => ({
 }));
 
 export const transactions = createTable("transaction", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-  emailId: bigint("email_id", { mode: "number" }).notNull(),
-  sequence: int("sequence").notNull(),
-  transactionDate: datetime("transaction_date").notNull(),
+  id: serial("id").primaryKey(),
+  emailId: integer("email_id").notNull(),
+  sequence: integer("sequence").notNull(),
+  transactionDate: timestamp("transaction_date").notNull(),
   description: text("description").notNull(),
   debit: decimal("debit", { precision: 10, scale: 2 }).notNull(),
   credit: decimal("credit", { precision: 10, scale: 2 }).notNull(),
   balance: decimal("balance", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 256 }).notNull(),
   user: varchar("user", { length: 256 }).notNull(),
-  account: mysqlEnum("account", ["Credit", "Debit"]).notNull(),
+  account: varchar("account", { length: 32 }).notNull(),
   comments: text("comments"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const transactionRelations = relations(transactions, ({ one }) => ({
@@ -64,14 +62,13 @@ export const transactionRelations = relations(transactions, ({ one }) => ({
 }));
 
 export const transactionCategories = createTable("transaction_category", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-  // TODO: the title col should be unique, don't want duplicate Categories
-  title: varchar("title", { length: 256 }).notNull(),
-  emailId: bigint("email_id", { mode: "number" }).notNull(),
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 256 }).unique().notNull(),
+  emailId: integer("email_id").notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const transactionCategoryRelations = relations(
@@ -85,14 +82,13 @@ export const transactionCategoryRelations = relations(
 );
 
 export const transactionUsers = createTable("transaction_user", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-  // TODO: the title col should be unique, don't want duplicate configured Users
-  title: varchar("title", { length: 256 }).notNull(),
-  emailId: bigint("email_id", { mode: "number" }).notNull(),
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 256 }).unique().notNull(),
+  emailId: integer("email_id").notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const transactionUserRelations = relations(
@@ -117,7 +113,11 @@ export const insertTransactionSchema = createInsertSchema(transactions)
     comments: z.string().nullable(),
   });
 
-export const selectTransactionsSchema = createSelectSchema(transactions);
+export const selectTransactionsSchema = createSelectSchema(transactions).extend(
+  {
+    account: z.enum(["Credit", "Debit"], { errorMap: accountEnumErrorMap }),
+  },
+);
 
 export const insertCategoriesSchema = createInsertSchema(
   transactionCategories,
