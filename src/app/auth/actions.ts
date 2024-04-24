@@ -28,5 +28,5 @@ export const login = async (formData: FormData) => {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 };
