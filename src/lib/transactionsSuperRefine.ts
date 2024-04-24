@@ -15,7 +15,6 @@ export const transactionsSuperRefine = ({
   ctx: RefinementCtx;
 }) => {
   for (const transacation of transactionsArray) {
-    console.log(transacation.user);
     if (Number.isNaN(+transacation.balance)) {
       ctx.addIssue({
         code: "custom",
