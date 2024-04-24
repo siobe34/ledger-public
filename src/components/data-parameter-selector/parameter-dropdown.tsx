@@ -39,7 +39,11 @@ export const ParameterDropdown = <
           <Button variant="outline">{selectedItem.label}</Button>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent loop align="center">
+      <DropdownMenuContent
+        loop
+        align="center"
+        className="max-h-24 overflow-y-scroll sm:max-h-max sm:overflow-auto"
+      >
         {dropdownOptions.map((dropdownItem) => (
           <DropdownMenuItem
             key={dropdownItem.value.toString()}

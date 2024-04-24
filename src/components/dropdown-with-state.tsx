@@ -43,7 +43,12 @@ export const DropdownStateful = ({
       <DropdownMenuTrigger asChild>
         <Button {...buttonProps}>{selectedItem}</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent {...props} align={align} loop>
+      <DropdownMenuContent
+        {...props}
+        align={align}
+        loop
+        className="max-h-24 overflow-y-scroll sm:max-h-max sm:overflow-auto"
+      >
         {dropdownOpts.map((dropdownItem) => (
           <DropdownMenuItem
             key={dropdownItem}
