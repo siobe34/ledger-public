@@ -2,9 +2,12 @@ import { ConfiguresCategoriesTable } from "@/app/dashboard/account-management/co
 import { ConfigureUsersTable } from "@/app/dashboard/account-management/configure-users-table/table";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type Metadata } from "next";
 import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Ledger | Account Management" };
 
 export default function AccountManagementPage() {
   return (

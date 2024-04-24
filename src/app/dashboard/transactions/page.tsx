@@ -3,8 +3,11 @@ import { DataParameterSelector } from "@/components/data-parameter-selector/rsc-
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { type PageSearchParams } from "@/lib/types/global";
+import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+
+export const metadata: Metadata = { title: "Ledger | View Transactions" };
 
 export default async function ViewTransactionsPage({
   searchParams,

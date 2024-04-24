@@ -2,9 +2,12 @@ import { UploadDataWizard } from "@/app/dashboard/transactions/upload/upload-dat
 import { uploadWizardStepSchema } from "@/lib/schemas/upload-page-wizard";
 import { type PageSearchParams } from "@/lib/types/global";
 import { api } from "@/trpc/server";
+import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Ledger | Upload Transactions" };
 
 export default async function UploadTransactionsPage({
   searchParams,

@@ -8,8 +8,11 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTransactionsSchema } from "@/lib/schemas/trpc-inputs";
 import { type PageSearchParams } from "@/lib/types/global";
+import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+
+export const metadata: Metadata = { title: "Ledger | Monthly Summary" };
 
 export default async function MonthlySummaryPage({
   searchParams,

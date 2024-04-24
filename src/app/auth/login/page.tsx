@@ -11,7 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/lib/supabase/server";
+import { type Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = { title: "Ledger | Sign In" };
 
 export default async function LoginPage() {
   const supabase = createClient();
