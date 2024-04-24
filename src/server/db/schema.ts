@@ -35,6 +35,7 @@ export const metadataRelations = relations(metadatas, ({ many }) => ({
   transactionUsers: many(transactionUsers),
 }));
 
+type AccountEnum = "Credit" | "Debit";
 export const transactions = createTable("transaction", {
   id: serial("id").primaryKey(),
   emailId: integer("email_id").notNull(),
@@ -46,7 +47,7 @@ export const transactions = createTable("transaction", {
   balance: decimal("balance", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 256 }).notNull(),
   user: varchar("user", { length: 256 }).notNull(),
-  account: varchar("account", { length: 32 }).notNull(),
+  account: varchar("account", { length: 32 }).$type<AccountEnum>().notNull(),
   comments: text("comments"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
